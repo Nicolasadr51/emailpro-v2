@@ -42,7 +42,7 @@ export const ImageBlock: React.FC<ImageBlockProps> = ({ element }) => {
           alt: file.name,
         };
         setImageData(newImageData);
-        updateBlock(element.id, { content: JSON.stringify(newImageData) });
+        updateBlock(element.id, { content: newImageData });
         setIsLoading(false);
       };
       reader.readAsDataURL(file);
@@ -55,19 +55,19 @@ export const ImageBlock: React.FC<ImageBlockProps> = ({ element }) => {
   const handleUrlChange = (url: string) => {
     const newImageData = { ...imageData, src: url };
     setImageData(newImageData);
-    updateBlock(element.id, { content: JSON.stringify(newImageData) });
+    updateBlock(element.id, { content: newImageData });
   };
 
   const handleAltChange = (alt: string) => {
     const newImageData = { ...imageData, alt };
     setImageData(newImageData);
-    updateBlock(element.id, { content: JSON.stringify(newImageData) });
+    updateBlock(element.id, { content: newImageData });
   };
 
   const handleLinkChange = (link: string) => {
     const newImageData = { ...imageData, link };
     setImageData(newImageData);
-    updateBlock(element.id, { content: JSON.stringify(newImageData) });
+    updateBlock(element.id, { content: newImageData });
   };
 
   const containerStyle = {

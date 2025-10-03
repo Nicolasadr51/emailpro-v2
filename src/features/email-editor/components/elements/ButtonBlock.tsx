@@ -43,19 +43,19 @@ export const ButtonBlock: React.FC<ButtonBlockProps> = ({ element }) => {
   const handleTextChange = (text: string) => {
     const newButtonData = { ...buttonData, text };
     setButtonData(newButtonData);
-    updateBlock(element.id, { content: JSON.stringify(newButtonData) });
+    updateBlock(element.id, { content: newButtonData });
   };
 
   const handleLinkChange = (link: string) => {
     const newButtonData = { ...buttonData, link };
     setButtonData(newButtonData);
-    updateBlock(element.id, { content: JSON.stringify(newButtonData) });
+    updateBlock(element.id, { content: newButtonData });
   };
 
   const handleTargetChange = (target: '_self' | '_blank') => {
     const newButtonData = { ...buttonData, target };
     setButtonData(newButtonData);
-    updateBlock(element.id, { content: JSON.stringify(newButtonData) });
+    updateBlock(element.id, { content: newButtonData });
   };
 
   const containerStyle = {

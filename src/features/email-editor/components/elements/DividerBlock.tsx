@@ -29,13 +29,13 @@ export const DividerBlock: React.FC<DividerBlockProps> = ({ element }) => {
   const handleThicknessChange = (thickness: number) => {
     const newDividerData = { ...dividerData, thickness };
     setDividerData(newDividerData);
-    updateBlock(element.id, { content: JSON.stringify(newDividerData) });
+    updateBlock(element.id, { content: newDividerData });
   };
 
   const handleStyleChange = (style: 'solid' | 'dashed' | 'dotted') => {
     const newDividerData = { ...dividerData, style };
     setDividerData(newDividerData);
-    updateBlock(element.id, { content: JSON.stringify(newDividerData) });
+    updateBlock(element.id, { content: newDividerData });
   };
 
   const containerStyle = {
