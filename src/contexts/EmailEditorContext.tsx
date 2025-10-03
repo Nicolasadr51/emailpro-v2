@@ -88,7 +88,7 @@ const emailEditorReducer = (state: EmailEditorState, action: EmailEditorAction):
     case 'UPDATE_BLOCK': {
       const updatedBlocks = state.template.blocks.map(block =>
         block.id === action.payload.blockId
-          ? { ...block, ...action.payload.updates }
+          ? { ...block, ...action.payload.updates } as EmailBlock
           : block
       );
 
