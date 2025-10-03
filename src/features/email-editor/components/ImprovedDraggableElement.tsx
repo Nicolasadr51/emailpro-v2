@@ -13,7 +13,7 @@ import {
 import { designTokens } from '../../../design-system/tokens';
 import { EditorElement } from '../types/editor.types';
 import { useImprovedDragDrop } from '../hooks/useImprovedDragDrop';
-import { useEmailEditor } from '../hooks/useEmailEditor';
+import { useEmailEditorStore } from '../hooks/useEmailEditor';
 
 interface ImprovedDraggableElementProps {
   element: EditorElement;
@@ -41,7 +41,7 @@ export const ImprovedDraggableElement: React.FC<ImprovedDraggableElementProps> =
   const [contextMenuPosition, setContextMenuPosition] = useState({ x: 0, y: 0 });
 
   const { startElementDrag, registerDropZone } = useImprovedDragDrop();
-  const { selectElement } = useEmailEditor();
+  const { selectElement } = useEmailEditorStore();
 
   // Enregistrer cet élément comme zone de drop
   useEffect(() => {

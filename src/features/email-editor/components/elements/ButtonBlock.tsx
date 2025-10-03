@@ -3,7 +3,7 @@
 
 import React, { useState } from 'react';
 import { EditorElement, ButtonElementContent } from '../../types/editor.types';
-import { useEmailEditor } from '../../hooks/useEmailEditor';
+import { useEmailEditorStore';
 import { ExternalLinkIcon } from 'lucide-react';
 
 interface ButtonBlockProps {
@@ -19,7 +19,7 @@ export const ButtonBlock: React.FC<ButtonBlockProps> = ({ element }) => {
       return { text: 'Cliquez ici', link: '#', target: '_self' };
     }
   });
-  const { updateElement, selectedElement } = useEmailEditor();
+  const { updateElement, selectedElement } = useEmailEditorStore();
   const isSelected = selectedElement?.id === element.id;
 
   const handleDoubleClick = (e: React.MouseEvent) => {

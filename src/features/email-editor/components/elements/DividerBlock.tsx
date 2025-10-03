@@ -3,7 +3,7 @@
 
 import React, { useState } from 'react';
 import { EditorElement, DividerElementContent } from '../../types/editor.types';
-import { useEmailEditor } from '../../hooks/useEmailEditor';
+import { useEmailEditorStore';
 import { MinusIcon } from 'lucide-react';
 
 interface DividerBlockProps {
@@ -19,7 +19,7 @@ export const DividerBlock: React.FC<DividerBlockProps> = ({ element }) => {
       return { thickness: 1, style: 'solid' };
     }
   });
-  const { updateElement, selectedElement } = useEmailEditor();
+  const { updateElement, selectedElement } = useEmailEditorStore();
   const isSelected = selectedElement?.id === element.id;
 
   const handleDoubleClick = (e: React.MouseEvent) => {

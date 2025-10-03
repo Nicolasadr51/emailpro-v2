@@ -3,7 +3,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { EditorElement } from '../../types/editor.types';
-import { useEmailEditor } from '../../hooks/useEmailEditor';
+import { useEmailEditorStore';
 
 interface TextBlockProps {
   element: EditorElement;
@@ -12,7 +12,7 @@ interface TextBlockProps {
 export const TextBlock: React.FC<TextBlockProps> = ({ element }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [textContent, setTextContent] = useState(element.content);
-  const { updateElement, selectedElement } = useEmailEditor();
+  const { updateElement, selectedElement } = useEmailEditorStore();
   const textRef = useRef<HTMLDivElement>(null);
   const isSelected = selectedElement?.id === element.id;
 

@@ -1,6 +1,6 @@
 import { useRef, useState, useCallback, useEffect } from 'react';
 import { EditorElement } from '../types/editor.types';
-import { useEmailEditor } from './useEmailEditor';
+import { useEmailEditorStore } from './useEmailEditor';
 
 interface DragState {
   isDragging: boolean;
@@ -19,7 +19,7 @@ interface DropZone {
 }
 
 export const useImprovedDragDrop = () => {
-  const { elements, addElement, moveElement, updateElement } = useEmailEditor();
+  const { elements, addElement, moveElement, updateElement } = useEmailEditorStore();
   const [dragState, setDragState] = useState<DragState>({
     isDragging: false,
     draggedElement: null,

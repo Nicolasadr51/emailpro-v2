@@ -80,7 +80,7 @@ const createDefaultElement = (type: EditorElement['type'], position: Position): 
   }
 };
 
-export const useEmailEditor = create<EditorStore>()(
+export const useEmailEditorStoreStore = create<EditorStore>()(
   devtools(
     (set, get) => ({
       // État initial
@@ -233,7 +233,7 @@ export const useEmailEditor = create<EditorStore>()(
 
 // Hook utilitaire pour créer des éléments
 export const useElementCreator = () => {
-  const addElement = useEmailEditor((state) => state.addElement);
+  const addElement = useEmailEditorStoreStore((state) => state.addElement);
 
   const createElement = (type: EditorElement['type'], position: Position) => {
     const elementData = createDefaultElement(type, position);

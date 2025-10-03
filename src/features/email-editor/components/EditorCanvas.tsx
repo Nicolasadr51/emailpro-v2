@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { useEmailEditor } from '../hooks/useEmailEditor';
+import { useEmailEditorStore';
 import { useDragDrop } from '../hooks/useDragDrop';
 import { DraggableElement } from './DraggableElement';
 import { EditorElement } from '../types/editor.types';
@@ -13,7 +13,7 @@ export const EditorCanvas: React.FC<EditorCanvasProps> = ({
   className = '', 
   viewMode = 'desktop' 
 }) => {
-  const { elements, selectedElement, template, zoom } = useEmailEditor();
+  const { elements, selectedElement, template, zoom } = useEmailEditorStore();
   const { dropRef, dropHandlers } = useDragDrop();
 
   // Adapter la largeur selon le mode d'affichage

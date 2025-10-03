@@ -3,11 +3,11 @@
 
 import { useRef, useCallback } from 'react';
 import { ElementType, Position } from '../types/editor.types';
-import { useEmailEditor, useElementCreator } from './useEmailEditor';
+import { useEmailEditorStore, useElementCreator } from './useEmailEditorStore';
 
 export const useDragDrop = () => {
   const { createElement } = useElementCreator();
-  const { moveElement } = useEmailEditor();
+  const { moveElement } = useEmailEditorStore();
   const dragRef = useRef<HTMLDivElement>(null);
 
   // Gestion du drop sur le canvas
@@ -55,7 +55,7 @@ export const useDragDrop = () => {
 
 // Hook pour rendre les éléments draggables
 export const useDraggableElement = (elementId: string) => {
-  const { selectElement } = useEmailEditor();
+  const { selectElement } = useEmailEditorStore();
 
   const handleDragStart = useCallback((e: React.DragEvent) => {
     e.dataTransfer.setData('elementId', elementId);
@@ -89,7 +89,7 @@ export const usePaletteElement = (elementType: ElementType) => {
 
 // Hook pour la sélection par clic
 export const useElementSelection = (elementId: string) => {
-  const { selectElement, selectedElement } = useEmailEditor();
+  const { selectElement, selectedElement } = useEmailEditorStore();
 
   const handleClick = useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
@@ -106,7 +106,7 @@ export const useElementSelection = (elementId: string) => {
 
 // Hook pour le redimensionnement des éléments
 export const useElementResize = (elementId: string) => {
-  const { updateElement } = useEmailEditor();
+  const { updateElement } = useEmailEditorStore();
   const isResizing = useRef(false);
   const startPos = useRef({ x: 0, y: 0 });
   const startSize = useRef({ width: 0, height: 0 });

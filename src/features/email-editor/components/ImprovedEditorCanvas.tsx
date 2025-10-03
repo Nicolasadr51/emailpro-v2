@@ -1,5 +1,5 @@
 import React, { useMemo, useState, useCallback } from 'react';
-import { useEmailEditor } from '../hooks/useEmailEditor';
+import { useEmailEditorStore';
 import { useDragDrop } from '../hooks/useDragDrop';
 import { DraggableElement } from './DraggableElement';
 import { EditorElement } from '../types/editor.types';
@@ -27,7 +27,7 @@ export const ImprovedEditorCanvas: React.FC<EditorCanvasProps> = ({
   viewMode = 'desktop',
   onViewModeChange
 }) => {
-  const { elements, selectedElement, template, zoom, setZoom } = useEmailEditor();
+  const { elements, selectedElement, template, zoom, setZoom } = useEmailEditorStore();
   const { dropRef, dropHandlers, isDragOver, draggedItem } = useDragDrop();
   const [showGrid, setShowGrid] = useState(true);
   const [previewMode, setPreviewMode] = useState(false);

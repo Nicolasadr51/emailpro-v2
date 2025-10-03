@@ -393,10 +393,10 @@ export const EmailEditorProvider: React.FC<{ children: React.ReactNode }> = ({ c
 };
 
 // Hook pour utiliser le contexte
-export const useEmailEditor = (): EmailEditorContextType => {
+export const useEmailEditorStore = (): EmailEditorContextType => {
   const context = useContext(EmailEditorContext);
   if (context === undefined) {
-    throw new Error('useEmailEditor must be used within an EmailEditorProvider');
+    throw new Error('useEmailEditorStore must be used within an EmailEditorProvider');
   }
   return context;
 };

@@ -3,7 +3,7 @@
 
 import React from 'react';
 import { EditorElement, EmailTemplate } from '../types/editor.types';
-import { useEmailEditor } from '../hooks/useEmailEditor';
+import { useEmailEditorStore';
 import { SettingsIcon, PaletteIcon, LayoutIcon } from 'lucide-react';
 
 interface PropertiesPanelProps {
@@ -17,7 +17,7 @@ export const PropertiesPanel: React.FC<PropertiesPanelProps> = ({
   template,
   className = '',
 }) => {
-  const { updateElement } = useEmailEditor();
+  const { updateElement } = useEmailEditorStore();
 
   const handleStyleChange = (property: string, value: string) => {
     if (!selectedElement) return;

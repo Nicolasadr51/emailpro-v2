@@ -3,7 +3,7 @@
 
 import React, { useEffect, useState, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useEmailEditor } from '../hooks/useEmailEditor';
+import { useEmailEditorStore';
 import { EditorCanvas } from './EditorCanvas';
 import { NewSidebar } from './NewSidebar';
 import { PropertiesPanel } from './PropertiesPanel';
@@ -45,7 +45,7 @@ export const EmailEditor: React.FC<EmailEditorProps> = ({ className = '' }) => {
     setZoom,
     history,
     historyIndex,
-  } = useEmailEditor();
+  } = useEmailEditorStore();
 
   const loadTemplate = useCallback(async (id: string) => {
     setIsLoading(true);

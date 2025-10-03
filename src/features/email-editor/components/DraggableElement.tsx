@@ -4,7 +4,7 @@
 import React, { useState } from 'react';
 import { EditorElement } from '../types/editor.types';
 import { useDraggableElement, useElementSelection, useElementResize } from '../hooks/useDragDrop';
-import { useEmailEditor } from '../hooks/useEmailEditor';
+import { useEmailEditorStore';
 import { TextBlock } from './elements/TextBlock';
 import { ImageBlock } from './elements/ImageBlock';
 import { ButtonBlock } from './elements/ButtonBlock';
@@ -20,7 +20,7 @@ export const DraggableElement: React.FC<DraggableElementProps> = ({
   isSelected,
 }) => {
   const [isHovered, setIsHovered] = useState(false);
-  const { deleteElement, duplicateElement } = useEmailEditor();
+  const { deleteElement, duplicateElement } = useEmailEditorStore();
   const draggableProps = useDraggableElement(element.id);
   const { onClick } = useElementSelection(element.id);
   const { handleResizeStart } = useElementResize(element.id);
