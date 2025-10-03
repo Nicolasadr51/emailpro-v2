@@ -26,6 +26,46 @@ export const DraggableElement: React.FC<DraggableElementProps> = ({
   const { onClick } = useElementSelection(element.id);
   const { handleResizeStart } = useElementResize(element.id);
 
+  // Fonction pour convertir BlockStyles vers styles CSS compatibles
+  const convertBlockStylesToCss = (styles: any) => {
+    const cssStyles: any = {};
+    
+    if (styles.backgroundColor) {
+      cssStyles.backgroundColor = styles.backgroundColor;
+    }
+    
+    if (styles.padding) {
+      if (typeof styles.padding === 'object') {
+        cssStyles.padding = `${styles.padding.top}px ${styles.padding.right}px ${styles.padding.bottom}px ${styles.padding.left}px`;
+      } else {
+        cssStyles.padding = styles.padding;
+      }
+    }
+    
+    if (styles.margin) {
+      if (typeof styles.margin === 'object') {
+        cssStyles.margin = `${styles.margin.top}px ${styles.margin.right}px ${styles.margin.bottom}px ${styles.margin.left}px`;
+      } else {
+        cssStyles.margin = styles.margin;
+      }
+    }
+    
+    if (styles.border) {
+      if (typeof styles.border === 'object') {
+        cssStyles.border = `${styles.border.width}px ${styles.border.style} ${styles.border.color}`;
+        cssStyles.borderRadius = `${styles.border.radius}px`;
+      } else {
+        cssStyles.border = styles.border;
+      }
+    }
+    
+    if (styles.textAlign) cssStyles.textAlign = styles.textAlign;
+    if (styles.width) cssStyles.width = styles.width;
+    if (styles.height) cssStyles.height = styles.height;
+    
+    return cssStyles;
+  };
+
   const elementStyle = {
     position: 'absolute' as const,
     left: element.position.x,
@@ -34,7 +74,7 @@ export const DraggableElement: React.FC<DraggableElementProps> = ({
     height: element.position.height || 'auto',
     cursor: 'move',
     zIndex: isSelected ? 1000 : 1,
-    ...element.styles,
+    ...convertBlockStylesToCss(element.styles || {}),
   };
 
   const renderElement = () => {
