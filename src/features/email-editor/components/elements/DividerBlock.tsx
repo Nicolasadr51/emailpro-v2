@@ -2,22 +2,21 @@
 // Architecture définie par Claude 4.5 Sonnet
 
 import React, { useState } from 'react';
-import { EditorElement, DividerElementContent } from '../../types/editor.types';
+import { EmailBlock, DividerBlockContent } from '../../../../types/emailEditor';
 import { useEmailEditorStore } from '../../../../contexts/EmailEditorContext';
 import { MinusIcon } from 'lucide-react';
 
 interface DividerBlockProps {
-  element: EditorElement;
+  element: EmailBlock;
 }
 
 export const DividerBlock: React.FC<DividerBlockProps> = ({ element }) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [dividerData, setDividerData] = useState<DividerElementContent>(() => {
-    try {
-      return JSON.parse(element.content);
-    } catch {
-      return { thickness: 1, style: 'solid' };
+  const [dividerData, setDividerData] = useState<DividerBlockContent>(() => {
+    if (element.type === 'divider') {
+      return element.content;
     }
+    return { height: 1, color: '#cccccc', style: 'solid' };
   });
   const { updateElement, selectedElement } = useEmailEditorStore();
   const isSelected = selectedElement?.id === element.id;

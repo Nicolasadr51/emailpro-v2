@@ -2,22 +2,21 @@
 // Architecture définie par Claude 4.5 Sonnet
 
 import React, { useState } from 'react';
-import { EditorElement, ImageElementContent } from '../../types/editor.types';
+import { EmailBlock, ImageBlockContent } from '../../../../types/emailEditor';
 import { useEmailEditorStore } from '../../../../contexts/EmailEditorContext';
 import { ImageIcon, LinkIcon, UploadIcon } from 'lucide-react';
 
 interface ImageBlockProps {
-  element: EditorElement;
+  element: EmailBlock;
 }
 
 export const ImageBlock: React.FC<ImageBlockProps> = ({ element }) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [imageData, setImageData] = useState<ImageElementContent>(() => {
-    try {
-      return JSON.parse(element.content);
-    } catch {
-      return { src: '', alt: '' };
+  const [imageData, setImageData] = useState<ImageBlockContent>(() => {
+    if (element.type === 'image') {
+      return element.content;
     }
+    return { src: '', alt: '' };
   });
   const [isLoading, setIsLoading] = useState(false);
   const { updateElement, selectedElement } = useEmailEditorStore();

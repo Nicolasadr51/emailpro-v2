@@ -2,22 +2,35 @@
 // Architecture définie par Claude 4.5 Sonnet
 
 import React, { useState } from 'react';
-import { EditorElement, ButtonElementContent } from '../../types/editor.types';
+import { EmailBlock, ButtonBlockContent } from '../../../../types/emailEditor';
 import { useEmailEditorStore } from '../../../../contexts/EmailEditorContext';
 import { ExternalLinkIcon } from 'lucide-react';
 
 interface ButtonBlockProps {
-  element: EditorElement;
+  element: EmailBlock;
 }
 
 export const ButtonBlock: React.FC<ButtonBlockProps> = ({ element }) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [buttonData, setButtonData] = useState<ButtonElementContent>(() => {
-    try {
-      return JSON.parse(element.content);
-    } catch {
-      return { text: 'Cliquez ici', link: '#', target: '_self' };
+  const [buttonData, setButtonData] = useState<ButtonBlockContent>(() => {
+    if (element.type === 'button') {
+      return element.content;
     }
+    return { 
+      text: 'Cliquez ici', 
+      link: '#', 
+      linkTarget: '_self',
+      backgroundColor: '#007bff',
+      color: '#ffffff',
+      fontSize: 16,
+      fontFamily: 'Arial',
+      fontWeight: 'normal',
+      paddingVertical: 12,
+      paddingHorizontal: 24,
+      borderRadius: 4,
+      borderWidth: 0,
+      borderColor: 'transparent'
+    };
   });
   const { updateElement, selectedElement } = useEmailEditorStore();
   const isSelected = selectedElement?.id === element.id;
