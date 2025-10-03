@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useReducer, useCallback } from 'react';
+import React, { createContext, useContext, useReducer, useCallback, useMemo } from 'react';
 import {
   EmailTemplate,
   EmailBlock,
@@ -408,9 +408,16 @@ export const EmailEditorProvider: React.FC<{ children: React.ReactNode }> = ({ c
     }, []),
   };
 
+  // Propriété calculée pour selectedBlock
+  const selectedBlock = useMemo(() => {
+    if (!state.selectedBlockId) return null;
+    return state.template.blocks.find(block => block.id === state.selectedBlockId) || null;
+  }, [state.selectedBlockId, state.template.blocks]);
+
   const contextValue: EmailEditorContextType = {
     state,
     actions,
+    selectedBlock,
   };
 
   return (

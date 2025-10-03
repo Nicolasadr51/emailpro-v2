@@ -294,6 +294,7 @@ export interface EmailEditorActions {
 export interface EmailEditorContextType {
   state: EmailEditorState;
   actions: EmailEditorActions;
+  selectedBlock: EmailBlock | null;
 }
 
 // Props pour les composants de blocs

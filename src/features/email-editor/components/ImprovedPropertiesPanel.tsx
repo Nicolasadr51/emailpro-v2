@@ -90,7 +90,7 @@ export const ImprovedPropertiesPanel: React.FC<PropertiesPanelProps> = ({
 
   const handlePropertyChange = (property: string, value: any) => {
     if (selectedBlock && onElementUpdate) {
-      onElementUpdate(selectedBlock.id, { [property]: value });
+      onElementUpdate(selectedBlockId, { [property]: value });
     }
   };
 
@@ -668,7 +668,7 @@ export const ImprovedPropertiesPanel: React.FC<PropertiesPanelProps> = ({
           
           <div style={{ display: 'flex', gap: designTokens.spacing.xs }}>
             <button
-              onClick={() => onElementDuplicate?.(selectedBlock.id)}
+              onClick={() => onElementDuplicate?.(selectedBlockId)}
               style={{
                 padding: designTokens.spacing.xs,
                 border: `1px solid ${designTokens.colors.semantic.border}`,
@@ -685,7 +685,7 @@ export const ImprovedPropertiesPanel: React.FC<PropertiesPanelProps> = ({
             </button>
             
             <button
-              onClick={() => onElementDelete?.(selectedBlock.id)}
+              onClick={() => onElementDelete?.(selectedBlockId)}
               style={{
                 padding: designTokens.spacing.xs,
                 border: `1px solid ${designTokens.colors.semantic.border}`,
@@ -729,7 +729,7 @@ export const ImprovedPropertiesPanel: React.FC<PropertiesPanelProps> = ({
             fontSize: designTokens.typography.sizes.xs,
             color: designTokens.colors.semantic.text.secondary,
           }}>
-            #{selectedBlock.id.slice(-6)}
+            #{selectedBlockId.slice(-6)}
           </span>
         </div>
       </div>

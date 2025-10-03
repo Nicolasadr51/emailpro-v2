@@ -23,7 +23,7 @@ export const PropertiesPanel: React.FC<PropertiesPanelProps> = ({
 
   const handleStyleChange = (property: string, value: string) => {
     if (!selectedBlock) return;
-    onUpdate(selectedBlock.id, {
+    onUpdate(selectedBlockId, {
       styles: {
         ...selectedBlock.styles,
         [property]: value,
@@ -33,7 +33,7 @@ export const PropertiesPanel: React.FC<PropertiesPanelProps> = ({
 
   const handlePositionChange = (property: 'x' | 'y', value: number) => {
     if (!selectedBlock) return;
-    onUpdate(selectedBlock.id, {
+    onUpdate(selectedBlockId, {
       position: {
         ...selectedBlock.position,
         [property]: value,
@@ -86,7 +86,7 @@ export const PropertiesPanel: React.FC<PropertiesPanelProps> = ({
               Élément {selectedBlock.type}
             </h4>
             <div style={{ fontSize: '12px', color: '#666' }}>
-              ID: {selectedBlock.id.slice(-8)}
+              ID: {selectedBlockId.slice(-8)}
             </div>
           </div>
 

@@ -21,7 +21,7 @@ export const EditorCanvas: React.FC<EditorCanvasProps> = ({
   // Utiliser les données du contexte avec vérifications de sécurité
   const template = state.template;
   const elements = template?.blocks || [];
-  const selectedBlock = null; // TODO: Implémenter la sélection d'élément dans le contexte
+  const selectedBlockId = state.selectedBlockId;
   const zoom = 1; // Placeholder - le zoom n'est pas encore implémenté dans le contexte
   const { dropRef, dropHandlers } = useDragDrop();
 
@@ -76,7 +76,7 @@ export const EditorCanvas: React.FC<EditorCanvasProps> = ({
           <DraggableElement
             key={element.id}
             element={element}
-            isSelected={selectedBlock?.id === element.id}
+            isSelected={selectedBlockId === element.id}
           />
         ))}
 
