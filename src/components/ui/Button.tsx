@@ -61,7 +61,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     'aria-describedby': ariaDescribedBy,
     ...props 
   }, ref) => {
-    const Comp = asChild ? Slot : 'BUTTON';
+    const Comp = asChild ? Slot : 'button';
     
     // Memoization du callback onClick
     const handleClick = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
@@ -80,7 +80,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       'aria-describedby': ariaDescribedBy,
       'aria-disabled': isDisabled,
       'aria-busy': loading,
-      role: asChild ? undefined : 'BUTTON',
+      role: asChild ? undefined : 'button',
       tabIndex: isDisabled ? -1 : 0
     };
     
