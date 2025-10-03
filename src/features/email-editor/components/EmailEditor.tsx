@@ -1,7 +1,7 @@
 // Composant principal de l'éditeur d'emails
 // Architecture définie par Claude 4.5 Sonnet
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEmailEditor } from '../hooks/useEmailEditor';
 import { EditorCanvas } from './EditorCanvas';
@@ -41,16 +41,7 @@ export const EmailEditor: React.FC<EmailEditorProps> = ({ className = '' }) => {
     historyIndex,
   } = useEmailEditor();
 
-  // Chargement du template
-  useEffect(() => {
-    if (templateId && templateId !== 'new') {
-      loadTemplate(templateId);
-    } else if (templateId === 'new') {
-      createNewTemplate();
-    }
-  }, [templateId]);
-
-  const loadTemplate = async (id: string) => {
+  const loadTemplate = useCallback(async (id: string) => {
     setIsLoading(true);
     try {
       const loadedTemplate = await emailEditorService.getTemplate(id);
@@ -59,13 +50,28 @@ export const EmailEditor: React.FC<EmailEditorProps> = ({ className = '' }) => {
     } catch (error) {
       console.error('Erreur lors du chargement du template:', error);
       // Créer un nouveau template en cas d'erreur
-      createNewTemplate();
+      const newTemplate: EmailTemplate = {
+        id: `template_${Date.now()}`,
+        name: 'Nouveau template',
+        description: '',
+        elements: [],
+        layout: {
+          width: 600,
+          height: 800,
+          backgroundColor: '#ffffff',
+        },
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        isPublic: false,
+      };
+      setTemplate(newTemplate);
+      setShowTemplates(false);
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [setTemplate]);
 
-  const createNewTemplate = () => {
+  const createNewTemplate = useCallback(() => {
     const newTemplate: EmailTemplate = {
       id: `template_${Date.now()}`,
       name: 'Nouveau template',
@@ -82,9 +88,18 @@ export const EmailEditor: React.FC<EmailEditorProps> = ({ className = '' }) => {
     };
     setTemplate(newTemplate);
     setShowTemplates(false);
-  };
+  }, [setTemplate]);
 
-  const handleSave = async () => {
+  // Chargement du template
+  useEffect(() => {
+    if (templateId && templateId !== 'new') {
+      loadTemplate(templateId);
+    } else if (templateId === 'new') {
+      createNewTemplate();
+    }
+  }, [templateId, loadTemplate, createNewTemplate]);
+
+  const handleSave = useCallback(async () => {
     if (!template) return;
 
     setIsSaving(true);
@@ -113,7 +128,7 @@ export const EmailEditor: React.FC<EmailEditorProps> = ({ className = '' }) => {
     } finally {
       setIsSaving(false);
     }
-  };
+  }, [template, elements, navigate, setTemplate]);
 
   const handlePreview = async () => {
     if (!template) return;
@@ -170,9 +185,9 @@ export const EmailEditor: React.FC<EmailEditorProps> = ({ className = '' }) => {
       }
     };
 
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [zoom, undo, redo, handleSave]);
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [zoom, undo, redo, handleSave, setZoom]);
 
   if (isLoading) {
     return (

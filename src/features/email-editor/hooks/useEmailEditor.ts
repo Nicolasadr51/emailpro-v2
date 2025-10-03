@@ -3,7 +3,7 @@
 
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
-import { EditorStore, EditorElement, EmailTemplate, Position } from '../types/editor.types';
+import { EditorStore, EditorElement, Position } from '../types/editor.types';
 
 const generateId = () => `element_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
 

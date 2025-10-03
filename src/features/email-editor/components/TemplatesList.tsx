@@ -3,7 +3,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { EmailTemplate } from '../types/editor.types';
-import { emailEditorService, systemTemplateService } from '../services/emailEditorService';
+
 import { Button } from '../../../components/ui/Button';
 import {
   PlusIcon,

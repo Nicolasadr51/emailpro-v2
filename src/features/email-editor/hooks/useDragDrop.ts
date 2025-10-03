@@ -2,12 +2,12 @@
 // Architecture définie par Claude 4.5 Sonnet
 
 import { useRef, useCallback } from 'react';
-import { DragItem, ElementType, Position } from '../types/editor.types';
+import { ElementType, Position } from '../types/editor.types';
 import { useEmailEditor, useElementCreator } from './useEmailEditor';
 
 export const useDragDrop = () => {
   const { createElement } = useElementCreator();
-  const { moveElement, selectElement } = useEmailEditor();
+  const { moveElement } = useEmailEditor();
   const dragRef = useRef<HTMLDivElement>(null);
 
   // Gestion du drop sur le canvas

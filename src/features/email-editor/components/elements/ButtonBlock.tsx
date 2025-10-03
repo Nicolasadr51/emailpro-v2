@@ -4,7 +4,7 @@
 import React, { useState } from 'react';
 import { EditorElement, ButtonElementContent } from '../../types/editor.types';
 import { useEmailEditor } from '../../hooks/useEmailEditor';
-import { MousePointerClickIcon, ExternalLinkIcon } from 'lucide-react';
+import { ExternalLinkIcon } from 'lucide-react';
 
 interface ButtonBlockProps {
   element: EditorElement;
