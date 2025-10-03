@@ -17,7 +17,7 @@ export const PropertiesPanel: React.FC<PropertiesPanelProps> = ({
   selectedBlockId,
   onUpdate,
   template,
-  className = 
+  className = ''
 }) => {
   const selectedBlock = template?.blocks.find(block => block.id === selectedBlockId);
 
