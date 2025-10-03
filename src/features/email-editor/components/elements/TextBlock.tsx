@@ -3,7 +3,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { EditorElement } from '../../types/editor.types';
-import { useEmailEditorStore } from '../hooks/useEmailEditor';
+import { useEmailEditorStore } from '../../hooks/useEmailEditor';
 
 interface TextBlockProps {
   element: EditorElement;

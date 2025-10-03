@@ -3,7 +3,7 @@
 
 import React, { useState } from 'react';
 import { EditorElement, ImageElementContent } from '../../types/editor.types';
-import { useEmailEditorStore } from '../hooks/useEmailEditor';
+import { useEmailEditorStore } from '../../hooks/useEmailEditor';
 import { ImageIcon, LinkIcon, UploadIcon } from 'lucide-react';
 
 interface ImageBlockProps {
