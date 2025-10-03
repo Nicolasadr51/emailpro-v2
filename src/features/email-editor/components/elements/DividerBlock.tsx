@@ -18,7 +18,7 @@ export const DividerBlock: React.FC<DividerBlockProps> = ({ element }) => {
     }
     return { height: 1, color: '#cccccc', style: 'solid' };
   });
-  const { updateBlock, selectedBlock } = useEmailEditorStore();
+  const { actions, selectedBlock } = useEmailEditorStore(); const { updateBlock } = actions;
   const isSelected = selectedBlock?.id === element.id;
 
   const handleDoubleClick = (e: React.MouseEvent) => {

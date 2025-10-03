@@ -32,7 +32,7 @@ export const ButtonBlock: React.FC<ButtonBlockProps> = ({ element }) => {
       borderColor: 'transparent'
     };
   });
-  const { updateBlock, selectedBlock } = useEmailEditorStore();
+  const { actions, selectedBlock } = useEmailEditorStore(); const { updateBlock } = actions;
   const isSelected = selectedBlock?.id === element.id;
 
   const handleDoubleClick = (e: React.MouseEvent) => {

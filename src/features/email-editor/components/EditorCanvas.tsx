@@ -15,7 +15,7 @@ export const EditorCanvas: React.FC<EditorCanvasProps> = ({
   viewMode = 'desktop' 
 }) => {
   console.log("EditorCanvas: Attempting to use useEmailEditorStore");
-  const { state } = useEmailEditorStore();
+  const { state, selectedBlock } = useEmailEditorStore();
   console.log("EditorCanvas: Successfully got context", { state });
   
   // Utiliser les données du contexte avec vérifications de sécurité

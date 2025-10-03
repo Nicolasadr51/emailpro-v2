@@ -27,7 +27,7 @@ export const ImprovedEditorCanvas: React.FC<EditorCanvasProps> = ({
   viewMode = 'desktop',
   onViewModeChange
 }) => {
-  const { elements, selectedBlock, template, zoom, setZoom } = useEmailEditorStore();
+  const { state, selectedBlock } = useEmailEditorStore(); const elements = state.template.blocks; const template = state.template;
   const { dropRef, dropHandlers, isDragOver, draggedItem } = useDragDrop();
   const [showGrid, setShowGrid] = useState(true);
   const [previewMode, setPreviewMode] = useState(false);

@@ -19,7 +19,7 @@ export const ImageBlock: React.FC<ImageBlockProps> = ({ element }) => {
     return { src: '', alt: '' };
   });
   const [isLoading, setIsLoading] = useState(false);
-  const { updateBlock, selectedBlock } = useEmailEditorStore();
+  const { actions, selectedBlock } = useEmailEditorStore(); const { updateBlock } = actions;
   const isSelected = selectedBlock?.id === element.id;
 
   const handleDoubleClick = (e: React.MouseEvent) => {
