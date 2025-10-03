@@ -32,8 +32,8 @@ export const ButtonBlock: React.FC<ButtonBlockProps> = ({ element }) => {
       borderColor: 'transparent'
     };
   });
-  const { updateElement, selectedElement } = useEmailEditorStore();
-  const isSelected = selectedElement?.id === element.id;
+  const { updateBlock, selectedBlock } = useEmailEditorStore();
+  const isSelected = selectedBlock?.id === element.id;
 
   const handleDoubleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -43,19 +43,19 @@ export const ButtonBlock: React.FC<ButtonBlockProps> = ({ element }) => {
   const handleTextChange = (text: string) => {
     const newButtonData = { ...buttonData, text };
     setButtonData(newButtonData);
-    updateElement(element.id, { content: JSON.stringify(newButtonData) });
+    updateBlock(element.id, { content: JSON.stringify(newButtonData) });
   };
 
   const handleLinkChange = (link: string) => {
     const newButtonData = { ...buttonData, link };
     setButtonData(newButtonData);
-    updateElement(element.id, { content: JSON.stringify(newButtonData) });
+    updateBlock(element.id, { content: JSON.stringify(newButtonData) });
   };
 
   const handleTargetChange = (target: '_self' | '_blank') => {
     const newButtonData = { ...buttonData, target };
     setButtonData(newButtonData);
-    updateElement(element.id, { content: JSON.stringify(newButtonData) });
+    updateBlock(element.id, { content: JSON.stringify(newButtonData) });
   };
 
   const containerStyle = {

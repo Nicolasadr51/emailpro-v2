@@ -2,7 +2,7 @@ import React, { useMemo, useState, useCallback } from 'react';
 import { useEmailEditorStore } from '../../../contexts/EmailEditorContext';
 import { useDragDrop } from '../hooks/useDragDrop';
 import { DraggableElement } from './DraggableElement';
-import { EditorElement } from '../types/editor.types';
+import { EmailBlock } from '../../../types/emailEditor';
 import { designTokens } from '../../../design-system/tokens';
 import { 
   Monitor, 
@@ -27,7 +27,7 @@ export const ImprovedEditorCanvas: React.FC<EditorCanvasProps> = ({
   viewMode = 'desktop',
   onViewModeChange
 }) => {
-  const { elements, selectedElement, template, zoom, setZoom } = useEmailEditorStore();
+  const { elements, selectedBlock, template, zoom, setZoom } = useEmailEditorStore();
   const { dropRef, dropHandlers, isDragOver, draggedItem } = useDragDrop();
   const [showGrid, setShowGrid] = useState(true);
   const [previewMode, setPreviewMode] = useState(false);
@@ -319,11 +319,11 @@ export const ImprovedEditorCanvas: React.FC<EditorCanvasProps> = ({
           )}
 
           {/* Template elements */}
-          {elements.map((element: EditorElement) => (
+          {elements.map((element: EmailBlock) => (
             <DraggableElement
               key={element.id}
               element={element}
-              isSelected={selectedElement?.id === element.id && !previewMode}
+              isSelected={selectedBlock?.id === element.id && !previewMode}
               previewMode={previewMode}
             />
           ))}
@@ -380,7 +380,7 @@ export const ImprovedEditorCanvas: React.FC<EditorCanvasProps> = ({
       }}>
         <div>
           {elements.length} élément{elements.length !== 1 ? 's' : ''} • 
-          {selectedElement ? ` Sélectionné: ${selectedElement.type}` : ' Aucune sélection'}
+          {selectedBlock ? ` Sélectionné: ${selectedBlock.type}` : ' Aucune sélection'}
         </div>
         <div>
           Mode: {viewMode} • Zoom: {Math.round(zoom * 100)}%

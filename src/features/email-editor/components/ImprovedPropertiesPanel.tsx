@@ -15,11 +15,11 @@ import {
   MoreHorizontal
 } from 'lucide-react';
 import { designTokens } from '../../../design-system/tokens';
-import { EditorElement } from '../types/editor.types';
+import { EmailBlock } from '../../../types/emailEditor';
 
 interface PropertiesPanelProps {
-  selectedElement?: EditorElement;
-  onElementUpdate?: (elementId: string, updates: Partial<EditorElement>) => void;
+  selectedBlock?: EmailBlock;
+  onElementUpdate?: (elementId: string, updates: Partial<EmailBlock>) => void;
   onElementDelete?: (elementId: string) => void;
   onElementDuplicate?: (elementId: string) => void;
   className?: string;
@@ -66,7 +66,7 @@ const propertySections: PropertySection[] = [
 ];
 
 export const ImprovedPropertiesPanel: React.FC<PropertiesPanelProps> = ({
-  selectedElement,
+  selectedBlock,
   onElementUpdate,
   onElementDelete,
   onElementDuplicate,
@@ -89,8 +89,8 @@ export const ImprovedPropertiesPanel: React.FC<PropertiesPanelProps> = ({
   };
 
   const handlePropertyChange = (property: string, value: any) => {
-    if (selectedElement && onElementUpdate) {
-      onElementUpdate(selectedElement.id, { [property]: value });
+    if (selectedBlock && onElementUpdate) {
+      onElementUpdate(selectedBlock.id, { [property]: value });
     }
   };
 
@@ -292,16 +292,16 @@ export const ImprovedPropertiesPanel: React.FC<PropertiesPanelProps> = ({
   );
 
   const renderContentSection = () => {
-    if (!selectedElement) return null;
+    if (!selectedBlock) return null;
 
-    switch (selectedElement.type) {
+    switch (selectedBlock.type) {
       case 'text':
         return (
           <>
             {renderTextarea(
               'Contenu du texte',
-              selectedElement.content?.text || '',
-              (value) => handlePropertyChange('content', { ...selectedElement.content, text: value }),
+              selectedBlock.content?.text || '',
+              (value) => handlePropertyChange('content', { ...selectedBlock.content, text: value }),
               'Saisissez votre texte ici...'
             )}
           </>
@@ -312,15 +312,15 @@ export const ImprovedPropertiesPanel: React.FC<PropertiesPanelProps> = ({
           <>
             {renderInput(
               'Titre',
-              selectedElement.content?.text || '',
-              (value) => handlePropertyChange('content', { ...selectedElement.content, text: value }),
+              selectedBlock.content?.text || '',
+              (value) => handlePropertyChange('content', { ...selectedBlock.content, text: value }),
               'text',
               'Votre titre ici...'
             )}
             {renderSelect(
               'Niveau de titre',
-              selectedElement.content?.level || 'h2',
-              (value) => handlePropertyChange('content', { ...selectedElement.content, level: value }),
+              selectedBlock.content?.level || 'h2',
+              (value) => handlePropertyChange('content', { ...selectedBlock.content, level: value }),
               [
                 { value: 'h1', label: 'Titre 1 (H1)' },
                 { value: 'h2', label: 'Titre 2 (H2)' },
@@ -336,15 +336,15 @@ export const ImprovedPropertiesPanel: React.FC<PropertiesPanelProps> = ({
           <>
             {renderInput(
               'Texte du bouton',
-              selectedElement.content?.text || '',
-              (value) => handlePropertyChange('content', { ...selectedElement.content, text: value }),
+              selectedBlock.content?.text || '',
+              (value) => handlePropertyChange('content', { ...selectedBlock.content, text: value }),
               'text',
               'Cliquez ici'
             )}
             {renderInput(
               'Lien (URL)',
-              selectedElement.content?.href || '',
-              (value) => handlePropertyChange('content', { ...selectedElement.content, href: value }),
+              selectedBlock.content?.href || '',
+              (value) => handlePropertyChange('content', { ...selectedBlock.content, href: value }),
               'url',
               'https://example.com'
             )}
@@ -356,22 +356,22 @@ export const ImprovedPropertiesPanel: React.FC<PropertiesPanelProps> = ({
           <>
             {renderInput(
               'URL de l\'image',
-              selectedElement.content?.src || '',
-              (value) => handlePropertyChange('content', { ...selectedElement.content, src: value }),
+              selectedBlock.content?.src || '',
+              (value) => handlePropertyChange('content', { ...selectedBlock.content, src: value }),
               'url',
               'https://example.com/image.jpg'
             )}
             {renderInput(
               'Texte alternatif',
-              selectedElement.content?.alt || '',
-              (value) => handlePropertyChange('content', { ...selectedElement.content, alt: value }),
+              selectedBlock.content?.alt || '',
+              (value) => handlePropertyChange('content', { ...selectedBlock.content, alt: value }),
               'text',
               'Description de l\'image'
             )}
             {renderInput(
               'Lien (optionnel)',
-              selectedElement.content?.href || '',
-              (value) => handlePropertyChange('content', { ...selectedElement.content, href: value }),
+              selectedBlock.content?.href || '',
+              (value) => handlePropertyChange('content', { ...selectedBlock.content, href: value }),
               'url',
               'https://example.com'
             )}
@@ -395,26 +395,26 @@ export const ImprovedPropertiesPanel: React.FC<PropertiesPanelProps> = ({
   };
 
   const renderStyleSection = () => {
-    if (!selectedElement) return null;
+    if (!selectedBlock) return null;
 
     return (
       <>
         {renderInput(
           'Couleur du texte',
-          selectedElement.style?.color || '#000000',
-          (value) => handlePropertyChange('style', { ...selectedElement.style, color: value }),
+          selectedBlock.style?.color || '#000000',
+          (value) => handlePropertyChange('style', { ...selectedBlock.style, color: value }),
           'color'
         )}
         {renderInput(
           'Couleur de fond',
-          selectedElement.style?.backgroundColor || '#ffffff',
-          (value) => handlePropertyChange('style', { ...selectedElement.style, backgroundColor: value }),
+          selectedBlock.style?.backgroundColor || '#ffffff',
+          (value) => handlePropertyChange('style', { ...selectedBlock.style, backgroundColor: value }),
           'color'
         )}
         {renderSelect(
           'Taille de police',
-          selectedElement.style?.fontSize || '16px',
-          (value) => handlePropertyChange('style', { ...selectedElement.style, fontSize: value }),
+          selectedBlock.style?.fontSize || '16px',
+          (value) => handlePropertyChange('style', { ...selectedBlock.style, fontSize: value }),
           [
             { value: '12px', label: 'Très petit (12px)' },
             { value: '14px', label: 'Petit (14px)' },
@@ -426,8 +426,8 @@ export const ImprovedPropertiesPanel: React.FC<PropertiesPanelProps> = ({
         )}
         {renderSelect(
           'Alignement du texte',
-          selectedElement.style?.textAlign || 'left',
-          (value) => handlePropertyChange('style', { ...selectedElement.style, textAlign: value }),
+          selectedBlock.style?.textAlign || 'left',
+          (value) => handlePropertyChange('style', { ...selectedBlock.style, textAlign: value }),
           [
             { value: 'left', label: 'Gauche' },
             { value: 'center', label: 'Centre' },
@@ -437,17 +437,17 @@ export const ImprovedPropertiesPanel: React.FC<PropertiesPanelProps> = ({
         )}
         {renderToggle(
           'Texte en gras',
-          selectedElement.style?.fontWeight === 'bold',
+          selectedBlock.style?.fontWeight === 'bold',
           (value) => handlePropertyChange('style', { 
-            ...selectedElement.style, 
+            ...selectedBlock.style, 
             fontWeight: value ? 'bold' : 'normal' 
           })
         )}
         {renderToggle(
           'Texte en italique',
-          selectedElement.style?.fontStyle === 'italic',
+          selectedBlock.style?.fontStyle === 'italic',
           (value) => handlePropertyChange('style', { 
-            ...selectedElement.style, 
+            ...selectedBlock.style, 
             fontStyle: value ? 'italic' : 'normal' 
           })
         )}
@@ -456,28 +456,28 @@ export const ImprovedPropertiesPanel: React.FC<PropertiesPanelProps> = ({
   };
 
   const renderLayoutSection = () => {
-    if (!selectedElement) return null;
+    if (!selectedBlock) return null;
 
     return (
       <>
         {renderInput(
           'Largeur',
-          selectedElement.layout?.width || 'auto',
-          (value) => handlePropertyChange('layout', { ...selectedElement.layout, width: value }),
+          selectedBlock.layout?.width || 'auto',
+          (value) => handlePropertyChange('layout', { ...selectedBlock.layout, width: value }),
           'text',
           'auto, 100%, 300px...'
         )}
         {renderInput(
           'Hauteur',
-          selectedElement.layout?.height || 'auto',
-          (value) => handlePropertyChange('layout', { ...selectedElement.layout, height: value }),
+          selectedBlock.layout?.height || 'auto',
+          (value) => handlePropertyChange('layout', { ...selectedBlock.layout, height: value }),
           'text',
           'auto, 200px...'
         )}
         {renderSelect(
           'Position',
-          selectedElement.layout?.position || 'relative',
-          (value) => handlePropertyChange('layout', { ...selectedElement.layout, position: value }),
+          selectedBlock.layout?.position || 'relative',
+          (value) => handlePropertyChange('layout', { ...selectedBlock.layout, position: value }),
           [
             { value: 'relative', label: 'Relative' },
             { value: 'absolute', label: 'Absolue' },
@@ -489,21 +489,21 @@ export const ImprovedPropertiesPanel: React.FC<PropertiesPanelProps> = ({
   };
 
   const renderSpacingSection = () => {
-    if (!selectedElement) return null;
+    if (!selectedBlock) return null;
 
     return (
       <>
         {renderInput(
           'Marge extérieure (margin)',
-          selectedElement.spacing?.margin || '0',
-          (value) => handlePropertyChange('spacing', { ...selectedElement.spacing, margin: value }),
+          selectedBlock.spacing?.margin || '0',
+          (value) => handlePropertyChange('spacing', { ...selectedBlock.spacing, margin: value }),
           'text',
           '10px, 10px 20px...'
         )}
         {renderInput(
           'Marge intérieure (padding)',
-          selectedElement.spacing?.padding || '0',
-          (value) => handlePropertyChange('spacing', { ...selectedElement.spacing, padding: value }),
+          selectedBlock.spacing?.padding || '0',
+          (value) => handlePropertyChange('spacing', { ...selectedBlock.spacing, padding: value }),
           'text',
           '10px, 10px 20px...'
         )}
@@ -512,26 +512,26 @@ export const ImprovedPropertiesPanel: React.FC<PropertiesPanelProps> = ({
   };
 
   const renderActionsSection = () => {
-    if (!selectedElement) return null;
+    if (!selectedBlock) return null;
 
     return (
       <>
         {renderToggle(
           'Visible',
-          selectedElement.visible !== false,
+          selectedBlock.visible !== false,
           (value) => handlePropertyChange('visible', value),
           'Afficher ou masquer cet élément'
         )}
         {renderInput(
           'ID personnalisé',
-          selectedElement.customId || '',
+          selectedBlock.customId || '',
           (value) => handlePropertyChange('customId', value),
           'text',
           'mon-element-unique'
         )}
         {renderInput(
           'Classes CSS',
-          selectedElement.cssClasses || '',
+          selectedBlock.cssClasses || '',
           (value) => handlePropertyChange('cssClasses', value),
           'text',
           'ma-classe autre-classe'
@@ -589,7 +589,7 @@ export const ImprovedPropertiesPanel: React.FC<PropertiesPanelProps> = ({
     );
   };
 
-  if (!selectedElement) {
+  if (!selectedBlock) {
     return (
       <div 
         className={className}
@@ -668,7 +668,7 @@ export const ImprovedPropertiesPanel: React.FC<PropertiesPanelProps> = ({
           
           <div style={{ display: 'flex', gap: designTokens.spacing.xs }}>
             <button
-              onClick={() => onElementDuplicate?.(selectedElement.id)}
+              onClick={() => onElementDuplicate?.(selectedBlock.id)}
               style={{
                 padding: designTokens.spacing.xs,
                 border: `1px solid ${designTokens.colors.semantic.border}`,
@@ -685,7 +685,7 @@ export const ImprovedPropertiesPanel: React.FC<PropertiesPanelProps> = ({
             </button>
             
             <button
-              onClick={() => onElementDelete?.(selectedElement.id)}
+              onClick={() => onElementDelete?.(selectedBlock.id)}
               style={{
                 padding: designTokens.spacing.xs,
                 border: `1px solid ${designTokens.colors.semantic.border}`,
@@ -716,20 +716,20 @@ export const ImprovedPropertiesPanel: React.FC<PropertiesPanelProps> = ({
             width: 8,
             height: 8,
             borderRadius: '50%',
-            backgroundColor: designTokens.colors.blocks[selectedElement.type as keyof typeof designTokens.colors.blocks] || designTokens.colors.semantic.text.secondary,
+            backgroundColor: designTokens.colors.blocks[selectedBlock.type as keyof typeof designTokens.colors.blocks] || designTokens.colors.semantic.text.secondary,
           }} />
           <span style={{
             fontSize: designTokens.typography.sizes.sm,
             fontWeight: designTokens.typography.weights.medium,
             color: designTokens.colors.semantic.text.primary,
           }}>
-            {selectedElement.type}
+            {selectedBlock.type}
           </span>
           <span style={{
             fontSize: designTokens.typography.sizes.xs,
             color: designTokens.colors.semantic.text.secondary,
           }}>
-            #{selectedElement.id.slice(-6)}
+            #{selectedBlock.id.slice(-6)}
           </span>
         </div>
       </div>

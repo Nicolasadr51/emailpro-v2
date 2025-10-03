@@ -2,7 +2,7 @@
 // Architecture définie par Claude 4.5 Sonnet
 
 import React, { useState, useEffect } from 'react';
-import { EmailTemplate } from '../types/editor.types';
+import { EmailTemplate } from '../../../types/emailEditor';
 
 import { Button } from '../../../components/ui/Button';
 import {

@@ -2,7 +2,7 @@
 // Architecture définie par Claude 4.5 Sonnet
 
 import { apiClient } from '../../../services/apiClient';
-import { EmailTemplate, EditorElement } from '../types/editor.types';
+import { EmailTemplate, EmailBlock } from '../../../types/emailEditor';
 import { CreateTemplateRequest, UpdateTemplateRequest, TemplateFilters, TemplateListResponse } from '../types/template.types';
 
 export const emailEditorService = {
@@ -66,13 +66,13 @@ export const emailEditorService = {
   },
 
   // Gestion des éléments
-  async updateElement(
+  async updateBlock(
     templateId: string,
     elementId: string,
-    updates: Partial<EditorElement>
-  ): Promise<EditorElement> {
+    updates: Partial<EmailBlock>
+  ): Promise<EmailBlock> {
     try {
-      const response = await apiClient.patch<EditorElement>(
+      const response = await apiClient.patch<EmailBlock>(
         `/api/templates/${templateId}/elements/${elementId}`,
         updates
       );
@@ -83,9 +83,9 @@ export const emailEditorService = {
     }
   },
 
-  async addElement(templateId: string, element: Omit<EditorElement, 'id'>): Promise<EditorElement> {
+  async addElement(templateId: string, element: Omit<EmailBlock, 'id'>): Promise<EmailBlock> {
     try {
-      const response = await apiClient.post<EditorElement>(
+      const response = await apiClient.post<EmailBlock>(
         `/api/templates/${templateId}/elements`,
         element
       );

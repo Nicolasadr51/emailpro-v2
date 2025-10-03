@@ -2,7 +2,7 @@
 // Architecture définie par Claude 4.5 Sonnet
 
 import React from 'react';
-import { EmailTemplate, EditorBlock } from '../types/editor.types';
+import { EmailTemplate, EditorBlock } from '../../../types/emailEditor';
 
 import { SettingsIcon, PaletteIcon, LayoutIcon } from 'lucide-react';
 

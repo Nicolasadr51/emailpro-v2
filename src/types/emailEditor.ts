@@ -195,12 +195,22 @@ export interface GlobalStyles {
   containerPadding: number;
 }
 
+// Layout du template
+export interface Layout {
+  width: number;
+  padding?: number;
+  background?: string;
+  maxWidth?: number;
+  alignment?: 'left' | 'center' | 'right';
+}
+
 // Template d'email complet
 export interface EmailTemplate {
   id: string;
   name: string;
   subject: string;
   preheader?: string;
+  layout: Layout;
   blocks: EmailBlock[];
   globalStyles: GlobalStyles;
   createdAt: string;
@@ -504,6 +514,13 @@ export const createDefaultTemplate = (): EmailTemplate => ({
   name: 'Nouveau Template',
   subject: 'Sujet de votre email',
   preheader: 'Aperçu de votre email...',
+  layout: {
+    width: 600,
+    padding: 20,
+    background: '#ffffff',
+    maxWidth: 800,
+    alignment: 'center',
+  },
   blocks: [],
   globalStyles: {
     backgroundColor: '#f4f4f4',

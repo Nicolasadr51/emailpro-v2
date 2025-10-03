@@ -13,7 +13,7 @@ import { StatusIndicator, SaveStatus } from './StatusIndicator';
 import { ViewModeToggle, ViewMode } from './ViewModeToggle';
 import { PredefinedLayouts } from './PredefinedLayouts';
 import { emailEditorService } from '../services/emailEditorService';
-import { EmailTemplate } from '../types/editor.types';
+import { EmailTemplate } from '../../../types/emailEditor';
 import { PageWrapper } from '../../../components/layout/PageWrapper';
 import { Button } from '../../../components/ui/Button';
 import { SaveIcon, EyeIcon, ArrowLeftIcon, SettingsIcon } from 'lucide-react';
@@ -342,7 +342,7 @@ export const EmailEditor: React.FC<EmailEditorProps> = ({ className = '' }) => {
         canRedo={state.historyIndex < state.history.length - 1}
         zoom={1}
         onZoomChange={() => {}}
-        selectedElement={null}
+        selectedBlock={null}
       />
 
       {/* Interface principale */}

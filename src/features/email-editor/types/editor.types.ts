@@ -1,13 +1,13 @@
 // Types pour l'éditeur d'emails avancé
 // Architecture définie par Claude 4.5 Sonnet
 
-export type ElementType = 'text' | 'heading' | 'image' | 'button' | 'divider' | 'social' | 'spacer' | 'layout' | 'template';
+export type BlockType = 'text' | 'heading' | 'image' | 'button' | 'divider' | 'social' | 'spacer' | 'layout' | 'template';
 
-export interface EditorElement {
+export interface EmailBlock {
   id: string;
-  type: ElementType;
+  type: BlockType;
   content: any; // Peut être string ou objet selon le type d'élément
-  styles?: ElementStyles;
+  styles?: BlockStyles;
   style?: any; // Pour compatibilité avec les nouveaux composants
   position: Position;
   size?: { width: number; height: number };
@@ -19,7 +19,7 @@ export interface EditorElement {
   spacing?: any;
 }
 
-export interface ElementStyles {
+export interface BlockStyles {
   fontSize?: string;
   fontWeight?: string;
   color?: string;
@@ -46,7 +46,7 @@ export interface EmailTemplate {
   id: string;
   name: string;
   description?: string;
-  elements: EditorElement[];
+  elements: EmailBlock[];
   layout: TemplateLayout;
   createdAt: Date;
   updatedAt: Date;
@@ -64,24 +64,24 @@ export interface TemplateLayout {
 
 export interface DragItem {
   type: string;
-  elementType?: ElementType;
-  element?: EditorElement;
+  elementType?: BlockType;
+  element?: EmailBlock;
 }
 
 export interface EditorState {
-  elements: EditorElement[];
-  selectedElement: EditorElement | null;
+  elements: EmailBlock[];
+  selectedBlock: EmailBlock | null;
   template: EmailTemplate | null;
   isLoading: boolean;
   isDragging: boolean;
   zoom: number;
-  history: EditorElement[][];
+  history: EmailBlock[][];
   historyIndex: number;
 }
 
 export interface EditorActions {
-  addElement: (element: Omit<EditorElement, 'id'>) => void;
-  updateElement: (id: string, updates: Partial<EditorElement>) => void;
+  addElement: (element: Omit<EmailBlock, 'id'>) => void;
+  updateBlock: (id: string, updates: Partial<EmailBlock>) => void;
   deleteElement: (id: string) => void;
   selectElement: (id: string | null) => void;
   moveElement: (id: string, position: Position) => void;
@@ -96,24 +96,24 @@ export interface EditorActions {
 export type EditorStore = EditorState & EditorActions;
 
 // Types pour les éléments spécifiques
-export interface TextElementContent {
+export interface TextBlockContent {
   text: string;
   isRichText: boolean;
 }
 
-export interface ImageElementContent {
+export interface ImageBlockContent {
   src: string;
   alt: string;
   link?: string;
 }
 
-export interface ButtonElementContent {
+export interface ButtonBlockContent {
   text: string;
   link: string;
   target?: '_blank' | '_self';
 }
 
-export interface DividerElementContent {
+export interface DividerBlockContent {
   thickness: number;
   style: 'solid' | 'dashed' | 'dotted';
 }

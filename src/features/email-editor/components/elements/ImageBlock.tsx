@@ -19,8 +19,8 @@ export const ImageBlock: React.FC<ImageBlockProps> = ({ element }) => {
     return { src: '', alt: '' };
   });
   const [isLoading, setIsLoading] = useState(false);
-  const { updateElement, selectedElement } = useEmailEditorStore();
-  const isSelected = selectedElement?.id === element.id;
+  const { updateBlock, selectedBlock } = useEmailEditorStore();
+  const isSelected = selectedBlock?.id === element.id;
 
   const handleDoubleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -42,7 +42,7 @@ export const ImageBlock: React.FC<ImageBlockProps> = ({ element }) => {
           alt: file.name,
         };
         setImageData(newImageData);
-        updateElement(element.id, { content: JSON.stringify(newImageData) });
+        updateBlock(element.id, { content: JSON.stringify(newImageData) });
         setIsLoading(false);
       };
       reader.readAsDataURL(file);
@@ -55,19 +55,19 @@ export const ImageBlock: React.FC<ImageBlockProps> = ({ element }) => {
   const handleUrlChange = (url: string) => {
     const newImageData = { ...imageData, src: url };
     setImageData(newImageData);
-    updateElement(element.id, { content: JSON.stringify(newImageData) });
+    updateBlock(element.id, { content: JSON.stringify(newImageData) });
   };
 
   const handleAltChange = (alt: string) => {
     const newImageData = { ...imageData, alt };
     setImageData(newImageData);
-    updateElement(element.id, { content: JSON.stringify(newImageData) });
+    updateBlock(element.id, { content: JSON.stringify(newImageData) });
   };
 
   const handleLinkChange = (link: string) => {
     const newImageData = { ...imageData, link };
     setImageData(newImageData);
-    updateElement(element.id, { content: JSON.stringify(newImageData) });
+    updateBlock(element.id, { content: JSON.stringify(newImageData) });
   };
 
   const containerStyle = {

@@ -2,7 +2,7 @@
 // Architecture définie par Claude 4.5 Sonnet
 
 import { useRef, useCallback } from 'react';
-import { ElementType, Position } from '../types/editor.types';
+import { BlockType, Position } from '../../../types/emailEditor';
 import { useEmailEditorStore } from '../../../contexts/EmailEditorContext';
 
 export const useDragDrop = () => {
@@ -15,7 +15,7 @@ export const useDragDrop = () => {
   const handleDrop = useCallback((e: React.DragEvent) => {
     e.preventDefault();
     
-    const elementType = e.dataTransfer.getData('elementType') as ElementType;
+    const elementType = e.dataTransfer.getData('elementType') as BlockType;
     const elementId = e.dataTransfer.getData('elementId');
     
     if (!dragRef.current) return;
@@ -76,7 +76,7 @@ export const useDraggableElement = (elementId: string) => {
 };
 
 // Hook pour les éléments de la palette
-export const usePaletteElement = (elementType: ElementType) => {
+export const usePaletteElement = (elementType: BlockType) => {
   const handleDragStart = useCallback((e: React.DragEvent) => {
     e.dataTransfer.setData('elementType', elementType);
     e.dataTransfer.effectAllowed = 'copy';
@@ -90,14 +90,14 @@ export const usePaletteElement = (elementType: ElementType) => {
 
 // Hook pour la sélection par clic
 export const useElementSelection = (elementId: string) => {
-  const { selectElement, selectedElement } = useEmailEditorStore();
+  const { selectElement, selectedBlock } = useEmailEditorStore();
 
   const handleClick = useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
     selectElement(elementId);
   }, [elementId, selectElement]);
 
-  const isSelected = selectedElement?.id === elementId;
+  const isSelected = selectedBlock?.id === elementId;
 
   return {
     isSelected,
@@ -107,7 +107,7 @@ export const useElementSelection = (elementId: string) => {
 
 // Hook pour le redimensionnement des éléments
 export const useElementResize = (elementId: string) => {
-  const { updateElement } = useEmailEditorStore();
+  const { updateBlock } = useEmailEditorStore();
   const isResizing = useRef(false);
   const startPos = useRef({ x: 0, y: 0 });
   const startSize = useRef({ width: 0, height: 0 });
@@ -147,7 +147,7 @@ export const useElementResize = (elementId: string) => {
         newHeight = Math.max(30, startSize.current.height - deltaY);
       }
 
-      updateElement(elementId, {
+      updateBlock(elementId, {
         styles: {
           width: `${newWidth}px`,
           height: `${newHeight}px`,
@@ -163,7 +163,7 @@ export const useElementResize = (elementId: string) => {
 
     document.addEventListener('mousemove', handleMouseMove);
     document.addEventListener('mouseup', handleMouseUp);
-  }, [elementId, updateElement]);
+  }, [elementId, updateBlock]);
 
   return {
     handleResizeStart,

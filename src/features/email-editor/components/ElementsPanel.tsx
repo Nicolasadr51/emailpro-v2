@@ -2,7 +2,7 @@
 // Architecture définie par Claude 4.5 Sonnet
 
 import React from 'react';
-import { ElementType } from '../types/editor.types';
+import { BlockType } from '../../../types/emailEditor';
 import { usePaletteElement } from '../hooks/useDragDrop';
 import { TypeIcon, ImageIcon, MousePointerClickIcon, MinusIcon } from 'lucide-react';
 
@@ -11,7 +11,7 @@ interface ElementsPanelProps {
 }
 
 interface ElementItem {
-  type: ElementType;
+  type: BlockType;
   name: string;
   description: string;
   icon: React.ReactNode;

@@ -1,13 +1,13 @@
 import React from 'react';
 import { Type, MousePointer, ShoppingCart } from 'lucide-react';
-import { EditorElement } from '../types/editor.types';
+import { EmailBlock } from '../../../types/emailEditor';
 
 interface PredefinedLayout {
   id: string;
   name: string;
   description: string;
   icon: React.ComponentType<any>;
-  elements: Partial<EditorElement>[];
+  elements: Partial<EmailBlock>[];
   category: 'marketing' | 'ecommerce' | 'newsletter' | 'event';
 }
 

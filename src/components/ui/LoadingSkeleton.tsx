@@ -1,11 +1,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { cn } from '../../lib/utils';
-import { ElementType } from '../../features/email-editor/types/editor.types';
+import { BlockType } from '../../features/email-editor/types/editor.types';
 
 interface LoadingSkeletonProps {
   className?: string;
-  variant?: ElementType | 'card' | 'avatar' | 'table';
+  variant?: BlockType | 'card' | 'avatar' | 'table';
   lines?: number;
   width?: string;
   height?: string;

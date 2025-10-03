@@ -18,8 +18,8 @@ export const DividerBlock: React.FC<DividerBlockProps> = ({ element }) => {
     }
     return { height: 1, color: '#cccccc', style: 'solid' };
   });
-  const { updateElement, selectedElement } = useEmailEditorStore();
-  const isSelected = selectedElement?.id === element.id;
+  const { updateBlock, selectedBlock } = useEmailEditorStore();
+  const isSelected = selectedBlock?.id === element.id;
 
   const handleDoubleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -29,13 +29,13 @@ export const DividerBlock: React.FC<DividerBlockProps> = ({ element }) => {
   const handleThicknessChange = (thickness: number) => {
     const newDividerData = { ...dividerData, thickness };
     setDividerData(newDividerData);
-    updateElement(element.id, { content: JSON.stringify(newDividerData) });
+    updateBlock(element.id, { content: JSON.stringify(newDividerData) });
   };
 
   const handleStyleChange = (style: 'solid' | 'dashed' | 'dotted') => {
     const newDividerData = { ...dividerData, style };
     setDividerData(newDividerData);
-    updateElement(element.id, { content: JSON.stringify(newDividerData) });
+    updateBlock(element.id, { content: JSON.stringify(newDividerData) });
   };
 
   const containerStyle = {

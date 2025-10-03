@@ -260,7 +260,7 @@ export const DraggableElement: React.FC<DraggableElementProps> = ({
 };
 
 // Styles CSS pour les éléments draggables
-export const draggableElementStyles = `
+export const draggableBlockStyles = `
   .draggable-element {
     transition: transform 0.1s ease;
   }

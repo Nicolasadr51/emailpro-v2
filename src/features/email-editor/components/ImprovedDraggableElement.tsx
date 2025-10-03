@@ -11,16 +11,16 @@ import {
   Settings
 } from 'lucide-react';
 import { designTokens } from '../../../design-system/tokens';
-import { EditorElement } from '../types/editor.types';
+import { EmailBlock } from '../../../types/emailEditor';
 import { useImprovedDragDrop } from '../hooks/useImprovedDragDrop';
 import { useEmailEditorStore } from '../../../contexts/EmailEditorContext';
 
 interface ImprovedDraggableElementProps {
-  element: EditorElement;
+  element: EmailBlock;
   isSelected?: boolean;
   previewMode?: boolean;
-  onSelect?: (element: EditorElement) => void;
-  onUpdate?: (elementId: string, updates: Partial<EditorElement>) => void;
+  onSelect?: (element: EmailBlock) => void;
+  onUpdate?: (elementId: string, updates: Partial<EmailBlock>) => void;
   onDelete?: (elementId: string) => void;
   onDuplicate?: (elementId: string) => void;
 }

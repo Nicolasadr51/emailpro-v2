@@ -2,7 +2,7 @@
 // Architecture définie par Claude 4.5 Sonnet
 
 import React from 'react';
-import { EditorElement } from '../types/editor.types';
+import { EmailBlock } from '../../../types/emailEditor';
 import { Button } from '../../../components/ui/Button';
 import {
   UndoIcon,
@@ -23,7 +23,7 @@ interface EditorToolbarProps {
   canRedo: boolean;
   zoom: number;
   onZoomChange: (zoom: number) => void;
-  selectedElement: EditorElement | null;
+  selectedBlock: EmailBlock | null;
   className?: string;
 }
 
@@ -34,7 +34,7 @@ export const EditorToolbar: React.FC<EditorToolbarProps> = ({
   canRedo,
   zoom,
   onZoomChange,
-  selectedElement,
+  selectedBlock,
   className = '',
 }) => {
   const handleZoomIn = () => {
@@ -86,7 +86,7 @@ export const EditorToolbar: React.FC<EditorToolbarProps> = ({
       </div>
 
       {/* Actions sur l'élément sélectionné */}
-      {selectedElement && (
+      {selectedBlock && (
         <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
           <div style={{
             fontSize: '12px',
@@ -94,10 +94,10 @@ export const EditorToolbar: React.FC<EditorToolbarProps> = ({
             marginRight: '8px',
             textTransform: 'capitalize',
           }}>
-            {selectedElement.type} sélectionné
+            {selectedBlock.type} sélectionné
           </div>
           
-          {selectedElement.type === 'text' && (
+          {selectedBlock.type === 'text' && (
             <>
               <Button
                 variant="ghost"

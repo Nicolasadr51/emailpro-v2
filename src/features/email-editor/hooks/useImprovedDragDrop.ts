@@ -1,10 +1,10 @@
 import { useRef, useState, useCallback, useEffect } from 'react';
-import { EditorElement } from '../types/editor.types';
+import { EmailBlock } from '../../../types/emailEditor';
 import { useEmailEditorStore } from '../../../contexts/EmailEditorContext';
 
 interface DragState {
   isDragging: boolean;
-  draggedElement: EditorElement | null;
+  draggedElement: EmailBlock | null;
   draggedFromSidebar: boolean;
   dragOffset: { x: number; y: number };
   dropZone: string | null;
@@ -79,7 +79,7 @@ export const useImprovedDragDrop = () => {
 
   // Démarrer le drag d'un élément existant
   const startElementDrag = useCallback((
-    element: EditorElement,
+    element: EmailBlock,
     event: React.DragEvent | React.MouseEvent
   ) => {
     const clientX = 'clientX' in event ? event.clientX : event.touches?.[0]?.clientX || 0;
@@ -298,7 +298,7 @@ export const useImprovedDragDrop = () => {
   ) => {
     if (dragState.draggedFromSidebar) {
       // Ajouter un nouvel élément depuis la sidebar
-      const newElement: EditorElement = {
+      const newElement: EmailBlock = {
         id: `element-${Date.now()}`,
         type: 'text', // À adapter selon le type réel
         position: { x: 0, y: 0 },
