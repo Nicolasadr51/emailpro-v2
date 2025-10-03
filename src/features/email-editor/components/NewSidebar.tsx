@@ -51,43 +51,43 @@ const sections: SidebarSection[] = [
 
 const contentBlocks = [
   {
-    type: 'IMAGE' as const,
+    type: 'image' as const,
     icon: <BlockIcon icon={Image} color="IMAGE" />,
     title: 'Image',
     description: 'Ajoutez une image ou un logo',
   },
   {
-    type: 'HEADING' as const,
+    type: 'heading' as const,
     icon: <BlockIcon icon={Type} color="HEADING" />,
     title: 'Titre',
     description: 'Titre principal ou sous-titre',
   },
   {
-    type: 'TEXT' as const,
+    type: 'text' as const,
     icon: <BlockIcon icon={AlignLeft} color="TEXT" />,
     title: 'Paragraphe',
     description: 'Bloc de texte formaté',
   },
   {
-    type: 'BUTTON' as const,
+    type: 'button' as const,
     icon: <BlockIcon icon={MousePointer} color="BUTTON" />,
     title: 'Bouton',
     description: 'Call-to-action cliquable',
   },
   {
-    type: 'DIVIDER' as const,
+    type: 'divider' as const,
     icon: <BlockIcon icon={Minus} color="DIVIDER" />,
     title: 'Séparateur',
     description: 'Ligne de séparation',
   },
   {
-    type: 'SOCIAL' as const,
+    type: 'social' as const,
     icon: <BlockIcon icon={Share2} color="SOCIAL" />,
     title: 'Réseaux sociaux',
     description: 'Icônes de réseaux sociaux',
   },
   {
-    type: 'SPACER' as const,
+    type: 'spacer' as const,
     icon: <BlockIcon icon={Box} color="SPACER" />,
     title: 'Espacement',
     description: 'Espace vertical ajustable',
@@ -96,28 +96,28 @@ const contentBlocks = [
 
 const layoutBlocks = [
   {
-    type: 'LAYOUT' as const,
+    type: 'layout' as const,
     columns: 1 as const,
     icon: <LayoutPreview columns={1} />,
     title: '1 colonne',
     description: 'Largeur pleine',
   },
   {
-    type: 'LAYOUT' as const,
+    type: 'layout' as const,
     columns: 2 as const,
     icon: <LayoutPreview columns={2} />,
     title: '2 colonnes',
     description: 'Répartition 50/50',
   },
   {
-    type: 'LAYOUT' as const,
+    type: 'layout' as const,
     columns: 3 as const,
     icon: <LayoutPreview columns={3} />,
     title: '3 colonnes',
     description: 'Répartition égale',
   },
   {
-    type: 'LAYOUT' as const,
+    type: 'layout' as const,
     columns: 2 as const,
     ratio: '2:1' as const,
     icon: <LayoutPreview columns={2} ratio="2:1" />,
@@ -125,7 +125,7 @@ const layoutBlocks = [
     description: 'Colonne large à gauche',
   },
   {
-    type: 'LAYOUT' as const,
+    type: 'layout' as const,
     columns: 2 as const,
     ratio: '1:2' as const,
     icon: <LayoutPreview columns={2} ratio="1:2" />,
@@ -136,7 +136,7 @@ const layoutBlocks = [
 
 const templateBlocks = [
   {
-    type: 'TEMPLATE' as const,
+    type: 'template' as const,
     id: 'hero-cta',
     icon: <div style={{ 
       width: 40, 
@@ -152,7 +152,7 @@ const templateBlocks = [
     description: 'Image, titre et bouton d\'action',
   },
   {
-    type: 'TEMPLATE' as const,
+    type: 'template' as const,
     id: 'newsletter',
     icon: <div style={{ 
       width: 40, 
@@ -168,7 +168,7 @@ const templateBlocks = [
     description: 'En-tête, articles et pied de page',
   },
   {
-    type: 'TEMPLATE' as const,
+    type: 'template' as const,
     id: 'product',
     icon: <div style={{ 
       width: 40, 

@@ -20,28 +20,28 @@ interface ElementItem {
 
 const elementItems: ElementItem[] = [
   {
-    type: 'TEXT',
+    type: 'text',
     name: 'Texte',
     description: 'Ajouter du texte formaté',
     icon: <TypeIcon size={20} />,
     color: '#4CAF50',
   },
   {
-    type: 'IMAGE',
+    type: 'image',
     name: 'Image',
     description: 'Insérer une image',
     icon: <ImageIcon size={20} />,
     color: '#2196F3',
   },
   {
-    type: 'BUTTON',
+    type: 'button',
     name: 'Bouton',
     description: 'Bouton d\'action cliquable',
     icon: <MousePointerClickIcon size={20} />,
     color: '#FF9800',
   },
   {
-    type: 'DIVIDER',
+    type: 'divider',
     name: 'Séparateur',
     description: 'Ligne de séparation',
     icon: <MinusIcon size={20} />,

@@ -14,7 +14,7 @@ interface LoadingSkeletonProps {
 
 export const LoadingSkeleton: React.FC<LoadingSkeletonProps> = ({
   className,
-  variant = 'TEXT',
+  variant = 'text',
   lines = 1,
   width,
   height,

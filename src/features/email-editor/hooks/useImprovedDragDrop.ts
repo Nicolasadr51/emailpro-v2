@@ -300,7 +300,7 @@ export const useImprovedDragDrop = () => {
       // Ajouter un nouvel élément depuis la sidebar
       const newElement: EditorElement = {
         id: `element-${Date.now()}`,
-        type: 'TEXT', // À adapter selon le type réel
+        type: 'text', // À adapter selon le type réel
         position: { x: 0, y: 0 },
         size: { width: 200, height: 50 },
         content: { text: 'Nouveau contenu' },

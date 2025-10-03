@@ -11,17 +11,17 @@ export interface BaseBlockData {
 }
 
 export interface ContentBlockData extends BaseBlockData {
-  type: Exclude<BlockType, 'LAYOUT' | 'TEMPLATE'>;
+  type: Exclude<BlockType, 'layout' | 'template'>;
 }
 
 export interface LayoutBlockData extends BaseBlockData {
-  type: 'LAYOUT';
+  type: 'layout';
   columns: 1 | 2 | 3;
   ratio?: ColumnRatio;
 }
 
 export interface TemplateBlockData extends BaseBlockData {
-  type: 'TEMPLATE';
+  type: 'template';
   templateId: string;
 }
 

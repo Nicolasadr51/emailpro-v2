@@ -98,7 +98,7 @@ export const ImprovedPropertiesPanel: React.FC<PropertiesPanelProps> = ({
     label: string,
     value: string,
     onChange: (value: string) => void,
-    type: 'TEXT' | 'number' | 'color' | 'url' = 'TEXT',
+    type: 'text' | 'number' | 'color' | 'url' = 'text',
     placeholder?: string
   ) => (
     <div style={{ marginBottom: designTokens.spacing.md }}>

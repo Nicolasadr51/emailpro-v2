@@ -5,15 +5,15 @@
  */
 
 export const BLOCK_TYPES = {
-  IMAGE: 'IMAGE',
-  HEADING: 'HEADING',
-  TEXT: 'TEXT',
-  BUTTON: 'BUTTON',
-  DIVIDER: 'DIVIDER',
-  SOCIAL: 'SOCIAL',
-  SPACER: 'SPACER',
-  LAYOUT: 'LAYOUT',
-  TEMPLATE: 'TEMPLATE',
+  IMAGE: 'image',
+  HEADING: 'heading',
+  TEXT: 'text',
+  BUTTON: 'button',
+  DIVIDER: 'divider',
+  SOCIAL: 'social',
+  SPACER: 'spacer',
+  LAYOUT: 'layout',
+  TEMPLATE: 'template',
 } as const;
 
 export type BlockType = typeof BLOCK_TYPES[keyof typeof BLOCK_TYPES];

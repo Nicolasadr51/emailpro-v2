@@ -58,49 +58,49 @@ const sections: SidebarSection[] = [
 
 const contentBlocks = [
   {
-    type: 'IMAGE' as const,
+    type: 'image' as const,
     icon: <BlockIcon icon={Image} color="IMAGE" />,
     title: 'Image',
     description: 'Ajoutez une image ou un logo',
     popular: true,
   },
   {
-    type: 'HEADING' as const,
+    type: 'heading' as const,
     icon: <BlockIcon icon={Type} color="HEADING" />,
     title: 'Titre',
     description: 'Titre principal ou sous-titre',
     popular: true,
   },
   {
-    type: 'TEXT' as const,
+    type: 'text' as const,
     icon: <BlockIcon icon={AlignLeft} color="TEXT" />,
     title: 'Paragraphe',
     description: 'Bloc de texte formaté',
     popular: true,
   },
   {
-    type: 'BUTTON' as const,
+    type: 'button' as const,
     icon: <BlockIcon icon={MousePointer} color="BUTTON" />,
     title: 'Bouton',
     description: 'Call-to-action cliquable',
     popular: true,
   },
   {
-    type: 'DIVIDER' as const,
+    type: 'divider' as const,
     icon: <BlockIcon icon={Minus} color="DIVIDER" />,
     title: 'Séparateur',
     description: 'Ligne de séparation',
     popular: false,
   },
   {
-    type: 'SOCIAL' as const,
+    type: 'social' as const,
     icon: <BlockIcon icon={Share2} color="SOCIAL" />,
     title: 'Réseaux sociaux',
     description: 'Icônes de réseaux sociaux',
     popular: false,
   },
   {
-    type: 'SPACER' as const,
+    type: 'spacer' as const,
     icon: <BlockIcon icon={Box} color="SPACER" />,
     title: 'Espacement',
     description: 'Espace vertical ajustable',
@@ -110,7 +110,7 @@ const contentBlocks = [
 
 const layoutBlocks = [
   {
-    type: 'LAYOUT' as const,
+    type: 'layout' as const,
     columns: 1 as const,
     icon: <LayoutPreview columns={1} size="sm" />,
     title: '1 colonne',
@@ -118,7 +118,7 @@ const layoutBlocks = [
     popular: true,
   },
   {
-    type: 'LAYOUT' as const,
+    type: 'layout' as const,
     columns: 2 as const,
     icon: <LayoutPreview columns={2} size="sm" />,
     title: '2 colonnes',
@@ -126,7 +126,7 @@ const layoutBlocks = [
     popular: true,
   },
   {
-    type: 'LAYOUT' as const,
+    type: 'layout' as const,
     columns: 3 as const,
     icon: <LayoutPreview columns={3} size="sm" />,
     title: '3 colonnes',
@@ -134,7 +134,7 @@ const layoutBlocks = [
     popular: false,
   },
   {
-    type: 'LAYOUT' as const,
+    type: 'layout' as const,
     columns: 2 as const,
     ratio: '2:1' as const,
     icon: <LayoutPreview columns={2} ratio="2:1" size="sm" />,
@@ -143,7 +143,7 @@ const layoutBlocks = [
     popular: false,
   },
   {
-    type: 'LAYOUT' as const,
+    type: 'layout' as const,
     columns: 2 as const,
     ratio: '1:2' as const,
     icon: <LayoutPreview columns={2} ratio="1:2" size="sm" />,
@@ -155,7 +155,7 @@ const layoutBlocks = [
 
 const templateBlocks = [
   {
-    type: 'TEMPLATE' as const,
+    type: 'template' as const,
     id: 'hero-cta',
     icon: <div style={{ 
       width: 40, 
@@ -173,7 +173,7 @@ const templateBlocks = [
     category: 'Marketing',
   },
   {
-    type: 'TEMPLATE' as const,
+    type: 'template' as const,
     id: 'newsletter',
     icon: <div style={{ 
       width: 40, 
@@ -191,7 +191,7 @@ const templateBlocks = [
     category: 'Communication',
   },
   {
-    type: 'TEMPLATE' as const,
+    type: 'template' as const,
     id: 'product',
     icon: <div style={{ 
       width: 40, 

@@ -29,22 +29,22 @@ export const PredefinedLayouts: React.FC<PredefinedLayoutsProps> = ({
       category: 'marketing',
       elements: [
         {
-          type: 'IMAGE',
+          type: 'image',
           content: '',
           styles: { width: '100%', height: '300px' }
         },
         {
-          type: 'TEXT',
+          type: 'text',
           content: 'Titre principal accrocheur',
           styles: { fontSize: '32px', fontWeight: 'bold', textAlign: 'center', margin: '20px 0' }
         },
         {
-          type: 'TEXT',
+          type: 'text',
           content: 'Description engageante qui incite à l\'action et explique la valeur proposée.',
           styles: { fontSize: '16px', textAlign: 'center', margin: '0 0 30px 0', color: '#666' }
         },
         {
-          type: 'BUTTON',
+          type: 'button',
           content: 'Découvrir maintenant',
           styles: { 
             backgroundColor: '#007bff', 
@@ -64,27 +64,27 @@ export const PredefinedLayouts: React.FC<PredefinedLayoutsProps> = ({
       category: 'newsletter',
       elements: [
         {
-          type: 'IMAGE',
+          type: 'image',
           content: '',
           styles: { width: '200px', height: 'auto', margin: '0 auto 30px auto' }
         },
         {
-          type: 'TEXT',
+          type: 'text',
           content: 'Newsletter - Janvier 2024',
           styles: { fontSize: '24px', fontWeight: 'bold', textAlign: 'center', margin: '0 0 30px 0' }
         },
         {
-          type: 'TEXT',
+          type: 'text',
           content: 'Article principal',
           styles: { fontSize: '20px', fontWeight: 'bold', margin: '30px 0 10px 0' }
         },
         {
-          type: 'TEXT',
+          type: 'text',
           content: 'Contenu de l\'article principal avec toutes les informations importantes...',
           styles: { fontSize: '16px', margin: '0 0 20px 0' }
         },
         {
-          type: 'DIVIDER',
+          type: 'divider',
           content: '',
           styles: { margin: '30px 0', border: '1px solid #eee' }
         }
@@ -98,32 +98,32 @@ export const PredefinedLayouts: React.FC<PredefinedLayoutsProps> = ({
       category: 'ecommerce',
       elements: [
         {
-          type: 'TEXT',
+          type: 'text',
           content: 'Nouveau produit',
           styles: { fontSize: '28px', fontWeight: 'bold', textAlign: 'center', margin: '0 0 20px 0' }
         },
         {
-          type: 'IMAGE',
+          type: 'image',
           content: '',
           styles: { width: '100%', maxWidth: '400px', height: 'auto', margin: '0 auto 20px auto' }
         },
         {
-          type: 'TEXT',
+          type: 'text',
           content: 'Nom du produit',
           styles: { fontSize: '22px', fontWeight: 'bold', textAlign: 'center', margin: '0 0 10px 0' }
         },
         {
-          type: 'TEXT',
+          type: 'text',
           content: 'Description détaillée du produit avec ses caractéristiques principales.',
           styles: { fontSize: '16px', textAlign: 'center', margin: '0 0 20px 0', color: '#666' }
         },
         {
-          type: 'TEXT',
+          type: 'text',
           content: '99,99 €',
           styles: { fontSize: '24px', fontWeight: 'bold', textAlign: 'center', margin: '0 0 20px 0', color: '#e74c3c' }
         },
         {
-          type: 'BUTTON',
+          type: 'button',
           content: 'Acheter maintenant',
           styles: { 
             backgroundColor: '#28a745', 
