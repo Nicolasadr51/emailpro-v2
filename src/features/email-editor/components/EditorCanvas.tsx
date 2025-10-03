@@ -27,8 +27,8 @@ export const EditorCanvas: React.FC<EditorCanvasProps> = ({
     }
   };
 
-  const canvasWidth = getCanvasWidth();
-  const canvasHeight = template?.layout.height || 800;
+  const canvasWidth = template ? getCanvasWidth() : 600;
+  const canvasHeight = template ? template.layout.height : 800;
 
   const canvasStyle = useMemo(() => ({
     width: canvasWidth,

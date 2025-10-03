@@ -13,7 +13,7 @@ import {
 
 // État initial de l'éditeur
 const initialState: EmailEditorState = {
-  template: createDefaultTemplate(),
+  template: createDefaultTemplate() as EmailTemplate | null,
   selectedBlockId: null,
   isEditing: false,
   editingBlockId: null,
@@ -277,7 +277,7 @@ const emailEditorReducer = (state: EmailEditorState, action: EmailEditorAction):
     case 'RESET_TEMPLATE':
       return {
         ...initialState,
-        template: createDefaultTemplate(),
+        template: createDefaultTemplate() as EmailTemplate | null,
       };
 
     default:
