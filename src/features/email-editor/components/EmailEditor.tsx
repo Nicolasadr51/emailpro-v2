@@ -5,7 +5,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEmailEditor } from '../hooks/useEmailEditor';
 import { EditorCanvas } from './EditorCanvas';
-import { ElementsPanel } from './ElementsPanel';
+import { NewSidebar } from './NewSidebar';
 import { PropertiesPanel } from './PropertiesPanel';
 import { EditorToolbar } from './EditorToolbar';
 import { TemplatesList } from './TemplatesList';
@@ -179,6 +179,12 @@ export const EmailEditor: React.FC<EmailEditorProps> = ({ className = '' }) => {
     setTemplate(updatedTemplate);
     setShowPredefinedLayouts(false);
     setSaveStatus('unsaved');
+  };
+
+  const handleElementAdd = (element: any) => {
+    console.log('Élément ajouté:', element);
+    // TODO: Implémenter l'ajout d'élément au canvas
+    // Cette fonction sera développée dans la prochaine phase
   };
 
   const handleViewModeChange = (mode: ViewMode) => {
@@ -368,7 +374,7 @@ export const EmailEditor: React.FC<EmailEditorProps> = ({ className = '' }) => {
               )}
             </div>
             
-            {!showPredefinedLayouts && <ElementsPanel />}
+            {!showPredefinedLayouts && <NewSidebar onElementAdd={handleElementAdd} />}
           </div>
         </div>
 
