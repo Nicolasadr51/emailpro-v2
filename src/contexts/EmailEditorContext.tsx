@@ -46,16 +46,16 @@ const emailEditorReducer = (state: EmailEditorState, action: EmailEditorAction):
       
       // Ajuster les positions des blocs existants
       const updatedBlocks = state.template.blocks.map(block => 
-        block.position >= position 
-          ? { ...block, position: block.position + 1 }
+        block.position.order >= position 
+          ? { ...block, position: { ...block.position, order: block.position.order + 1 } }
           : block
       );
       
-      newBlock.position = position;
+      newBlock.position.order = position;
       
       const newTemplate: EmailTemplate = {
         ...state.template,
-        blocks: [...updatedBlocks as EmailBlock[], newBlock].sort((a, b) => a.position - b.position),
+        blocks: [...updatedBlocks as EmailBlock[], newBlock].sort((a, b) => a.position.order - b.position.order),
         updatedAt: new Date().toISOString(),
       };
 
@@ -118,19 +118,19 @@ const emailEditorReducer = (state: EmailEditorState, action: EmailEditorAction):
       const duplicatedBlock = {
         ...blockToDuplicate,
         id: `block-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-        position: blockToDuplicate.position + 1,
+        position: { ...blockToDuplicate.position, order: blockToDuplicate.position.order + 1 },
       };
 
       // Ajuster les positions des blocs suivants
       const updatedBlocks = state.template.blocks.map(block =>
-        block.position > blockToDuplicate.position
-          ? { ...block, position: block.position + 1 }
+        block.position.order > blockToDuplicate.position.order
+          ? { ...block, position: { ...block.position, order: block.position.order + 1 } }
           : block
       );
 
       const newTemplate: EmailTemplate = {
         ...state.template,
-        blocks: [...updatedBlocks as EmailBlock[], duplicatedBlock].sort((a, b) => a.position - b.position),
+        blocks: [...updatedBlocks as EmailBlock[], duplicatedBlock].sort((a, b) => a.position.order - b.position.order),
         updatedAt: new Date().toISOString(),
       };
 
@@ -153,14 +153,14 @@ const emailEditorReducer = (state: EmailEditorState, action: EmailEditorAction):
       // Réorganiser les positions
       const updatedBlocks = otherBlocks
         .map(block => {
-          if (block.position >= newPosition) {
-            return { ...block, position: block.position + 1 };
+          if (block.position.order >= newPosition) {
+            return { ...block, position: { ...block.position, order: block.position.order + 1 } };
           }
           return block;
         })
-        .concat({ ...blockToMove, position: newPosition })
-        .sort((a, b) => a.position - b.position)
-        .map((block, index) => ({ ...block, position: index }));
+        .concat({ ...blockToMove, position: { ...blockToMove.position, order: newPosition } })
+        .sort((a, b) => a.position.order - b.position.order)
+        .map((block, index) => ({ ...block, position: { ...block.position, order: index } }));
 
       const newTemplate: EmailTemplate = {
         ...state.template,

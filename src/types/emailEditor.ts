@@ -6,6 +6,7 @@ export interface Position {
   y: number;
   width?: number;
   height?: number;
+  order: number; // Pour l'ordonnancement des blocs dans le template
 }
 
 export type BlockType = 
@@ -333,6 +334,7 @@ export const createDefaultBlock = (type: BlockType): EmailBlock => {
       y: 0,
       width: 300,
       height: 100,
+      order: 0, // Sera défini lors de l'ajout au template
     },
     styles: {
       backgroundColor: 'transparent',
