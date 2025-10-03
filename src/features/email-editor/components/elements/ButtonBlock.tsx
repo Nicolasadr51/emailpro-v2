@@ -92,7 +92,7 @@ export const ButtonBlock: React.FC<ButtonBlockProps> = ({ element }) => {
         <div
           style={{
             padding: '16px',
-            backgroundColor: '#f8f9fa',
+            background: '#f8f9fa',
             border: '2px dashed #007bff',
             borderRadius: '8px',
             minWidth: '250px',

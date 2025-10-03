@@ -41,7 +41,7 @@ export const EditorCanvas: React.FC<EditorCanvasProps> = ({
   const canvasStyle = useMemo(() => ({
     width: canvasWidth,
     minHeight: canvasHeight,
-    backgroundColor: template?.layout.backgroundColor || '#ffffff',
+    backgroundColor: template?.layout.background || '#ffffff',
     transform: `scale(${zoom})`,
     transformOrigin: 'top left',
     position: 'relative' as const,
@@ -49,7 +49,7 @@ export const EditorCanvas: React.FC<EditorCanvasProps> = ({
     boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
     borderRadius: '8px',
     overflow: 'hidden',
-  }), [canvasWidth, canvasHeight, template?.layout.backgroundColor, zoom]);
+  }), [canvasWidth, canvasHeight, template?.layout.background, zoom]);
 
   const containerStyle = useMemo(() => ({
     width: `${canvasWidth * zoom + 40}px`,

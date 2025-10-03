@@ -56,7 +56,7 @@ export const PropertiesPanel: React.FC<PropertiesPanelProps> = ({
       <div style={{
         padding: '16px',
         borderBottom: '1px solid #e0e0e0',
-        backgroundColor: '#f8f9fa',
+        background: '#f8f9fa',
       }}>
         <h3 style={{
           margin: 0,

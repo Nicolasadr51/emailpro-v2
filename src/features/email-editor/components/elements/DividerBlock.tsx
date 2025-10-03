@@ -66,7 +66,7 @@ export const DividerBlock: React.FC<DividerBlockProps> = ({ element }) => {
         <div
           style={{
             padding: '16px',
-            backgroundColor: '#f8f9fa',
+            background: '#f8f9fa',
             border: '2px dashed #007bff',
             borderRadius: '8px',
             minWidth: '200px',

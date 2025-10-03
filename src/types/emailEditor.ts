@@ -198,11 +198,30 @@ export interface GlobalStyles {
 // Layout du template
 export interface Layout {
   width: number;
+  height: number;
   padding?: number;
   background?: string;
   maxWidth?: number;
   alignment?: 'left' | 'center' | 'right';
 }
+
+// Constantes par défaut pour Layout
+export const DEFAULT_LAYOUT: Layout = {
+  width: 600,
+  height: 800,
+  padding: 20,
+  background: '#ffffff',
+  maxWidth: 800,
+  alignment: 'center',
+};
+
+// Utilitaire de validation Layout
+export const validateLayout = (layout: Partial<Layout>): Layout => {
+  return {
+    ...DEFAULT_LAYOUT,
+    ...layout,
+  };
+};
 
 // Template d'email complet
 export interface EmailTemplate {
@@ -514,13 +533,7 @@ export const createDefaultTemplate = (): EmailTemplate => ({
   name: 'Nouveau Template',
   subject: 'Sujet de votre email',
   preheader: 'Aperçu de votre email...',
-  layout: {
-    width: 600,
-    padding: 20,
-    background: '#ffffff',
-    maxWidth: 800,
-    alignment: 'center',
-  },
+  layout: DEFAULT_LAYOUT,
   blocks: [],
   globalStyles: {
     backgroundColor: '#f4f4f4',

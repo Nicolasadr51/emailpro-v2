@@ -55,7 +55,7 @@ export const EditorToolbar: React.FC<EditorToolbarProps> = ({
       alignItems: 'center',
       justifyContent: 'space-between',
       padding: '8px 16px',
-      backgroundColor: '#f8f9fa',
+      background: '#f8f9fa',
       borderBottom: '1px solid #e0e0e0',
       gap: '16px',
     }}>

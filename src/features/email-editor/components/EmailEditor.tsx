@@ -64,7 +64,7 @@ export const EmailEditor: React.FC<EmailEditorProps> = ({ className = '' }) => {
         layout: {
           width: 600,
           height: 800,
-          backgroundColor: '#ffffff',
+          background: '#ffffff',
         },
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -86,7 +86,7 @@ export const EmailEditor: React.FC<EmailEditorProps> = ({ className = '' }) => {
       layout: {
         width: 600,
         height: 800,
-        backgroundColor: '#ffffff',
+        background: '#ffffff',
       },
       createdAt: new Date(),
       updatedAt: new Date(),

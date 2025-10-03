@@ -114,7 +114,7 @@ export const ElementsPanel: React.FC<ElementsPanelProps> = ({ className = '' }) 
         style={{
           padding: '16px',
           borderBottom: '1px solid #e0e0e0',
-          backgroundColor: '#f8f9fa',
+          background: '#f8f9fa',
         }}
       >
         <h3
@@ -197,7 +197,7 @@ export const ElementsPanel: React.FC<ElementsPanelProps> = ({ className = '' }) 
         style={{
           padding: '16px',
           borderTop: '1px solid #e0e0e0',
-          backgroundColor: '#f8f9fa',
+          background: '#f8f9fa',
         }}
       >
         <div

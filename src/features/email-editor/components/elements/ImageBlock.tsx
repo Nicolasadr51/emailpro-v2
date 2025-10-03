@@ -97,7 +97,7 @@ export const ImageBlock: React.FC<ImageBlockProps> = ({ element }) => {
         <div
           style={{
             padding: '16px',
-            backgroundColor: '#f8f9fa',
+            background: '#f8f9fa',
             border: '2px dashed #007bff',
             borderRadius: '8px',
             height: '100%',
@@ -278,7 +278,7 @@ export const ImageBlock: React.FC<ImageBlockProps> = ({ element }) => {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#f8f9fa',
+        background: '#f8f9fa',
         border: '2px dashed #dee2e6',
         borderRadius: '8px',
         color: '#6c757d',
