@@ -12,14 +12,35 @@ interface ButtonBlockProps {
 
 export const ButtonBlock: React.FC<ButtonBlockProps> = ({ element }) => {
   const [isEditing, setIsEditing] = useState(false);
+  // Fonction de migration pour les données ButtonBlock (recommandation Claude 4.5)
+  const migrateButtonData = (oldData: Partial<ButtonBlockContent>): ButtonBlockContent => {
+    return {
+      text: oldData.text || 'Cliquez ici',
+      link: oldData.link || '#',
+      linkTarget: oldData.linkTarget || '_self',
+      target: oldData.target || oldData.linkTarget || '_self', // Migration intelligente
+      backgroundColor: oldData.backgroundColor || '#007bff',
+      color: oldData.color || '#ffffff',
+      fontSize: oldData.fontSize || 16,
+      fontFamily: oldData.fontFamily || 'Arial, sans-serif',
+      fontWeight: oldData.fontWeight || 'bold',
+      paddingVertical: oldData.paddingVertical || 12,
+      paddingHorizontal: oldData.paddingHorizontal || 24,
+      borderRadius: oldData.borderRadius || 4,
+      borderWidth: oldData.borderWidth || 0,
+      borderColor: oldData.borderColor || 'transparent',
+    };
+  };
+
   const [buttonData, setButtonData] = useState<ButtonBlockContent>(() => {
     if (element.type === 'button') {
-      return element.content;
+      return migrateButtonData(element.content);
     }
     return { 
       text: 'Cliquez ici', 
       link: '#', 
       linkTarget: '_self',
+      target: '_self', // Ajouté pour la cohérence
       backgroundColor: '#007bff',
       color: '#ffffff',
       fontSize: 16,
