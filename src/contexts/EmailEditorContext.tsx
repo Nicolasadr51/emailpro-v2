@@ -13,7 +13,7 @@ import {
 
 // État initial de l'éditeur
 const initialState: EmailEditorState = {
-  template: createDefaultTemplate() as EmailTemplate | null,
+  template: createDefaultTemplate(),
   selectedBlockId: null,
   isEditing: false,
   editingBlockId: null,
