@@ -141,7 +141,7 @@ const templateBlocks = [
     icon: <div style={{ 
       width: 40, 
       height: 40, 
-      backgroundColor: `${designTokens.colors.blocks.BUTTON}15`,
+      backgroundColor: `${designTokens.colors.blocks.button}15`,
       borderRadius: designTokens.borderRadius.md,
       display: 'flex',
       alignItems: 'center',
@@ -157,7 +157,7 @@ const templateBlocks = [
     icon: <div style={{ 
       width: 40, 
       height: 40, 
-      backgroundColor: `${designTokens.colors.blocks.TEXT}15`,
+      backgroundColor: `${designTokens.colors.blocks.text}15`,
       borderRadius: designTokens.borderRadius.md,
       display: 'flex',
       alignItems: 'center',
@@ -173,7 +173,7 @@ const templateBlocks = [
     icon: <div style={{ 
       width: 40, 
       height: 40, 
-      backgroundColor: `${designTokens.colors.blocks.IMAGE}15`,
+      backgroundColor: `${designTokens.colors.blocks.image}15`,
       borderRadius: designTokens.borderRadius.md,
       display: 'flex',
       alignItems: 'center',

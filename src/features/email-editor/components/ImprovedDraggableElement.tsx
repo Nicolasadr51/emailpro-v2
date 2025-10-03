@@ -194,7 +194,7 @@ export const ImprovedDraggableElement: React.FC<ImprovedDraggableElementProps> =
             height: '100%',
             border: 'none',
             borderRadius: designTokens.borderRadius.md,
-            backgroundColor: element.style?.backgroundColor || designTokens.colors.blocks.BUTTON,
+            backgroundColor: element.style?.backgroundColor || designTokens.colors.blocks.button,
             color: element.style?.color || '#ffffff',
             fontSize: element.style?.fontSize || '16px',
             fontWeight: element.style?.fontWeight || '500',
@@ -357,7 +357,7 @@ export const ImprovedDraggableElement: React.FC<ImprovedDraggableElementProps> =
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            color: isLocked ? designTokens.colors.blocks.BUTTON : 'inherit',
+            color: isLocked ? designTokens.colors.blocks.button : 'inherit',
           }}
           title={isLocked ? 'Déverrouiller' : 'Verrouiller'}
         >
@@ -524,7 +524,7 @@ export const ImprovedDraggableElement: React.FC<ImprovedDraggableElementProps> =
             position: 'absolute',
             top: '4px',
             right: '4px',
-            backgroundColor: designTokens.colors.blocks.BUTTON,
+            backgroundColor: designTokens.colors.blocks.button,
             color: 'white',
             borderRadius: '50%',
             width: '20px',

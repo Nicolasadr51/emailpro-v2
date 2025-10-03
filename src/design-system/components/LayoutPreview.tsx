@@ -38,7 +38,7 @@ export const LayoutPreview = React.memo<LayoutPreviewProps>(({
   const containerStyle = useMemo<React.CSSProperties>(() => ({
     width: px(container),
     height: px(container),
-    backgroundColor: `${designTokens.colors.blocks.TEXT}15`,
+    backgroundColor: `${designTokens.colors.blocks.text}15`,
     borderRadius: px(designTokens.borderRadius.sm),
     padding: px(padding),
     display: 'flex',
@@ -47,7 +47,7 @@ export const LayoutPreview = React.memo<LayoutPreviewProps>(({
   }), [container, gap, padding]);
 
   const columnStyle = useMemo<React.CSSProperties>(() => ({
-    backgroundColor: designTokens.colors.blocks.TEXT,
+    backgroundColor: designTokens.colors.blocks.text,
     borderRadius: px(2),
     opacity: 0.7,
   }), []);

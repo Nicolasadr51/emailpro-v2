@@ -160,7 +160,7 @@ const templateBlocks = [
     icon: <div style={{ 
       width: 40, 
       height: 40, 
-      backgroundColor: `${designTokens.colors.blocks.BUTTON}15`,
+      backgroundColor: `${designTokens.colors.blocks.button}15`,
       borderRadius: designTokens.borderRadius.md,
       display: 'flex',
       alignItems: 'center',
@@ -178,7 +178,7 @@ const templateBlocks = [
     icon: <div style={{ 
       width: 40, 
       height: 40, 
-      backgroundColor: `${designTokens.colors.blocks.TEXT}15`,
+      backgroundColor: `${designTokens.colors.blocks.text}15`,
       borderRadius: designTokens.borderRadius.md,
       display: 'flex',
       alignItems: 'center',
@@ -196,7 +196,7 @@ const templateBlocks = [
     icon: <div style={{ 
       width: 40, 
       height: 40, 
-      backgroundColor: `${designTokens.colors.blocks.IMAGE}15`,
+      backgroundColor: `${designTokens.colors.blocks.image}15`,
       borderRadius: designTokens.borderRadius.md,
       display: 'flex',
       alignItems: 'center',
@@ -310,10 +310,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
           alignItems: 'center',
           gap: designTokens.spacing.xs,
           padding: `${designTokens.spacing.xs} ${designTokens.spacing.sm}`,
-          border: `1px solid ${showOnlyPopular ? designTokens.colors.blocks.BUTTON : designTokens.colors.semantic.border}`,
+          border: `1px solid ${showOnlyPopular ? designTokens.colors.blocks.button : designTokens.colors.semantic.border}`,
           borderRadius: designTokens.borderRadius.sm,
-          backgroundColor: showOnlyPopular ? `${designTokens.colors.blocks.BUTTON}10` : 'transparent',
-          color: showOnlyPopular ? designTokens.colors.blocks.BUTTON : designTokens.colors.semantic.text.secondary,
+          backgroundColor: showOnlyPopular ? `${designTokens.colors.blocks.button}10` : 'transparent',
+          color: showOnlyPopular ? designTokens.colors.blocks.button : designTokens.colors.semantic.text.secondary,
           fontSize: designTokens.typography.sizes.xs,
           cursor: 'pointer',
           transition: designTokens.transitions.base,
@@ -403,8 +403,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 {block.popular && (
                   <Star 
                     size={12} 
-                    fill={designTokens.colors.blocks.BUTTON}
-                    color={designTokens.colors.blocks.BUTTON}
+                    fill={designTokens.colors.blocks.button}
+                    color={designTokens.colors.blocks.button}
                     style={{
                       position: 'absolute',
                       top: designTokens.spacing.xs,
@@ -432,8 +432,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 {layout.popular && (
                   <Star 
                     size={12} 
-                    fill={designTokens.colors.blocks.BUTTON}
-                    color={designTokens.colors.blocks.BUTTON}
+                    fill={designTokens.colors.blocks.button}
+                    color={designTokens.colors.blocks.button}
                     style={{
                       position: 'absolute',
                       top: designTokens.spacing.xs,
@@ -460,8 +460,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 {template.popular && (
                   <Star 
                     size={12} 
-                    fill={designTokens.colors.blocks.BUTTON}
-                    color={designTokens.colors.blocks.BUTTON}
+                    fill={designTokens.colors.blocks.button}
+                    color={designTokens.colors.blocks.button}
                     style={{
                       position: 'absolute',
                       top: designTokens.spacing.xs,
