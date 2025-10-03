@@ -1,14 +1,22 @@
 // Types pour l'éditeur d'emails avancé
 // Architecture définie par Claude 4.5 Sonnet
 
-export type ElementType = 'text' | 'image' | 'button' | 'divider';
+export type ElementType = 'TEXT' | 'HEADING' | 'IMAGE' | 'BUTTON' | 'DIVIDER' | 'SOCIAL' | 'SPACER' | 'LAYOUT' | 'TEMPLATE';
 
 export interface EditorElement {
   id: string;
   type: ElementType;
-  content: string;
-  styles: ElementStyles;
+  content: any; // Peut être string ou objet selon le type d'élément
+  styles?: ElementStyles;
+  style?: any; // Pour compatibilité avec les nouveaux composants
   position: Position;
+  size?: { width: number; height: number };
+  visible?: boolean;
+  locked?: boolean;
+  customId?: string;
+  cssClasses?: string;
+  layout?: any;
+  spacing?: any;
 }
 
 export interface ElementStyles {

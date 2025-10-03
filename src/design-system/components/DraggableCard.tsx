@@ -1,22 +1,15 @@
-import React, { useState } from 'react';
-import { designTokens } from '../tokens';
+import React, { useState, useCallback, useMemo, useRef } from 'react';
+import { designTokens, getSpacing, getTransition, px } from '../tokens';
+import { DraggableCardProps, DragData } from '../types';
 
-interface DraggableCardProps {
-  icon: React.ReactNode;
-  title: string;
-  description?: string;
-  preview?: React.ReactNode;
-  onDragStart?: () => void;
-  onDragEnd?: () => void;
-  onClick?: () => void;
-  className?: string;
-}
+const DRAG_MIME_TYPE = 'application/x-email-block';
 
-export const DraggableCard: React.FC<DraggableCardProps> = ({
+export const DraggableCard = React.memo<DraggableCardProps>(({
   icon,
   title,
   description,
   preview,
+  blockData,
   onDragStart,
   onDragEnd,
   onClick,
@@ -24,79 +17,142 @@ export const DraggableCard: React.FC<DraggableCardProps> = ({
 }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
 
-  const handleDragStart = (e: React.DragEvent) => {
+  const handleDragStart = useCallback((e: React.DragEvent<HTMLDivElement>) => {
     setIsDragging(true);
-    onDragStart?.();
     
-    // Créer une image de drag personnalisée
-    const dragImage = e.currentTarget.cloneNode(true) as HTMLElement;
-    dragImage.style.transform = 'rotate(5deg)';
-    dragImage.style.opacity = '0.8';
-    document.body.appendChild(dragImage);
-    e.dataTransfer.setDragImage(dragImage, 0, 0);
-    setTimeout(() => document.body.removeChild(dragImage), 0);
-  };
+    const dragData: DragData = {
+      blockType: blockData.type,
+      blockData,
+    };
+    
+    e.dataTransfer.effectAllowed = 'copy';
+    e.dataTransfer.setData(DRAG_MIME_TYPE, JSON.stringify(dragData));
+    
+    // Image de drag personnalisée
+    if (cardRef.current) {
+      const dragImage = cardRef.current.cloneNode(true) as HTMLElement;
+      dragImage.style.position = 'absolute';
+      dragImage.style.top = '-9999px';
+      dragImage.style.transform = 'rotate(3deg)';
+      dragImage.style.opacity = '0.9';
+      dragImage.style.pointerEvents = 'none';
+      document.body.appendChild(dragImage);
+      
+      e.dataTransfer.setDragImage(dragImage, 20, 20);
+      
+      requestAnimationFrame(() => {
+        document.body.removeChild(dragImage);
+      });
+    }
+    
+    onDragStart?.(dragData);
+  }, [blockData, onDragStart]);
 
-  const handleDragEnd = () => {
+  const handleDragEnd = useCallback(() => {
     setIsDragging(false);
     onDragEnd?.();
-  };
+  }, [onDragEnd]);
 
-  const cardStyle: React.CSSProperties = {
-    padding: designTokens.spacing.md,
-    borderRadius: designTokens.borderRadius.lg,
-    border: `1px solid ${isHovered ? designTokens.colors.semantic.borderHover : designTokens.colors.semantic.border}`,
-    backgroundColor: isHovered ? designTokens.colors.states.hover : designTokens.colors.semantic.background,
-    cursor: 'grab',
+  const handleClick = useCallback(() => {
+    onClick?.(blockData);
+  }, [onClick, blockData]);
+
+  const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      handleClick();
+    }
+  }, [handleClick]);
+
+  const cardStyle = useMemo<React.CSSProperties>(() => ({
+    padding: getSpacing('md'),
+    borderRadius: px(designTokens.borderRadius.lg),
+    border: `1px solid ${
+      isFocused 
+        ? designTokens.colors.states.focus
+        : isHovered 
+          ? designTokens.colors.semantic.borderHover 
+          : designTokens.colors.semantic.border
+    }`,
+    backgroundColor: isHovered 
+      ? designTokens.colors.states.hover 
+      : designTokens.colors.semantic.background,
+    cursor: isDragging ? 'grabbing' : 'grab',
     opacity: isDragging ? 0.5 : 1,
-    transition: designTokens.transitions.base,
-    boxShadow: isDragging ? designTokens.shadows.drag : isHovered ? designTokens.shadows.md : designTokens.shadows.sm,
+    transition: getTransition('all'),
+    boxShadow: isDragging 
+      ? designTokens.shadows.drag 
+      : isHovered 
+        ? designTokens.shadows.md 
+        : designTokens.shadows.sm,
     userSelect: 'none',
-  };
+    outline: isFocused ? `2px solid ${designTokens.colors.states.focus}` : 'none',
+    outlineOffset: '2px',
+  }), [isHovered, isDragging, isFocused]);
+
+  const contentStyle = useMemo<React.CSSProperties>(() => ({
+    display: 'flex',
+    alignItems: 'center',
+    gap: getSpacing('md'),
+  }), []);
+
+  const titleStyle = useMemo<React.CSSProperties>(() => ({
+    fontSize: px(designTokens.typography.sizes.base),
+    fontWeight: designTokens.typography.weights.medium,
+    color: designTokens.colors.semantic.text.primary,
+    marginBottom: description ? getSpacing('xs') : 0,
+    lineHeight: designTokens.typography.lineHeights.tight,
+  }), [description]);
+
+  const descriptionStyle = useMemo<React.CSSProperties>(() => ({
+    fontSize: px(designTokens.typography.sizes.xs),
+    color: designTokens.colors.semantic.text.secondary,
+    lineHeight: designTokens.typography.lineHeights.normal,
+  }), []);
 
   return (
     <div
+      ref={cardRef}
       draggable
+      role="button"
+      tabIndex={0}
+      aria-label={`Drag or click to add ${title}`}
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
-      onClick={onClick}
+      onClick={handleClick}
+      onKeyDown={handleKeyDown}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      onFocus={() => setIsFocused(true)}
+      onBlur={() => setIsFocused(false)}
       style={cardStyle}
       className={className}
     >
-      <div style={{ display: 'flex', alignItems: 'center', gap: designTokens.spacing.md }}>
+      <div style={contentStyle}>
         {icon}
         <div style={{ flex: 1, minWidth: 0 }}>
-          <div
-            style={{
-              fontSize: designTokens.typography.sizes.base,
-              fontWeight: designTokens.typography.weights.medium,
-              color: designTokens.colors.semantic.text.primary,
-              marginBottom: description ? designTokens.spacing.xs : 0,
-            }}
-          >
+          <div style={titleStyle}>
             {title}
           </div>
           {description && (
-            <div
-              style={{
-                fontSize: designTokens.typography.sizes.xs,
-                color: designTokens.colors.semantic.text.secondary,
-                lineHeight: 1.4,
-              }}
-            >
+            <div style={descriptionStyle}>
               {description}
             </div>
           )}
         </div>
       </div>
       {preview && (
-        <div style={{ marginTop: designTokens.spacing.md }}>
+        <div style={{ marginTop: getSpacing('md') }}>
           {preview}
         </div>
       )}
     </div>
   );
-};
+});
+
+DraggableCard.displayName = 'DraggableCard';
+
+export { DRAG_MIME_TYPE };

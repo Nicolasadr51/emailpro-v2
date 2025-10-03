@@ -51,44 +51,44 @@ const sections: SidebarSection[] = [
 
 const contentBlocks = [
   {
-    type: 'IMAGE',
-    icon: <BlockIcon icon={Image} color="image" />,
+    type: 'IMAGE' as const,
+    icon: <BlockIcon icon={Image} color="IMAGE" />,
     title: 'Image',
     description: 'Ajoutez une image ou un logo',
   },
   {
-    type: 'HEADING',
-    icon: <BlockIcon icon={Type} color="heading" />,
+    type: 'HEADING' as const,
+    icon: <BlockIcon icon={Type} color="HEADING" />,
     title: 'Titre',
     description: 'Titre principal ou sous-titre',
   },
   {
-    type: 'TEXT',
-    icon: <BlockIcon icon={AlignLeft} color="text" />,
+    type: 'TEXT' as const,
+    icon: <BlockIcon icon={AlignLeft} color="TEXT" />,
     title: 'Paragraphe',
     description: 'Bloc de texte formaté',
   },
   {
-    type: 'BUTTON',
-    icon: <BlockIcon icon={MousePointer} color="button" />,
+    type: 'BUTTON' as const,
+    icon: <BlockIcon icon={MousePointer} color="BUTTON" />,
     title: 'Bouton',
     description: 'Call-to-action cliquable',
   },
   {
-    type: 'DIVIDER',
-    icon: <BlockIcon icon={Minus} color="divider" />,
+    type: 'DIVIDER' as const,
+    icon: <BlockIcon icon={Minus} color="DIVIDER" />,
     title: 'Séparateur',
     description: 'Ligne de séparation',
   },
   {
-    type: 'SOCIAL',
-    icon: <BlockIcon icon={Share2} color="social" />,
+    type: 'SOCIAL' as const,
+    icon: <BlockIcon icon={Share2} color="SOCIAL" />,
     title: 'Réseaux sociaux',
     description: 'Icônes de réseaux sociaux',
   },
   {
-    type: 'SPACER',
-    icon: <BlockIcon icon={Box} color="spacer" />,
+    type: 'SPACER' as const,
+    icon: <BlockIcon icon={Box} color="SPACER" />,
     title: 'Espacement',
     description: 'Espace vertical ajustable',
   },
@@ -96,28 +96,28 @@ const contentBlocks = [
 
 const layoutBlocks = [
   {
-    type: 'LAYOUT',
+    type: 'LAYOUT' as const,
     columns: 1 as const,
     icon: <LayoutPreview columns={1} />,
     title: '1 colonne',
     description: 'Largeur pleine',
   },
   {
-    type: 'LAYOUT',
+    type: 'LAYOUT' as const,
     columns: 2 as const,
     icon: <LayoutPreview columns={2} />,
     title: '2 colonnes',
     description: 'Répartition 50/50',
   },
   {
-    type: 'LAYOUT',
+    type: 'LAYOUT' as const,
     columns: 3 as const,
     icon: <LayoutPreview columns={3} />,
     title: '3 colonnes',
     description: 'Répartition égale',
   },
   {
-    type: 'LAYOUT',
+    type: 'LAYOUT' as const,
     columns: 2 as const,
     ratio: '2:1' as const,
     icon: <LayoutPreview columns={2} ratio="2:1" />,
@@ -125,7 +125,7 @@ const layoutBlocks = [
     description: 'Colonne large à gauche',
   },
   {
-    type: 'LAYOUT',
+    type: 'LAYOUT' as const,
     columns: 2 as const,
     ratio: '1:2' as const,
     icon: <LayoutPreview columns={2} ratio="1:2" />,
@@ -136,12 +136,12 @@ const layoutBlocks = [
 
 const templateBlocks = [
   {
-    type: 'TEMPLATE',
+    type: 'TEMPLATE' as const,
     id: 'hero-cta',
     icon: <div style={{ 
       width: 40, 
       height: 40, 
-      backgroundColor: `${designTokens.colors.blocks.button}15`,
+      backgroundColor: `${designTokens.colors.blocks.BUTTON}15`,
       borderRadius: designTokens.borderRadius.md,
       display: 'flex',
       alignItems: 'center',
@@ -152,12 +152,12 @@ const templateBlocks = [
     description: 'Image, titre et bouton d\'action',
   },
   {
-    type: 'TEMPLATE',
+    type: 'TEMPLATE' as const,
     id: 'newsletter',
     icon: <div style={{ 
       width: 40, 
       height: 40, 
-      backgroundColor: `${designTokens.colors.blocks.text}15`,
+      backgroundColor: `${designTokens.colors.blocks.TEXT}15`,
       borderRadius: designTokens.borderRadius.md,
       display: 'flex',
       alignItems: 'center',
@@ -168,12 +168,12 @@ const templateBlocks = [
     description: 'En-tête, articles et pied de page',
   },
   {
-    type: 'TEMPLATE',
+    type: 'TEMPLATE' as const,
     id: 'product',
     icon: <div style={{ 
       width: 40, 
       height: 40, 
-      backgroundColor: `${designTokens.colors.blocks.image}15`,
+      backgroundColor: `${designTokens.colors.blocks.IMAGE}15`,
       borderRadius: designTokens.borderRadius.md,
       display: 'flex',
       alignItems: 'center',
@@ -265,6 +265,7 @@ export const NewSidebar: React.FC<NewSidebarProps> = ({
                 icon={block.icon}
                 title={block.title}
                 description={block.description}
+                blockData={{ type: block.type, id: `${block.type}-${index}` }}
                 onClick={() => handleElementClick(block)}
               />
             ))}
@@ -275,6 +276,12 @@ export const NewSidebar: React.FC<NewSidebarProps> = ({
                 icon={layout.icon}
                 title={layout.title}
                 description={layout.description}
+                blockData={{ 
+                  type: layout.type, 
+                  id: `${layout.type}-${layout.columns}-${index}`,
+                  columns: layout.columns,
+                  ratio: layout.ratio
+                }}
                 onClick={() => handleElementClick(layout)}
               />
             ))}
@@ -285,6 +292,11 @@ export const NewSidebar: React.FC<NewSidebarProps> = ({
                 icon={template.icon}
                 title={template.title}
                 description={template.description}
+                blockData={{ 
+                  type: template.type, 
+                  id: `${template.type}-${template.id}-${index}`,
+                  templateId: template.id
+                }}
                 onClick={() => handleElementClick(template)}
               />
             ))}

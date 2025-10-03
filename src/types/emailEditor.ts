@@ -330,7 +330,7 @@ export const createDefaultBlock = (type: BlockType): EmailBlock => {
   };
 
   switch (type) {
-    case 'text':
+    case 'TEXT':
       return {
         ...baseBlock,
         type: 'text',
@@ -361,7 +361,7 @@ export const createDefaultBlock = (type: BlockType): EmailBlock => {
         },
       } as HeadingBlock;
 
-    case 'image':
+    case 'IMAGE':
       return {
         ...baseBlock,
         type: 'image',
@@ -374,7 +374,7 @@ export const createDefaultBlock = (type: BlockType): EmailBlock => {
         },
       } as ImageBlock;
 
-    case 'button':
+    case 'BUTTON':
       return {
         ...baseBlock,
         type: 'button',
@@ -395,7 +395,7 @@ export const createDefaultBlock = (type: BlockType): EmailBlock => {
         },
       } as ButtonBlock;
 
-    case 'divider':
+    case 'DIVIDER':
       return {
         ...baseBlock,
         type: 'divider',

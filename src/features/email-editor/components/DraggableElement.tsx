@@ -38,14 +38,16 @@ export const DraggableElement: React.FC<DraggableElementProps> = ({
 
   const renderElement = () => {
     switch (element.type) {
-      case 'text':
+      case 'TEXT':
         return <TextBlock element={element} />;
-      case 'image':
+      case 'IMAGE':
         return <ImageBlock element={element} />;
-      case 'button':
+      case 'BUTTON':
         return <ButtonBlock element={element} />;
-      case 'divider':
+      case 'DIVIDER':
         return <DividerBlock element={element} />;
+      case 'HEADING':
+        return <TextBlock element={element} />;
       default:
         return <div>Élément non supporté</div>;
     }

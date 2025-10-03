@@ -36,7 +36,7 @@ export const LoadingSkeleton: React.FC<LoadingSkeletonProps> = ({
 
   const renderSkeleton = () => {
     switch (variant) {
-      case 'text':
+      case 'TEXT':
         return (
           <div className={cn('space-y-2', className)}>
             {Array.from({ length: lines }).map((_, index) => (
@@ -87,7 +87,7 @@ export const LoadingSkeleton: React.FC<LoadingSkeletonProps> = ({
           />
         );
 
-      case 'button':
+      case 'BUTTON':
         return (
           <SkeletonElement
             className={cn(baseClasses, 'h-10 w-24', className)}

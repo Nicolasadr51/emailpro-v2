@@ -18,7 +18,7 @@ const createDefaultElement = (type: EditorElement['type'], position: Position): 
   };
 
   switch (type) {
-    case 'text':
+    case 'TEXT':
       return {
         ...baseElement,
         content: 'Votre texte ici',
@@ -29,7 +29,7 @@ const createDefaultElement = (type: EditorElement['type'], position: Position): 
           lineHeight: '1.5',
         },
       };
-    case 'image':
+    case 'IMAGE':
       return {
         ...baseElement,
         content: JSON.stringify({
@@ -42,7 +42,7 @@ const createDefaultElement = (type: EditorElement['type'], position: Position): 
           height: '200px',
         },
       };
-    case 'button':
+    case 'BUTTON':
       return {
         ...baseElement,
         content: JSON.stringify({
@@ -60,7 +60,7 @@ const createDefaultElement = (type: EditorElement['type'], position: Position): 
           border: 'none',
         },
       };
-    case 'divider':
+    case 'DIVIDER':
       return {
         ...baseElement,
         content: JSON.stringify({
