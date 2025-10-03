@@ -277,7 +277,7 @@ const emailEditorReducer = (state: EmailEditorState, action: EmailEditorAction):
     case 'RESET_TEMPLATE':
       return {
         ...initialState,
-        template: createDefaultTemplate() as EmailTemplate | null,
+        template: createDefaultTemplate(),
       };
 
     default:
