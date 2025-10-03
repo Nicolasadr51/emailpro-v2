@@ -3,7 +3,7 @@
 
 import React from 'react';
 import { EditorElement, EmailTemplate } from '../types/editor.types';
-import { useEmailEditorStore';
+import { useEmailEditorStore } from '../hooks/useEmailEditor';
 import { SettingsIcon, PaletteIcon, LayoutIcon } from 'lucide-react';
 
 interface PropertiesPanelProps {

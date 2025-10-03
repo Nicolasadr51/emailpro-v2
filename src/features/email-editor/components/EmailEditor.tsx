@@ -3,7 +3,7 @@
 
 import React, { useEffect, useState, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useEmailEditorStore';
+import { useEmailEditorStore } from '../hooks/useEmailEditor';
 import { EditorCanvas } from './EditorCanvas';
 import { NewSidebar } from './NewSidebar';
 import { PropertiesPanel } from './PropertiesPanel';

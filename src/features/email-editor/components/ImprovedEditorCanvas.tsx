@@ -1,5 +1,5 @@
 import React, { useMemo, useState, useCallback } from 'react';
-import { useEmailEditorStore';
+import { useEmailEditorStore } from '../hooks/useEmailEditor';
 import { useDragDrop } from '../hooks/useDragDrop';
 import { DraggableElement } from './DraggableElement';
 import { EditorElement } from '../types/editor.types';

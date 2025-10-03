@@ -4,7 +4,7 @@
 import React, { useState } from 'react';
 import { EditorElement } from '../types/editor.types';
 import { useDraggableElement, useElementSelection, useElementResize } from '../hooks/useDragDrop';
-import { useEmailEditorStore';
+import { useEmailEditorStore } from '../hooks/useEmailEditor';
 import { TextBlock } from './elements/TextBlock';
 import { ImageBlock } from './elements/ImageBlock';
 import { ButtonBlock } from './elements/ButtonBlock';

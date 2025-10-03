@@ -3,7 +3,7 @@
 
 import React, { useState } from 'react';
 import { EditorElement, DividerElementContent } from '../../types/editor.types';
-import { useEmailEditorStore';
+import { useEmailEditorStore } from '../hooks/useEmailEditor';
 import { MinusIcon } from 'lucide-react';
 
 interface DividerBlockProps {
