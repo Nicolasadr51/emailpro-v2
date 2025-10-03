@@ -5,6 +5,7 @@ import {
   EmailEditorState,
   EmailEditorActions,
   EmailEditorAction,
+  EmailEditorContextType,
   BlockType,
   createDefaultTemplate,
   createDefaultBlock,
