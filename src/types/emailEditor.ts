@@ -117,10 +117,14 @@ export interface ImageBlockContent {
   linkTarget?: '_blank' | '_self';
 }
 
+// Type pour le comportement des liens (recommandation Claude 4.5)
+export type ButtonTarget = '_self' | '_blank';
+
 export interface ButtonBlockContent {
   text: string;
   link: string;
-  linkTarget: '_blank' | '_self';
+  linkTarget: '_blank' | '_self'; // Maintenu pour compatibilité
+  target: ButtonTarget; // Ajouté selon l'usage dans le composant
   backgroundColor: string;
   color: string;
   fontSize: number;
@@ -465,7 +469,8 @@ export const createDefaultBlock = (type: BlockType): EmailBlock => {
         content: {
           text: 'Cliquez ici',
           link: '#',
-          linkTarget: '_self',
+          linkTarget: '_self', // Maintenu pour compatibilité
+          target: '_self', // Ajouté selon l'usage dans le composant
           backgroundColor: '#007bff',
           color: '#ffffff',
           fontSize: 16,
