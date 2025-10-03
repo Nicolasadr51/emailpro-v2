@@ -3,10 +3,11 @@ import { useEmailEditorStore } from '../hooks/useEmailEditor';
 import { useDragDrop } from '../hooks/useDragDrop';
 import { DraggableElement } from './DraggableElement';
 import { EditorElement } from '../types/editor.types';
+import { ViewMode } from './ViewModeToggle'; // Importer le type ViewMode
 
 interface EditorCanvasProps {
   className?: string;
-  viewMode?: 'desktop' | 'tablet' | 'mobile';
+  viewMode?: ViewMode; // Ajouter viewMode en tant que propriété optionnelle de type ViewMode
 }
 
 export const EditorCanvas: React.FC<EditorCanvasProps> = ({ 
