@@ -1,15 +1,32 @@
 import React, { createContext, useContext, useReducer, useCallback } from 'react';
-import { 
-  EmailEditorState, 
-  EmailEditorAction, 
-  EmailEditorContextType,
+import {
   EmailTemplate,
-  BlockType,
   EmailBlock,
-  GlobalStyles,
+  EmailEditorState,
+  EmailEditorActions,
+  EmailEditorAction,
+  BlockType,
   createDefaultTemplate,
-  createDefaultBlock
+  createDefaultBlock,
+  Position
 } from '../types/emailEditor';
+
+// Fonction de migration pour convertir les anciennes positions number vers Position
+const migrateBlockPosition = (block: any, index: number): EmailBlock => {
+  if (typeof block.position === 'number') {
+    return {
+      ...block,
+      position: {
+        x: 0,
+        y: index * 120, // Espacement vertical
+        width: 300,
+        height: 100,
+        order: block.position
+      }
+    };
+  }
+  return block;
+};
 
 // État initial de l'éditeur
 const initialState: EmailEditorState = {
@@ -77,7 +94,7 @@ const emailEditorReducer = (state: EmailEditorState, action: EmailEditorAction):
 
       const newTemplate: EmailTemplate = {
         ...state.template,
-        blocks: updatedBlocks as EmailBlock[] as EmailBlock[],
+        blocks: updatedBlocks,
         updatedAt: new Date().toISOString(),
       };
 
@@ -90,13 +107,21 @@ const emailEditorReducer = (state: EmailEditorState, action: EmailEditorAction):
     }
 
     case 'DELETE_BLOCK': {
-      const updatedBlocks = state.template.blocks
-        .filter(block => block.id !== action.payload.blockId)
-        .map((block, index) => ({ ...block, position: index }));
+      const filteredBlocks = state.template.blocks
+        .filter(block => block.id !== action.payload.blockId);
+      
+      const updatedBlocks = filteredBlocks
+        .map((block, index) => ({ 
+          ...block, 
+          position: { 
+            ...block.position, 
+            order: index 
+          } 
+        }));
 
       const newTemplate: EmailTemplate = {
         ...state.template,
-        blocks: updatedBlocks as EmailBlock[] as EmailBlock[],
+        blocks: updatedBlocks,
         updatedAt: new Date().toISOString(),
       };
 
@@ -164,7 +189,7 @@ const emailEditorReducer = (state: EmailEditorState, action: EmailEditorAction):
 
       const newTemplate: EmailTemplate = {
         ...state.template,
-        blocks: updatedBlocks as EmailBlock[] as EmailBlock[],
+        blocks: updatedBlocks,
         updatedAt: new Date().toISOString(),
       };
 
