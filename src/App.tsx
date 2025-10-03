@@ -60,6 +60,10 @@ function App() {
                         <Route path="campaigns" element={<CampaignsPage />} />
                         <Route path="contacts" element={<ContactListPage />} />
                         <Route path="campaigns/:id/edit" element={<EmailEditorPage />} />
+                        
+                        {/* Routes pour l'éditeur d'emails */}
+                        <Route path="email-editor" element={<EmailEditorPage />} />
+                        <Route path="email-editor/:templateId" element={<EmailEditorPage />} />
 
                         <Route path="templates" element={<TemplatesPage />} />
                         <Route path="statistics" element={<StatisticsPage />} />

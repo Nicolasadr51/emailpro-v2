@@ -9,7 +9,8 @@ import {
   Settings,
   ChevronLeft,
   ChevronRight,
-  Palette
+  Palette,
+  Edit3
 } from 'lucide-react';
 import { useSidebar } from '../../store/useAppStore';
 import { useKeyboardShortcuts } from '../../hooks';
@@ -58,6 +59,14 @@ const navigationItems: NavigationItem[] = [
     shortcut: 'ctrl+t',
     ariaLabel: 'Gérer les modèles d\'email',
     description: 'Modèles d\'emails réutilisables'
+  },
+  {
+    path: '/email-editor',
+    title: 'Éditeur d\'emails',
+    icon: <Edit3 className="h-5 w-5" />,
+    shortcut: 'ctrl+e',
+    ariaLabel: 'Créer et éditer des emails',
+    description: 'Éditeur d\'emails avancé'
   },
   {
     path: '/statistics',
