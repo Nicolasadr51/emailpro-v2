@@ -23,7 +23,11 @@ export type BlockType =
 
 // Styles de base pour tous les blocs
 export interface BlockStyles {
+  // Couleurs
   backgroundColor?: string;
+  color?: string;
+  
+  // Espacement
   padding?: {
     top: number;
     right: number;
@@ -36,16 +40,51 @@ export interface BlockStyles {
     bottom: number;
     left: number;
   };
+  
+  // Bordures
   border?: {
     width: number;
     style: 'solid' | 'dashed' | 'dotted' | 'none';
     color: string;
     radius: number;
   };
+  
+  // Typographie
+  fontSize?: string;
+  fontWeight?: string | number;
+  fontFamily?: string;
+  lineHeight?: string | number;
   textAlign?: 'left' | 'center' | 'right' | 'justify';
+  textDecoration?: string;
+  
+  // Dimensions
   width?: string;
   height?: string;
+  
+  // Autres propriétés CSS communes
+  borderRadius?: string;
+  opacity?: number;
+  zIndex?: number;
 }
+
+// Valeurs par défaut pour BlockStyles (recommandation Claude 4.5)
+export const DEFAULT_BLOCK_STYLES: BlockStyles = {
+  backgroundColor: '#ffffff',
+  color: '#000000',
+  fontSize: '16px',
+  fontWeight: '400',
+  fontFamily: 'Arial, sans-serif',
+  lineHeight: '1.4',
+  textAlign: 'left',
+  borderRadius: '0px',
+  opacity: 1,
+  zIndex: 1,
+};
+
+// Fonction utilitaire pour appliquer les styles par défaut
+export const applyDefaultStyles = (styles?: Partial<BlockStyles>): BlockStyles => {
+  return { ...DEFAULT_BLOCK_STYLES, ...styles };
+};
 
 // Contenu spécifique pour chaque type de bloc
 export interface TextBlockContent {
