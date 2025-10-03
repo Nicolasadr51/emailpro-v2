@@ -4,6 +4,7 @@
 import React, { useState } from 'react';
 import { EmailBlock, ImageBlockContent } from '../../../../types/emailEditor';
 import { useEmailEditorStore } from '../../../../contexts/EmailEditorContext';
+import { useBlockStyles } from '../../../../hooks/useBlockStyles';
 import { ImageIcon, LinkIcon, UploadIcon } from 'lucide-react';
 
 interface ImageBlockProps {
@@ -70,17 +71,21 @@ export const ImageBlock: React.FC<ImageBlockProps> = ({ element }) => {
     updateBlock(element.id, { content: newImageData });
   };
 
-  const containerStyle = {
+  // Utilisation du hook useBlockStyles (recommandation Claude 4.5)
+  const baseImageStyles = useBlockStyles(element.styles);
+  
+  const containerStyle: React.CSSProperties = {
+    ...baseImageStyles,
     width: '100%',
-    height: '100%',
     minHeight: '100px',
-    position: 'relative' as const,
-    backgroundColor: element.styles.backgroundColor || 'transparent',
-    borderRadius: element.styles.borderRadius || '0',
-    border: element.styles.border || 'none',
-    padding: element.styles.padding || '0',
-    margin: element.styles.margin || '0',
+    position: 'relative',
     overflow: 'hidden',
+    // Valeurs par défaut si non définies dans BlockStyles
+    backgroundColor: baseImageStyles.backgroundColor || 'transparent',
+    borderRadius: baseImageStyles.borderRadius || '0',
+    border: baseImageStyles.border || 'none',
+    padding: baseImageStyles.padding || '0',
+    margin: baseImageStyles.margin || '0',
   };
 
   const imageStyle = {

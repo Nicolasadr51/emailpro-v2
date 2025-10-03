@@ -1,8 +1,8 @@
 // Composant pour les éléments de bouton dans l'éditeur
 // Architecture définie par Claude 4.5 Sonnet
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { EmailBlock, ButtonBlockContent } from '../../../../types/emailEditor';
+import { useBlockStyles } from '../../../../hooks/useBlockStyles';
 import { useEmailEditorStore } from '../../../../contexts/EmailEditorContext';
 import { ExternalLinkIcon } from 'lucide-react';
 
@@ -88,22 +88,26 @@ export const ButtonBlock: React.FC<ButtonBlockProps> = ({ element }) => {
     position: 'relative' as const,
   };
 
-  const buttonStyle = {
+  // Utilisation du hook useBlockStyles (recommandation Claude 4.5)
+  const baseButtonStyles = useBlockStyles(element.styles);
+  
+  const buttonStyle: React.CSSProperties = {
+    ...baseButtonStyles,
     display: 'inline-block',
-    padding: element.styles.padding || '12px 24px',
-    margin: element.styles.margin || '0',
-    backgroundColor: element.styles.backgroundColor || '#007bff',
-    color: element.styles.color || '#ffffff',
-    border: element.styles.border || 'none',
-    borderRadius: element.styles.borderRadius || '4px',
-    fontSize: element.styles.fontSize || '16px',
-    fontWeight: element.styles.fontWeight || '500',
-    textAlign: element.styles.textAlign || 'center',
     textDecoration: 'none',
     cursor: 'pointer',
     transition: 'all 0.2s ease',
     minWidth: '100px',
     lineHeight: '1.2',
+    // Valeurs par défaut si non définies dans BlockStyles
+    padding: baseButtonStyles.padding || '12px 24px',
+    backgroundColor: baseButtonStyles.backgroundColor || '#007bff',
+    color: baseButtonStyles.color || '#ffffff',
+    border: baseButtonStyles.border || 'none',
+    borderRadius: baseButtonStyles.borderRadius || '4px',
+    fontSize: baseButtonStyles.fontSize || '16px',
+    fontWeight: baseButtonStyles.fontWeight || '500',
+    textAlign: baseButtonStyles.textAlign || 'center',
   };
 
   // Mode édition

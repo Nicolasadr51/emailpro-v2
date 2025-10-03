@@ -4,6 +4,7 @@
 import React, { useState } from 'react';
 import { EmailBlock, DividerBlockContent } from '../../../../types/emailEditor';
 import { useEmailEditorStore } from '../../../../contexts/EmailEditorContext';
+import { useBlockStyles } from '../../../../hooks/useBlockStyles';
 import { MinusIcon } from 'lucide-react';
 
 interface DividerBlockProps {
@@ -38,25 +39,29 @@ export const DividerBlock: React.FC<DividerBlockProps> = ({ element }) => {
     updateBlock(element.id, { content: newDividerData });
   };
 
-  const containerStyle = {
+  // Utilisation du hook useBlockStyles (recommandation Claude 4.5)
+  const baseDividerStyles = useBlockStyles(element.styles);
+  
+  const containerStyle: React.CSSProperties = {
+    ...baseDividerStyles,
     width: '100%',
-    height: '100%',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    position: 'relative' as const,
-    padding: element.styles.padding || '20px 0',
-    margin: element.styles.margin || '0',
+    position: 'relative',
+    // Valeurs par défaut si non définies dans BlockStyles
+    padding: baseDividerStyles.padding || '20px 0',
+    margin: baseDividerStyles.margin || '0',
   };
 
-  const dividerStyle = {
-    width: element.styles.width || '100%',
+  const dividerStyle: React.CSSProperties = {
+    width: baseDividerStyles.width || '100%',
     height: `${dividerData.thickness}px`,
     border: 'none',
     borderStyle: dividerData.style,
     borderWidth: dividerData.style !== 'solid' ? `${dividerData.thickness}px` : '0',
-    borderColor: element.styles.backgroundColor || '#e0e0e0',
-    backgroundColor: dividerData.style === 'solid' ? (element.styles.backgroundColor || '#e0e0e0') : 'transparent',
+    borderColor: baseDividerStyles.backgroundColor || '#e0e0e0',
+    backgroundColor: dividerData.style === 'solid' ? (baseDividerStyles.backgroundColor || '#e0e0e0') : 'transparent',
   };
 
   // Mode édition
