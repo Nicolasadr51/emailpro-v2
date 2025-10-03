@@ -43,7 +43,7 @@ export const StatisticsPage: React.FC = () => {
       <div className="mb-6">
         <Select
           value={selectedCampaign}
-          onValueChange={setSelectedCampaign}
+          onChange={(e) => setSelectedCampaign(e.target.value)}
           placeholder="Sélectionner une campagne"
         >
           <option value="campaign-1">Campagne Newsletter Octobre</option>

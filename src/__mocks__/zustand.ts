@@ -10,7 +10,7 @@ const mockStore = create(() => ({
 export const mockZustand = {
   store: mockStore,
   reset: () => {
-    const state = mockStore.getState();
+    const state = mockStore.getState() as Record<string, any>;
     Object.keys(state).forEach(key => {
       if (typeof state[key] === 'function') {
         (state[key] as jest.Mock).mockClear();

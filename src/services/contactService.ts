@@ -40,7 +40,7 @@ export const contactService = {
       const endpoint = queryString ? `/contacts?${queryString}` : '/contacts';
       return apiClient.get<ContactListResponse>(endpoint);
     } catch (error) {
-      handleApiError(error, 'récupération des contacts');
+      throw handleApiError(error, 'récupération des contacts');
     }
   },
 
@@ -51,7 +51,7 @@ export const contactService = {
       }
       return apiClient.get<Contact>(`/contacts/${id}`);
     } catch (error) {
-      handleApiError(error, 'récupération du contact');
+      throw handleApiError(error, 'récupération du contact');
     }
   },
 
@@ -73,7 +73,7 @@ export const contactService = {
       if (error instanceof ValidationError) {
         throw error;
       }
-      handleApiError(error, 'création du contact');
+      throw handleApiError(error, 'création du contact');
     }
   },
 
@@ -95,7 +95,7 @@ export const contactService = {
       if (error instanceof ValidationError) {
         throw error;
       }
-      handleApiError(error, 'mise à jour du contact');
+      throw handleApiError(error, 'mise à jour du contact');
     }
   },
 
@@ -106,7 +106,7 @@ export const contactService = {
       }
       return apiClient.delete<void>(`/contacts/${id}`);
     } catch (error) {
-      handleApiError(error, 'suppression du contact');
+      throw handleApiError(error, 'suppression du contact');
     }
   },
 
@@ -125,7 +125,7 @@ export const contactService = {
       const endpoint = queryString ? `/contact-lists?${queryString}` : '/contact-lists';
       return apiClient.get<ContactListsResponse>(endpoint);
     } catch (error) {
-      handleApiError(error, 'récupération des listes de contacts');
+      throw handleApiError(error, 'récupération des listes de contacts');
     }
   },
 
@@ -136,7 +136,7 @@ export const contactService = {
       }
       return apiClient.get<ContactList>(`/contact-lists/${id}`);
     } catch (error) {
-      handleApiError(error, 'récupération de la liste de contacts');
+      throw handleApiError(error, 'récupération de la liste de contacts');
     }
   },
 
@@ -158,7 +158,7 @@ export const contactService = {
       if (error instanceof ValidationError) {
         throw error;
       }
-      handleApiError(error, 'création de la liste de contacts');
+      throw handleApiError(error, 'création de la liste de contacts');
     }
   },
 
@@ -180,7 +180,7 @@ export const contactService = {
       if (error instanceof ValidationError) {
         throw error;
       }
-      handleApiError(error, 'mise à jour de la liste de contacts');
+      throw handleApiError(error, 'mise à jour de la liste de contacts');
     }
   },
 
@@ -191,7 +191,7 @@ export const contactService = {
       }
       return apiClient.delete<void>(`/contact-lists/${id}`);
     } catch (error) {
-      handleApiError(error, 'suppression de la liste de contacts');
+      throw handleApiError(error, 'suppression de la liste de contacts');
     }
   },
 };
