@@ -14,7 +14,15 @@ export const EditorCanvas: React.FC<EditorCanvasProps> = ({
   className = '', 
   viewMode = 'desktop' 
 }) => {
-  const { elements, selectedElement, template, zoom } = useEmailEditorStore();
+  console.log("EditorCanvas: Attempting to use useEmailEditorStore");
+  const { state } = useEmailEditorStore();
+  console.log("EditorCanvas: Successfully got context", { state });
+  
+  // Utiliser les données du contexte avec vérifications de sécurité
+  const template = state.template;
+  const elements = template?.blocks || [];
+  const selectedElement = null; // TODO: Implémenter la sélection d'élément dans le contexte
+  const zoom = 1; // Placeholder - le zoom n'est pas encore implémenté dans le contexte
   const { dropRef, dropHandlers } = useDragDrop();
 
   // Adapter la largeur selon le mode d'affichage
