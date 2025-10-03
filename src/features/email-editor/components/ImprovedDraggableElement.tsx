@@ -152,7 +152,7 @@ export const ImprovedDraggableElement: React.FC<ImprovedDraggableElementProps> =
   // Rendu du contenu selon le type d'élément
   const renderContent = () => {
     switch (element.type) {
-      case 'TEXT':
+      case 'text':
         return (
           <div style={{
             padding: '8px',
@@ -169,7 +169,7 @@ export const ImprovedDraggableElement: React.FC<ImprovedDraggableElementProps> =
           </div>
         );
 
-      case 'HEADING':
+      case 'heading':
         const HeadingTag = (element.content?.level || 'h2') as keyof JSX.IntrinsicElements;
         return (
           <HeadingTag style={{
@@ -187,7 +187,7 @@ export const ImprovedDraggableElement: React.FC<ImprovedDraggableElementProps> =
           </HeadingTag>
         );
 
-      case 'BUTTON':
+      case 'button':
         return (
           <button style={{
             width: '100%',
@@ -205,7 +205,7 @@ export const ImprovedDraggableElement: React.FC<ImprovedDraggableElementProps> =
           </button>
         );
 
-      case 'IMAGE':
+      case 'image':
         return (
           <div style={{
             width: '100%',
@@ -239,7 +239,7 @@ export const ImprovedDraggableElement: React.FC<ImprovedDraggableElementProps> =
           </div>
         );
 
-      case 'DIVIDER':
+      case 'divider':
         return (
           <div style={{
             width: '100%',

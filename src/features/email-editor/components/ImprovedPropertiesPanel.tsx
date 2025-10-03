@@ -295,7 +295,7 @@ export const ImprovedPropertiesPanel: React.FC<PropertiesPanelProps> = ({
     if (!selectedElement) return null;
 
     switch (selectedElement.type) {
-      case 'TEXT':
+      case 'text':
         return (
           <>
             {renderTextarea(
@@ -307,7 +307,7 @@ export const ImprovedPropertiesPanel: React.FC<PropertiesPanelProps> = ({
           </>
         );
       
-      case 'HEADING':
+      case 'heading':
         return (
           <>
             {renderInput(
@@ -331,7 +331,7 @@ export const ImprovedPropertiesPanel: React.FC<PropertiesPanelProps> = ({
           </>
         );
       
-      case 'BUTTON':
+      case 'button':
         return (
           <>
             {renderInput(
@@ -351,7 +351,7 @@ export const ImprovedPropertiesPanel: React.FC<PropertiesPanelProps> = ({
           </>
         );
       
-      case 'IMAGE':
+      case 'image':
         return (
           <>
             {renderInput(
