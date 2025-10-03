@@ -97,7 +97,7 @@ export const EditorToolbar: React.FC<EditorToolbarProps> = ({
             {selectedElement.type} sélectionné
           </div>
           
-          {selectedElement.type === 'text' && (
+          {selectedElement.type === 'TEXT' && (
             <>
               <Button
                 variant="ghost"

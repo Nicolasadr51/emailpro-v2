@@ -220,7 +220,7 @@ export const PropertiesPanel: React.FC<PropertiesPanelProps> = ({
             </div>
 
             {/* Typographie */}
-            {selectedElement.type === 'text' && (
+            {selectedElement.type === 'TEXT' && (
               <div style={{ marginBottom: '16px' }}>
                 <div style={{ marginBottom: '8px' }}>
                   <label style={{

@@ -1,10 +1,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { cn } from '../../lib/utils';
+import { ElementType } from '../../features/email-editor/types/editor.types';
 
 interface LoadingSkeletonProps {
   className?: string;
-  variant?: 'text' | 'card' | 'avatar' | 'button' | 'table';
+  variant?: ElementType | 'card' | 'avatar' | 'table';
   lines?: number;
   width?: string;
   height?: string;
@@ -13,7 +14,7 @@ interface LoadingSkeletonProps {
 
 export const LoadingSkeleton: React.FC<LoadingSkeletonProps> = ({
   className,
-  variant = 'text',
+  variant = 'TEXT',
   lines = 1,
   width,
   height,

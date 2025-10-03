@@ -42,7 +42,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     containerClassName,
     variant,
     size,
-    type = 'text',
+    type = 'TEXT',
     label,
     error,
     helperText,

@@ -333,7 +333,7 @@ export const createDefaultBlock = (type: BlockType): EmailBlock => {
     case 'TEXT':
       return {
         ...baseBlock,
-        type: 'text',
+        type: 'TEXT',
         content: {
           text: 'Votre texte ici...',
           fontSize: 16,
@@ -348,7 +348,7 @@ export const createDefaultBlock = (type: BlockType): EmailBlock => {
     case 'heading':
       return {
         ...baseBlock,
-        type: 'heading',
+        type: 'HEADING',
         content: {
           text: 'Votre titre ici',
           level: 2,
@@ -364,7 +364,7 @@ export const createDefaultBlock = (type: BlockType): EmailBlock => {
     case 'IMAGE':
       return {
         ...baseBlock,
-        type: 'image',
+        type: 'IMAGE',
         content: {
           src: 'https://via.placeholder.com/600x300',
           alt: 'Image',
@@ -377,7 +377,7 @@ export const createDefaultBlock = (type: BlockType): EmailBlock => {
     case 'BUTTON':
       return {
         ...baseBlock,
-        type: 'button',
+        type: 'BUTTON',
         content: {
           text: 'Cliquez ici',
           link: '#',
@@ -398,7 +398,7 @@ export const createDefaultBlock = (type: BlockType): EmailBlock => {
     case 'DIVIDER':
       return {
         ...baseBlock,
-        type: 'divider',
+        type: 'DIVIDER',
         content: {
           height: 1,
           color: '#cccccc',
