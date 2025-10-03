@@ -2,44 +2,46 @@
 // Architecture définie par Claude 4.5 Sonnet
 
 import React from 'react';
-import { EditorElement, EmailTemplate } from '../types/editor.types';
-import { useEmailEditorStore } from '../hooks/useEmailEditor';
+import { EmailTemplate, EditorBlock } from '../types/editor.types';
+
 import { SettingsIcon, PaletteIcon, LayoutIcon } from 'lucide-react';
 
 interface PropertiesPanelProps {
-  selectedElement: EditorElement | null;
+  selectedBlockId: string | null;
+  onUpdate: (blockId: string, updates: Partial<EditorBlock>) => void;
   template: EmailTemplate | null;
   className?: string;
 }
 
 export const PropertiesPanel: React.FC<PropertiesPanelProps> = ({
-  selectedElement,
+  selectedBlockId,
+  onUpdate,
   template,
-  className = '',
+  className = 
 }) => {
-  const { updateElement } = useEmailEditorStore();
+  const selectedBlock = template?.blocks.find(block => block.id === selectedBlockId);
 
   const handleStyleChange = (property: string, value: string) => {
-    if (!selectedElement) return;
-    
-    updateElement(selectedElement.id, {
+    if (!selectedBlock) return;
+    onUpdate(selectedBlock.id, {
       styles: {
-        ...selectedElement.styles,
+        ...selectedBlock.styles,
         [property]: value,
       },
     });
   };
 
   const handlePositionChange = (property: 'x' | 'y', value: number) => {
-    if (!selectedElement) return;
-    
-    updateElement(selectedElement.id, {
+    if (!selectedBlock) return;
+    onUpdate(selectedBlock.id, {
       position: {
-        ...selectedElement.position,
+        ...selectedBlock.position,
         [property]: value,
       },
     });
   };
+
+
 
   return (
     <div className={`properties-panel ${className}`} style={{
@@ -70,7 +72,7 @@ export const PropertiesPanel: React.FC<PropertiesPanelProps> = ({
         </h3>
       </div>
 
-      {selectedElement ? (
+      {selectedBlock ? (
         <div>
           {/* Informations de l'élément */}
           <div style={{ padding: '16px', borderBottom: '1px solid #e0e0e0' }}>
@@ -81,10 +83,10 @@ export const PropertiesPanel: React.FC<PropertiesPanelProps> = ({
               color: '#333',
               textTransform: 'capitalize',
             }}>
-              Élément {selectedElement.type}
+              Élément {selectedBlock.type}
             </h4>
             <div style={{ fontSize: '12px', color: '#666' }}>
-              ID: {selectedElement.id.slice(-8)}
+              ID: {selectedBlock.id.slice(-8)}
             </div>
           </div>
 
@@ -115,7 +117,7 @@ export const PropertiesPanel: React.FC<PropertiesPanelProps> = ({
                 </label>
                 <input
                   type="number"
-                  value={selectedElement.position.x}
+                  value={selectedBlock.position.x}
                   onChange={(e) => handlePositionChange('x', parseInt(e.target.value) || 0)}
                   style={{
                     width: '100%',
@@ -138,7 +140,7 @@ export const PropertiesPanel: React.FC<PropertiesPanelProps> = ({
                 </label>
                 <input
                   type="number"
-                  value={selectedElement.position.y}
+                  value={selectedBlock.position.y}
                   onChange={(e) => handlePositionChange('y', parseInt(e.target.value) || 0)}
                   style={{
                     width: '100%',
@@ -182,7 +184,7 @@ export const PropertiesPanel: React.FC<PropertiesPanelProps> = ({
                   </label>
                   <input
                     type="color"
-                    value={selectedElement.styles.color || '#333333'}
+                    value={selectedBlock.styles.color || '#333333'}
                     onChange={(e) => handleStyleChange('color', e.target.value)}
                     style={{
                       width: '100%',
@@ -205,7 +207,7 @@ export const PropertiesPanel: React.FC<PropertiesPanelProps> = ({
                   </label>
                   <input
                     type="color"
-                    value={selectedElement.styles.backgroundColor || '#ffffff'}
+                    value={selectedBlock.styles.backgroundColor || '#ffffff'}
                     onChange={(e) => handleStyleChange('backgroundColor', e.target.value)}
                     style={{
                       width: '100%',
@@ -220,7 +222,7 @@ export const PropertiesPanel: React.FC<PropertiesPanelProps> = ({
             </div>
 
             {/* Typographie */}
-            {selectedElement.type === 'TEXT' && (
+            {selectedBlock.type === 'TEXT' && (
               <div style={{ marginBottom: '16px' }}>
                 <div style={{ marginBottom: '8px' }}>
                   <label style={{
@@ -234,7 +236,7 @@ export const PropertiesPanel: React.FC<PropertiesPanelProps> = ({
                   </label>
                   <input
                     type="text"
-                    value={selectedElement.styles.fontSize || '16px'}
+                    value={selectedBlock.styles.fontSize || '16px'}
                     onChange={(e) => handleStyleChange('fontSize', e.target.value)}
                     placeholder="16px"
                     style={{
@@ -257,7 +259,7 @@ export const PropertiesPanel: React.FC<PropertiesPanelProps> = ({
                     Alignement
                   </label>
                   <select
-                    value={selectedElement.styles.textAlign || 'left'}
+                    value={selectedBlock.styles.textAlign || 'left'}
                     onChange={(e) => handleStyleChange('textAlign', e.target.value)}
                     style={{
                       width: '100%',
@@ -290,7 +292,7 @@ export const PropertiesPanel: React.FC<PropertiesPanelProps> = ({
                   </label>
                   <input
                     type="text"
-                    value={selectedElement.styles.padding || '10px'}
+                    value={selectedBlock.styles.padding || '10px'}
                     onChange={(e) => handleStyleChange('padding', e.target.value)}
                     placeholder="10px"
                     style={{
@@ -314,7 +316,7 @@ export const PropertiesPanel: React.FC<PropertiesPanelProps> = ({
                   </label>
                   <input
                     type="text"
-                    value={selectedElement.styles.margin || '5px'}
+                    value={selectedBlock.styles.margin || '5px'}
                     onChange={(e) => handleStyleChange('margin', e.target.value)}
                     placeholder="5px"
                     style={{

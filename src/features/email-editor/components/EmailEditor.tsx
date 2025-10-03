@@ -380,8 +380,9 @@ export const EmailEditor: React.FC<EmailEditorProps> = ({ className = '' }) => {
         {/* Panneau des propriétés */}
         {showProperties && (
           <PropertiesPanel
-            selectedElement={selectedElement}
-            template={template}
+            selectedBlockId={state.selectedBlockId}
+            onUpdate={actions.updateBlock}
+            template={state.template}
           />
         )}
       </div>
