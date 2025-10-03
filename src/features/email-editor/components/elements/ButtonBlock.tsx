@@ -3,7 +3,7 @@
 
 import React, { useState } from 'react';
 import { EditorElement, ButtonElementContent } from '../../types/editor.types';
-import { useEmailEditorStore } from '../../hooks/useEmailEditor';
+import { useEmailEditorStore } from '../../../../contexts/EmailEditorContext';
 import { ExternalLinkIcon } from 'lucide-react';
 
 interface ButtonBlockProps {

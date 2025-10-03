@@ -290,6 +290,7 @@ const EmailEditorContext = createContext<EmailEditorContextType | undefined>(und
 
 // Provider du contexte
 export const EmailEditorProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  console.log("EmailEditorProvider mounted");
   const [state, dispatch] = useReducer(emailEditorReducer, initialState);
 
   // Actions de l'éditeur

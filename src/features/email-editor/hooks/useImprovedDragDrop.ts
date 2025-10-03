@@ -1,6 +1,6 @@
 import { useRef, useState, useCallback, useEffect } from 'react';
 import { EditorElement } from '../types/editor.types';
-import { useEmailEditorStore } from './useEmailEditor';
+import { useEmailEditorStore } from '../../../contexts/EmailEditorContext';
 
 interface DragState {
   isDragging: boolean;
@@ -19,7 +19,7 @@ interface DropZone {
 }
 
 export const useImprovedDragDrop = () => {
-  const { elements, addElement, moveElement, updateElement } = useEmailEditorStore();
+  const { state, actions } = useEmailEditorStore();
   const [dragState, setDragState] = useState<DragState>({
     isDragging: false,
     draggedElement: null,
@@ -308,10 +308,10 @@ export const useImprovedDragDrop = () => {
         visible: true,
       };
 
-      addElement(newElement, dropZoneId, insertPosition);
+      actions.addBlock(newElement.type, dropZoneId, insertPosition);
     } else if (dragState.draggedElement) {
       // Déplacer un élément existant
-      moveElement(
+      actions.moveBlock(
         dragState.draggedElement.id,
         dropZoneId,
         insertPosition

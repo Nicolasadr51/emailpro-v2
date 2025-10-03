@@ -13,7 +13,7 @@ import {
 import { designTokens } from '../../../design-system/tokens';
 import { EditorElement } from '../types/editor.types';
 import { useImprovedDragDrop } from '../hooks/useImprovedDragDrop';
-import { useEmailEditorStore } from '../hooks/useEmailEditor';
+import { useEmailEditorStore } from '../../../contexts/EmailEditorContext';
 
 interface ImprovedDraggableElementProps {
   element: EditorElement;

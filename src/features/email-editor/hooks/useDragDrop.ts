@@ -3,10 +3,11 @@
 
 import { useRef, useCallback } from 'react';
 import { ElementType, Position } from '../types/editor.types';
-import { useEmailEditorStore, useElementCreator } from './useEmailEditor';
+import { useEmailEditorStore } from '../../../contexts/EmailEditorContext';
 
 export const useDragDrop = () => {
-  const { createElement } = useElementCreator();
+
+  const { actions } = useEmailEditorStore();
   const { moveElement } = useEmailEditorStore();
   const dragRef = useRef<HTMLDivElement>(null);
 
@@ -27,12 +28,12 @@ export const useDragDrop = () => {
 
     if (elementType && !elementId) {
       // Création d'un nouvel élément depuis la palette
-      createElement(elementType, position);
+      actions.addBlock(elementType, position);
     } else if (elementId) {
       // Déplacement d'un élément existant
       moveElement(elementId, position);
     }
-  }, [createElement, moveElement]);
+  }, [actions, moveElement]);
 
   const handleDragOver = useCallback((e: React.DragEvent) => {
     e.preventDefault();
