@@ -9,6 +9,9 @@ import { ElementsPanel } from './ElementsPanel';
 import { PropertiesPanel } from './PropertiesPanel';
 import { EditorToolbar } from './EditorToolbar';
 import { TemplatesList } from './TemplatesList';
+import { StatusIndicator, SaveStatus } from './StatusIndicator';
+import { ViewModeToggle, ViewMode } from './ViewModeToggle';
+import { PredefinedLayouts } from './PredefinedLayouts';
 import { emailEditorService } from '../services/emailEditorService';
 import { EmailTemplate } from '../types/editor.types';
 import { PageWrapper } from '../../../components/layout/PageWrapper';
@@ -27,6 +30,9 @@ export const EmailEditor: React.FC<EmailEditorProps> = ({ className = '' }) => {
   const [showTemplates, setShowTemplates] = useState(!templateId);
   const [showProperties, setShowProperties] = useState(true);
   const [lastSaved, setLastSaved] = useState<Date | null>(null);
+  const [saveStatus, setSaveStatus] = useState<SaveStatus>('saved');
+  const [viewMode, setViewMode] = useState<ViewMode>('desktop');
+  const [showPredefinedLayouts, setShowPredefinedLayouts] = useState(false);
 
   const {
     template,
@@ -103,6 +109,8 @@ export const EmailEditor: React.FC<EmailEditorProps> = ({ className = '' }) => {
     if (!template) return;
 
     setIsSaving(true);
+    setSaveStatus('saving');
+    
     try {
       if (template.id.startsWith('template_')) {
         // Nouveau template
@@ -123,8 +131,10 @@ export const EmailEditor: React.FC<EmailEditorProps> = ({ className = '' }) => {
         });
       }
       setLastSaved(new Date());
+      setSaveStatus('saved');
     } catch (error) {
       console.error('Erreur lors de la sauvegarde:', error);
+      setSaveStatus('error');
     } finally {
       setIsSaving(false);
     }
@@ -145,6 +155,34 @@ export const EmailEditor: React.FC<EmailEditorProps> = ({ className = '' }) => {
     setTemplate(selectedTemplate);
     setShowTemplates(false);
     navigate(`/email-editor/${selectedTemplate.id}`);
+  };
+
+  const handlePredefinedLayoutSelect = (layout: any) => {
+    if (!template) return;
+    
+    // Créer les éléments à partir du layout prédéfini
+    const newElements = layout.elements.map((element: any, index: number) => ({
+      ...element,
+      id: `element_${Date.now()}_${index}`,
+      position: { x: 0, y: index * 100 },
+      size: { width: template.layout.width, height: 'auto' }
+    }));
+
+    // Mettre à jour le template avec les nouveaux éléments
+    const updatedTemplate = {
+      ...template,
+      elements: newElements,
+      name: layout.name,
+      updatedAt: new Date()
+    };
+
+    setTemplate(updatedTemplate);
+    setShowPredefinedLayouts(false);
+    setSaveStatus('unsaved');
+  };
+
+  const handleViewModeChange = (mode: ViewMode) => {
+    setViewMode(mode);
   };
 
   const handleBack = () => {
@@ -252,6 +290,13 @@ export const EmailEditor: React.FC<EmailEditorProps> = ({ className = '' }) => {
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <StatusIndicator status={saveStatus} />
+          
+          <ViewModeToggle 
+            currentMode={viewMode}
+            onModeChange={handleViewModeChange}
+          />
+
           <Button
             variant="ghost"
             size="sm"
@@ -301,7 +346,31 @@ export const EmailEditor: React.FC<EmailEditorProps> = ({ className = '' }) => {
         overflow: 'hidden',
       }}>
         {/* Panneau des éléments */}
-        <ElementsPanel />
+        <div style={{
+          width: '280px',
+          borderRight: '1px solid #e0e0e0',
+          backgroundColor: 'white',
+          overflow: 'auto',
+        }}>
+          <div style={{ padding: '16px' }}>
+            <div style={{ marginBottom: '20px' }}>
+              <Button
+                variant={showPredefinedLayouts ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setShowPredefinedLayouts(!showPredefinedLayouts)}
+                className="w-full mb-3"
+              >
+                {showPredefinedLayouts ? 'Masquer les layouts' : 'Layouts prédéfinis'}
+              </Button>
+              
+              {showPredefinedLayouts && (
+                <PredefinedLayouts onLayoutSelect={handlePredefinedLayoutSelect} />
+              )}
+            </div>
+            
+            {!showPredefinedLayouts && <ElementsPanel />}
+          </div>
+        </div>
 
         {/* Canvas principal */}
         <div style={{
@@ -310,7 +379,7 @@ export const EmailEditor: React.FC<EmailEditorProps> = ({ className = '' }) => {
           flexDirection: 'column',
           overflow: 'hidden',
         }}>
-          <EditorCanvas />
+          <EditorCanvas viewMode={viewMode} />
         </div>
 
         {/* Panneau des propriétés */}

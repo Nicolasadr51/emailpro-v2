@@ -6,13 +6,27 @@ import { EditorElement } from '../types/editor.types';
 
 interface EditorCanvasProps {
   className?: string;
+  viewMode?: 'desktop' | 'tablet' | 'mobile';
 }
 
-export const EditorCanvas: React.FC<EditorCanvasProps> = ({ className = '' }) => {
+export const EditorCanvas: React.FC<EditorCanvasProps> = ({ 
+  className = '', 
+  viewMode = 'desktop' 
+}) => {
   const { elements, selectedElement, template, zoom } = useEmailEditor();
   const { dropRef, dropHandlers } = useDragDrop();
 
-  const canvasWidth = template?.layout.width || 600;
+  // Adapter la largeur selon le mode d'affichage
+  const getCanvasWidth = () => {
+    switch (viewMode) {
+      case 'mobile': return 375;
+      case 'tablet': return 768;
+      case 'desktop': 
+      default: return template?.layout.width || 600;
+    }
+  };
+
+  const canvasWidth = getCanvasWidth();
   const canvasHeight = template?.layout.height || 800;
 
   const canvasStyle = useMemo(() => ({
