@@ -20,7 +20,8 @@ export const DraggableElement: React.FC<DraggableElementProps> = ({
   isSelected,
 }) => {
   const [isHovered, setIsHovered] = useState(false);
-  const { deleteElement, duplicateElement } = useEmailEditorStore();
+  const { actions } = useEmailEditorStore();
+  const { deleteBlock, duplicateBlock } = actions;
   const draggableProps = useDraggableElement(element.id);
   const { onClick } = useElementSelection(element.id);
   const { handleResizeStart } = useElementResize(element.id);
@@ -55,12 +56,12 @@ export const DraggableElement: React.FC<DraggableElementProps> = ({
 
   const handleDelete = (e: React.MouseEvent) => {
     e.stopPropagation();
-    deleteElement(element.id);
+    deleteBlock(element.id);
   };
 
   const handleDuplicate = (e: React.MouseEvent) => {
     e.stopPropagation();
-    duplicateElement(element.id);
+    duplicateBlock(element.id);
   };
 
   return (
