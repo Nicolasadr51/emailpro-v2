@@ -2,7 +2,7 @@
 // Architecture définie par Claude 4.5 Sonnet
 
 import React, { useState } from 'react';
-import { EditorElement } from '../types/editor.types';
+import { EmailBlock } from '../../../types/emailEditor';
 import { useDraggableElement, useElementSelection, useElementResize } from '../hooks/useDragDrop';
 import { useEmailEditorStore } from '../../../contexts/EmailEditorContext';
 import { TextBlock } from './elements/TextBlock';
@@ -11,7 +11,7 @@ import { ButtonBlock } from './elements/ButtonBlock';
 import { DividerBlock } from './elements/DividerBlock';
 
 interface DraggableElementProps {
-  element: EditorElement;
+  element: EmailBlock;
   isSelected: boolean;
 }
 

@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { useEmailEditorStore } from '../../../contexts/EmailEditorContext';
 import { useDragDrop } from '../hooks/useDragDrop';
 import { DraggableElement } from './DraggableElement';
-import { EditorElement } from '../types/editor.types';
+import { EmailBlock } from '../../../types/emailEditor';
 import { ViewMode } from './ViewModeToggle'; // Importer le type ViewMode
 
 interface EditorCanvasProps {
@@ -72,7 +72,7 @@ export const EditorCanvas: React.FC<EditorCanvasProps> = ({
         <div className="canvas-grid" />
 
         {/* Template elements */}
-        {elements.map((element: EditorElement) => (
+        {elements.map((element: EmailBlock) => (
           <DraggableElement
             key={element.id}
             element={element}
