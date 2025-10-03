@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Card } from '../ui/Card';
 import { Badge } from '../ui/Badge';
 import { Button } from '../ui/Button';
@@ -59,10 +59,10 @@ export const RealTimeMetrics: React.FC<RealTimeMetricsProps> = ({
     ];
   };
 
-  const refreshMetrics = () => {
+  const refreshMetrics = useCallback(() => {
     setMetrics(generateRandomMetrics());
     setLastUpdate(new Date());
-  };
+  }, []);
 
   useEffect(() => {
     if (!isLive) return;
@@ -72,7 +72,7 @@ export const RealTimeMetrics: React.FC<RealTimeMetricsProps> = ({
     }, refreshInterval);
 
     return () => clearInterval(interval);
-  }, [isLive, refreshInterval]);
+  }, [isLive, refreshInterval, refreshMetrics]);
 
   const formatTime = (date: Date) => {
     return date.toLocaleTimeString('fr-FR', {

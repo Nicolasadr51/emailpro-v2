@@ -1,8 +1,8 @@
 // Validations temporaires avec TypeScript natif
 // TODO: Corriger Zod plus tard
 
-import { Campaign, CreateCampaignRequest, UpdateCampaignRequest } from '../types/campaign';
-import { Contact, ContactList, CreateContactRequest, CreateContactListRequest, UpdateContactListRequest } from '../types/contact';
+import { CreateCampaignRequest } from '../types/campaign';
+import { CreateContactRequest, CreateContactListRequest } from '../types/contact';
 
 // Types pour les validations
 export interface ValidationResult {

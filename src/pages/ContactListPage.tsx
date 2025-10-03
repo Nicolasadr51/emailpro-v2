@@ -4,7 +4,7 @@ import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from '../components/ui';
 import { useContacts, useDeleteContact } from '../hooks/useContacts';
-import { Contact } from '../types/contact';
+
 import { Link } from 'react-router-dom';
 import { PlusIcon, SearchIcon, TrashIcon, EditIcon } from 'lucide-react';
 import { LoadingOverlay } from '../components/ui/LoadingOverlay';

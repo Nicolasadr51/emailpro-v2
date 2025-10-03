@@ -1,7 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { contactService } from '../services/contactService';
 import { Contact, CreateContactRequest, UpdateContactRequest, ContactFilters, ContactListResponse, ContactListsResponse } from '../types/contact';
-import { AppError, createAppError, ValidationError, NotFoundError, NetworkError } from '../types/errors';
+import { AppError, createAppError } from '../types/errors';
 import { useNotifications } from '../store/useAppStore';
 
 export const useContacts = (filters: ContactFilters = {}, page: number = 1, limit: number = 10) => {

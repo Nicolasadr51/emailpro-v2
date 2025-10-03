@@ -65,7 +65,7 @@ class ApiClient {
       },
     };
 
-    let lastError: ApiError;
+    let lastError: ApiError | undefined;
 
     for (let attempt = 0; attempt <= retries; attempt++) {
       try {
@@ -110,7 +110,7 @@ class ApiClient {
       }
     }
 
-    throw lastError!;
+    throw lastError || new Error('Erreur inconnue lors de la requête');
   }
 
   private combineAbortSignals(signals: AbortSignal[]): AbortSignal {
