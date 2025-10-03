@@ -1,5 +1,13 @@
 // Types pour l'éditeur d'email avec corrections Claude 4.x
 
+// Interface pour la position des éléments
+export interface Position {
+  x: number;
+  y: number;
+  width?: number;
+  height?: number;
+}
+
 export type BlockType = 
   | 'text' 
   | 'heading' 
@@ -129,7 +137,7 @@ export interface HtmlBlockContent {
 export interface BaseEmailBlock<T extends BlockType, C> {
   id: string;
   type: T;
-  position: number;
+  position: Position;
   styles: BlockStyles;
   locked?: boolean;
   hidden?: boolean;
@@ -320,7 +328,12 @@ export type EmailEditorAction =
 export const createDefaultBlock = (type: BlockType): EmailBlock => {
   const baseBlock = {
     id: `block-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-    position: 0,
+    position: {
+      x: 0,
+      y: 0,
+      width: 300,
+      height: 100,
+    },
     styles: {
       backgroundColor: 'transparent',
       padding: { top: 10, right: 10, bottom: 10, left: 10 },
