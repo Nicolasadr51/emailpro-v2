@@ -325,13 +325,13 @@ export const EmailEditor: React.FC<EmailEditorProps> = ({ className = '' }) => {
 
       {/* Barre d'outils de l'éditeur */}
       <EditorToolbar
-        onUndo={undo}
-        onRedo={redo}
-        canUndo={historyIndex > 0}
-        canRedo={historyIndex < state.history.length - 1}
-        zoom={zoom}
-        onZoomChange={setZoom}
-        selectedElement={selectedElement}
+        onUndo={actions.undo}
+        onRedo={actions.redo}
+        canUndo={state.historyIndex > 0}
+        canRedo={state.historyIndex < state.history.length - 1}
+        zoom={1}
+        onZoomChange={() => {}}
+        selectedElement={null}
       />
 
       {/* Interface principale */}
