@@ -3,7 +3,7 @@
 
 import { useRef, useCallback } from 'react';
 import { ElementType, Position } from '../types/editor.types';
-import { useEmailEditorStore, useElementCreator } from './useEmailEditorStore';
+import { useEmailEditorStore, useElementCreator } from './useEmailEditor';
 
 export const useDragDrop = () => {
   const { createElement } = useElementCreator();
