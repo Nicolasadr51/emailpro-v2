@@ -3,7 +3,7 @@
 
 import React, { useEffect, useState, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useEmailEditorStore } from '../hooks/useEmailEditor';
+import { useEmailEditor } from '../../../contexts/EmailEditorContext';
 import { EditorCanvas } from './EditorCanvas';
 import { NewSidebar } from './NewSidebar';
 import { PropertiesPanel } from './PropertiesPanel';
@@ -34,18 +34,7 @@ export const EmailEditor: React.FC<EmailEditorProps> = ({ className = '' }) => {
   const [viewMode, setViewMode] = useState<ViewMode>('desktop');
   const [showPredefinedLayouts, setShowPredefinedLayouts] = useState(false);
 
-  const {
-    template,
-    elements,
-    selectedElement,
-    setTemplate,
-    undo,
-    redo,
-    zoom,
-    setZoom,
-    history,
-    historyIndex,
-  } = useEmailEditorStore();
+  const { state, actions } = useEmailEditor();
 
   const loadTemplate = useCallback(async (id: string) => {
     setIsLoading(true);
