@@ -34,7 +34,18 @@ export const EmailEditor: React.FC<EmailEditorProps> = ({ className = '' }) => {
   const [viewMode, setViewMode] = useState<ViewMode>('desktop');
   const [showPredefinedLayouts, setShowPredefinedLayouts] = useState(false);
 
+  console.log("EmailEditor: Attempting to use useEmailEditorStore");
   const { state, actions } = useEmailEditorStore();
+  console.log("EmailEditor: Successfully got context", { state, actions });
+  
+  // Utiliser les données du contexte
+  const template = state.template;
+  const elements = template?.blocks || [];
+  const setTemplate = actions.loadTemplate;
+  const zoom = 1; // Placeholder - le zoom n'est pas encore implémenté dans le contexte
+  const setZoom = () => {}; // Placeholder
+  const undo = actions.undo;
+  const redo = actions.redo;
 
   const loadTemplate = useCallback(async (id: string) => {
     setIsLoading(true);
