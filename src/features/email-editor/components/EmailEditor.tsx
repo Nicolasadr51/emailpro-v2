@@ -328,7 +328,7 @@ export const EmailEditor: React.FC<EmailEditorProps> = ({ className = '' }) => {
         onUndo={undo}
         onRedo={redo}
         canUndo={historyIndex > 0}
-        canRedo={historyIndex < history.length - 1}
+        canRedo={historyIndex < state.history.length - 1}
         zoom={zoom}
         onZoomChange={setZoom}
         selectedElement={selectedElement}
