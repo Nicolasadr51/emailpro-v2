@@ -6,6 +6,7 @@ import {
   EmailEditorActions,
   EmailEditorAction,
   EmailEditorContextType,
+  GlobalStyles,
   BlockType,
   createDefaultTemplate,
   createDefaultBlock,
