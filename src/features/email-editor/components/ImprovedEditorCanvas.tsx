@@ -4,12 +4,12 @@ import { useDragDrop } from '../hooks/useDragDrop';
 import { DraggableElement } from './DraggableElement';
 import { EmailBlock } from '../../../types/emailEditor';
 import { designTokens, getTransition } from '../../../design-system/tokens';
-import { 
-  Monitor, 
-  Tablet, 
-  Smartphone, 
-  ZoomIn, 
-  ZoomOut, 
+import {
+  Monitor,
+  Tablet,
+  Smartphone,
+  ZoomIn,
+  ZoomOut,
   RotateCcw,
   Eye,
   Code,
