@@ -326,6 +326,7 @@ backgroundColor: template?.layout.backgroundColor || '#ffffff',
               element={element}
               isSelected={selectedBlock?.id === element.id && !previewMode}
               previewMode={previewMode}
+              onSelect={actions.selectBlock}
             />
           ))}
 
