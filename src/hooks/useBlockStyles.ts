@@ -1,9 +1,29 @@
 import { useMemo } from 'react';
-import { BlockStyles } from '../types/emailEditor';
+import { BlockStyles, GlobalStyles, Spacing, Border } from '../types/emailEditor';
+
+/**
+ * Utilitaire pour convertir un objet de spacing en chaîne CSS
+ */
+const convertSpacingToCSS = (spacing?: Spacing): string => {
+  if (!spacing) return '0px';
+  return `${spacing.top}px ${spacing.right}px ${spacing.bottom}px ${spacing.left}px`;
+};
+
+/**
+ * Utilitaire pour convertir un objet border en chaîne CSS
+ */
+const convertBorderToCSS = (border?: Border): { border?: string; borderRadius?: string } => {
+  if (!border) return {};
+  
+  return {
+    border: `${border.width}px ${border.style} ${border.color}`,
+    borderRadius: border.radius ? `${border.radius}px` : undefined
+  };
+};
 
 /**
  * Hook pour convertir BlockStyles en CSS Properties compatibles React
- * Recommandation Claude 4.5 pour résoudre définitivement les erreurs de styles
+ * Gère la conversion des objets (padding, margin, border) en chaînes CSS
  */
 export const useBlockStyles = (blockStyles?: BlockStyles): React.CSSProperties => {
   return useMemo(() => {
@@ -11,55 +31,109 @@ export const useBlockStyles = (blockStyles?: BlockStyles): React.CSSProperties =
 
     const cssStyles: React.CSSProperties = {};
 
-    // Conversion border objet → border + borderRadius CSS
-    if (blockStyles.border && typeof blockStyles.border === 'object') {
-      cssStyles.border = `${blockStyles.border.width}px ${blockStyles.border.style} ${blockStyles.border.color}`;
-      cssStyles.borderRadius = `${blockStyles.border.radius}px`;
-    } else if (typeof blockStyles.border === 'string') {
-      cssStyles.border = blockStyles.border;
+    // Couleurs
+    if (blockStyles.backgroundColor) {
+      cssStyles.backgroundColor = blockStyles.backgroundColor;
+    }
+    if (blockStyles.color) {
+      cssStyles.color = blockStyles.color;
     }
 
-    // Conversion padding objet → padding CSS string
-    if (blockStyles.padding && typeof blockStyles.padding === 'object') {
-      cssStyles.padding = `${blockStyles.padding.top}px ${blockStyles.padding.right}px ${blockStyles.padding.bottom}px ${blockStyles.padding.left}px`;
-    } else if (typeof blockStyles.padding === 'string') {
-      cssStyles.padding = blockStyles.padding;
+    // Espacement - conversion des objets en chaînes CSS
+    if (blockStyles.padding) {
+      cssStyles.padding = convertSpacingToCSS(blockStyles.padding);
+    }
+    if (blockStyles.margin) {
+      cssStyles.margin = convertSpacingToCSS(blockStyles.margin);
     }
 
-    // Conversion margin objet → margin CSS string
-    if (blockStyles.margin && typeof blockStyles.margin === 'object') {
-      cssStyles.margin = `${blockStyles.margin.top}px ${blockStyles.margin.right}px ${blockStyles.margin.bottom}px ${blockStyles.margin.left}px`;
-    } else if (typeof blockStyles.margin === 'string') {
-      cssStyles.margin = blockStyles.margin;
+    // Bordures - conversion de l'objet en chaînes CSS
+    if (blockStyles.border) {
+      const borderStyles = convertBorderToCSS(blockStyles.border);
+      if (borderStyles.border) {
+        cssStyles.border = borderStyles.border;
+      }
+      if (borderStyles.borderRadius) {
+        cssStyles.borderRadius = borderStyles.borderRadius;
+      }
+    }
+    
+    // Support de borderRadius en tant que propriété séparée
+    if (blockStyles.borderRadius && !blockStyles.border) {
+      cssStyles.borderRadius = blockStyles.borderRadius;
     }
 
-    // Propriétés CSS directes (déjà compatibles)
-    if (blockStyles.backgroundColor) cssStyles.backgroundColor = blockStyles.backgroundColor;
-    if (blockStyles.color) cssStyles.color = blockStyles.color;
-    if (blockStyles.fontSize) cssStyles.fontSize = typeof blockStyles.fontSize === 'number' ? `${blockStyles.fontSize}px` : blockStyles.fontSize;
-    if (blockStyles.fontWeight) cssStyles.fontWeight = blockStyles.fontWeight;
-    if (blockStyles.fontFamily) cssStyles.fontFamily = blockStyles.fontFamily;
-    if (blockStyles.lineHeight) cssStyles.lineHeight = blockStyles.lineHeight;
-    if (blockStyles.textAlign) cssStyles.textAlign = blockStyles.textAlign;
-    if (blockStyles.textDecoration) cssStyles.textDecoration = blockStyles.textDecoration;
-    if (blockStyles.borderRadius) cssStyles.borderRadius = blockStyles.borderRadius;
-    if (blockStyles.opacity !== undefined) cssStyles.opacity = blockStyles.opacity;
-    if (blockStyles.zIndex !== undefined) cssStyles.zIndex = blockStyles.zIndex;
-    if (blockStyles.display) cssStyles.display = blockStyles.display;
-    if (blockStyles.position) cssStyles.position = blockStyles.position;
-    if (blockStyles.top !== undefined) cssStyles.top = blockStyles.top;
-    if (blockStyles.right !== undefined) cssStyles.right = blockStyles.right;
-    if (blockStyles.bottom !== undefined) cssStyles.bottom = blockStyles.bottom;
-    if (blockStyles.left !== undefined) cssStyles.left = blockStyles.left;
-    if (blockStyles.width) cssStyles.width = blockStyles.width;
-    if (blockStyles.height) cssStyles.height = blockStyles.height;
-    if (blockStyles.minWidth) cssStyles.minWidth = blockStyles.minWidth;
-    if (blockStyles.minHeight) cssStyles.minHeight = blockStyles.minHeight;
-    if (blockStyles.maxWidth) cssStyles.maxWidth = blockStyles.maxWidth;
-    if (blockStyles.maxHeight) cssStyles.maxHeight = blockStyles.maxHeight;
+    // Typographie
+    if (blockStyles.fontSize) {
+      cssStyles.fontSize = blockStyles.fontSize;
+    }
+    if (blockStyles.fontWeight) {
+      cssStyles.fontWeight = blockStyles.fontWeight;
+    }
+    if (blockStyles.fontFamily) {
+      cssStyles.fontFamily = blockStyles.fontFamily;
+    }
+    if (blockStyles.lineHeight) {
+      cssStyles.lineHeight = blockStyles.lineHeight;
+    }
+    if (blockStyles.textAlign) {
+      cssStyles.textAlign = blockStyles.textAlign;
+    }
+    if (blockStyles.textDecoration) {
+      cssStyles.textDecoration = blockStyles.textDecoration;
+    }
+
+    // Dimensions
+    if (blockStyles.width) {
+      cssStyles.width = blockStyles.width;
+    }
+    if (blockStyles.height) {
+      cssStyles.height = blockStyles.height;
+    }
+
+    // Autres propriétés
+    if (blockStyles.opacity !== undefined) {
+      cssStyles.opacity = blockStyles.opacity;
+    }
+    if (blockStyles.zIndex !== undefined) {
+      cssStyles.zIndex = blockStyles.zIndex;
+    }
 
     return cssStyles;
   }, [blockStyles]);
+};
+
+/**
+ * Version alternative qui combine les styles de bloc avec des styles globaux
+ * Compatible avec la structure GlobalStyles du projet
+ */
+export const useBlockStylesWithGlobalStyles = (
+  blockStyles?: BlockStyles, 
+  globalStyles?: GlobalStyles
+): React.CSSProperties => {
+  const baseStyles = useBlockStyles(blockStyles);
+  
+  return useMemo(() => {
+    const combinedStyles = { ...baseStyles };
+    
+    // Appliquer les styles globaux comme fallback
+    if (globalStyles) {
+      if (!combinedStyles.fontFamily) {
+        combinedStyles.fontFamily = globalStyles.fontFamily;
+      }
+      if (!combinedStyles.fontSize) {
+        combinedStyles.fontSize = `${globalStyles.fontSize}px`;
+      }
+      if (!combinedStyles.lineHeight) {
+        combinedStyles.lineHeight = globalStyles.lineHeight;
+      }
+      if (!combinedStyles.color) {
+        combinedStyles.color = globalStyles.color;
+      }
+    }
+    
+    return combinedStyles;
+  }, [baseStyles, globalStyles]);
 };
 
 /**
@@ -75,4 +149,37 @@ export const useBlockStylesWithOverrides = (
     ...baseStyles,
     ...overrides
   }), [baseStyles, overrides]);
+};
+
+/**
+ * Utilitaire pour valider et nettoyer les objets de style
+ * Garantit que tous les objets complexes sont convertis en chaînes CSS
+ * (Moins pertinent avec la nouvelle structure, mais peut servir pour d'autres validations)
+ */
+export const sanitizeBlockStyles = (styles?: BlockStyles): Partial<BlockStyles> => {
+  if (!styles) return {};
+  
+  const sanitized: Partial<BlockStyles> = { ...styles };
+  
+  // Aucune conversion d'objet n'est nécessaire ici avec la nouvelle structure
+  // Les propriétés sont déjà des chaînes ou undefined
+  
+  return sanitized;
+};
+
+/**
+ * Hook utilitaire pour créer des styles de conteneur sécurisés
+ * Recommandé pour tous les composants de blocs
+ */
+export const useSafeContainerStyle = (
+  blockStyles?: BlockStyles,
+  additionalStyles?: React.CSSProperties
+): React.CSSProperties => {
+  const sanitizedStyles = useMemo(() => sanitizeBlockStyles(blockStyles), [blockStyles]);
+  const baseStyles = useBlockStyles(sanitizedStyles);
+  
+  return useMemo(() => ({
+    ...baseStyles,
+    ...additionalStyles
+  }), [baseStyles, additionalStyles]);
 };
