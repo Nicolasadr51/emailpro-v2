@@ -1,3 +1,4 @@
+'''
 import React, { useState } from 'react';
 import { 
   Type, 
@@ -15,7 +16,7 @@ import {
   Ruler
 } from 'lucide-react';
 import { designTokens, getTransition } from '../../../design-system/tokens';
-import { EmailBlock } from '../../../types/emailEditor';
+import { EmailBlock, ButtonBlockContent } from '../../../types/emailEditor';
 
 interface PropertiesPanelProps {
   selectedBlock?: EmailBlock;
@@ -332,18 +333,19 @@ export const ImprovedPropertiesPanel: React.FC<PropertiesPanelProps> = ({
         );
       
       case 'button':
+        const buttonContent = selectedBlock.content as ButtonBlockContent | undefined;
         return (
           <>
             {renderInput(
               'Texte du bouton',
-              selectedBlock.content?.text || '',
+              buttonContent?.text || '',
               (value) => handlePropertyChange('content', { ...selectedBlock.content, text: value }),
               'text',
               'Cliquez ici'
             )}
             {renderInput(
               'Lien (URL)',
-              selectedBlock.content?.href || '',
+              buttonContent?.href || '',
               (value) => handlePropertyChange('content', { ...selectedBlock.content, href: value }),
               'url',
               'https://example.com'
@@ -498,14 +500,14 @@ export const ImprovedPropertiesPanel: React.FC<PropertiesPanelProps> = ({
           selectedBlock.spacing?.margin || '0',
           (value) => handlePropertyChange('spacing', { ...selectedBlock.spacing, margin: value }),
           'text',
-          '10px, 10px 20px...'
+          '0, 10px, 10px 20px...'
         )}
         {renderInput(
           'Marge intérieure (padding)',
           selectedBlock.spacing?.padding || '0',
           (value) => handlePropertyChange('spacing', { ...selectedBlock.spacing, padding: value }),
           'text',
-          '10px, 10px 20px...'
+          '0, 10px, 10px 20px...'
         )}
       </>
     );
@@ -517,231 +519,113 @@ export const ImprovedPropertiesPanel: React.FC<PropertiesPanelProps> = ({
     return (
       <>
         {renderToggle(
-          'Visible',
-          selectedBlock.visible !== false,
-          (value) => handlePropertyChange('visible', value),
-          'Afficher ou masquer cet élément'
+          'Cacher sur mobile',
+          selectedBlock.responsive?.hiddenOnMobile || false,
+          (value) => handlePropertyChange('responsive', { ...selectedBlock.responsive, hiddenOnMobile: value }),
+          'Cache cet élément sur les écrans de petite taille.'
         )}
-        {renderInput(
-          'ID personnalisé',
-          selectedBlock.customId || '',
-          (value) => handlePropertyChange('customId', value),
-          'text',
-          'mon-element-unique'
-        )}
-        {renderInput(
-          'Classes CSS',
-          selectedBlock.cssClasses || '',
-          (value) => handlePropertyChange('cssClasses', value),
-          'text',
-          'ma-classe autre-classe'
+        {renderToggle(
+          'Cacher sur ordinateur',
+          selectedBlock.responsive?.hiddenOnDesktop || false,
+          (value) => handlePropertyChange('responsive', { ...selectedBlock.responsive, hiddenOnDesktop: value }),
+          'Cache cet élément sur les écrans de grande taille.'
         )}
       </>
     );
   };
 
-  const renderSection = (section: PropertySection) => {
-    const isExpanded = expandedSections.has(section.id);
-    
-    return (
-      <div key={section.id} style={{ marginBottom: designTokens.spacing.md }}>
-        <button
-          onClick={() => toggleSection(section.id)}
-          style={{
-            width: '100%',
-            display: 'flex',
-            alignItems: 'center',
-            gap: designTokens.spacing.sm,
-            padding: `${designTokens.spacing.sm} 0`,
-            border: 'none',
-            background: 'none',
-            cursor: 'pointer',
-            fontSize: designTokens.typography.sizes.base,
-            fontWeight: designTokens.typography.weights.semibold,
-            color: designTokens.colors.semantic.text.primary,
-            transition: getTransition("all", "base"),
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.color = designTokens.colors.states.focus;
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.color = designTokens.colors.semantic.text.primary;
-          }}
-        >
-          {isExpanded ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
-          {section.icon}
-          {section.title}
-        </button>
-
-        {isExpanded && (
-          <div style={{ 
-            marginTop: designTokens.spacing.md,
-            paddingLeft: designTokens.spacing.lg,
-          }}>
-            {section.id === 'content' && renderContentSection()}
-            {section.id === 'style' && renderStyleSection()}
-            {section.id === 'layout' && renderLayoutSection()}
-            {section.id === 'spacing' && renderSpacingSection()}
-            {section.id === 'actions' && renderActionsSection()}
-          </div>
-        )}
-      </div>
-    );
-  };
-
   if (!selectedBlock) {
     return (
-      <div 
-        className={className}
-        style={{
-          width: 320,
-          height: '100%',
-          backgroundColor: designTokens.colors.semantic.background,
-          borderLeft: `1px solid ${designTokens.colors.semantic.border}`,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: designTokens.spacing.xl,
-        }}
-      >
-        <div style={{ textAlign: 'center' }}>
-          <div style={{
-            fontSize: '48px',
-            marginBottom: designTokens.spacing.md,
-            opacity: 0.3,
-          }}>
-            🎨
-          </div>
-          <div style={{
-            fontSize: designTokens.typography.sizes.lg,
-            fontWeight: designTokens.typography.weights.medium,
-            color: designTokens.colors.semantic.text.primary,
-            marginBottom: designTokens.spacing.sm,
-          }}>
-            Aucun élément sélectionné
-          </div>
-          <div style={{
-            fontSize: designTokens.typography.sizes.sm,
-            color: designTokens.colors.semantic.text.secondary,
-            lineHeight: 1.5,
-          }}>
-            Cliquez sur un élément dans le canvas pour modifier ses propriétés
-          </div>
-        </div>
+      <div className={className} style={{
+        padding: designTokens.spacing.lg,
+        backgroundColor: designTokens.colors.semantic.background,
+        borderLeft: `1px solid ${designTokens.colors.semantic.border}`,
+        color: designTokens.colors.semantic.text.secondary,
+        textAlign: 'center',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: '100%',
+      }}>
+        Sélectionnez un élément pour voir ses propriétés.
       </div>
     );
   }
 
   return (
-    <div 
-      className={className}
-      style={{
-        width: 320,
-        height: '100%',
-        backgroundColor: designTokens.colors.semantic.background,
-        borderLeft: `1px solid ${designTokens.colors.semantic.border}`,
-        display: 'flex',
-        flexDirection: 'column',
-        overflow: 'hidden',
-      }}
-    >
-      {/* Header */}
+    <div className={className} style={{
+      backgroundColor: designTokens.colors.semantic.background,
+      borderLeft: `1px solid ${designTokens.colors.semantic.border}`,
+      height: '100%',
+      overflowY: 'auto',
+      display: 'flex',
+      flexDirection: 'column',
+    }}>
       <div style={{
         padding: designTokens.spacing.lg,
         borderBottom: `1px solid ${designTokens.colors.semantic.border}`,
-        backgroundColor: designTokens.colors.semantic.background,
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
       }}>
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          marginBottom: designTokens.spacing.sm,
-        }}>
-          <h3 style={{
-            margin: 0,
-            fontSize: designTokens.typography.sizes.lg,
-            fontWeight: designTokens.typography.weights.semibold,
-            color: designTokens.colors.semantic.text.primary,
-          }}>
-            Propriétés
-          </h3>
-          
-          <div style={{ display: 'flex', gap: designTokens.spacing.xs }}>
-            <button
-              onClick={() => onElementDuplicate?.(selectedBlockId)}
-              style={{
-                padding: designTokens.spacing.xs,
-                border: `1px solid ${designTokens.colors.semantic.border}`,
-                borderRadius: designTokens.borderRadius.sm,
-                backgroundColor: 'transparent',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-              title="Dupliquer"
-            >
-              <Copy size={14} />
-            </button>
-            
-            <button
-              onClick={() => onElementDelete?.(selectedBlockId)}
-              style={{
-                padding: designTokens.spacing.xs,
-                border: `1px solid ${designTokens.colors.semantic.border}`,
-                borderRadius: designTokens.borderRadius.sm,
-                backgroundColor: 'transparent',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: '#ef4444',
-              }}
-              title="Supprimer"
-            >
-              <Trash2 size={14} />
-            </button>
-          </div>
-        </div>
-        
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: designTokens.spacing.sm,
-          padding: `${designTokens.spacing.sm} ${designTokens.spacing.md}`,
-          backgroundColor: designTokens.colors.states.hover,
-          borderRadius: designTokens.borderRadius.md,
-        }}>
+        <div>
           <div style={{
-            width: 8,
-            height: 8,
-            borderRadius: '50%',
-            backgroundColor: designTokens.colors.blocks[selectedBlock.type as keyof typeof designTokens.colors.blocks] || designTokens.colors.semantic.text.secondary,
-          }} />
-          <span style={{
-            fontSize: designTokens.typography.sizes.sm,
-            fontWeight: designTokens.typography.weights.medium,
+            fontSize: designTokens.typography.sizes.md,
+            fontWeight: designTokens.typography.weights.bold,
             color: designTokens.colors.semantic.text.primary,
           }}>
-            {selectedBlock.type}
-          </span>
-          <span style={{
+            {selectedBlock.type.charAt(0).toUpperCase() + selectedBlock.type.slice(1)}
+          </div>
+          <div style={{
             fontSize: designTokens.typography.sizes.xs,
             color: designTokens.colors.semantic.text.secondary,
+            fontFamily: designTokens.typography.fonts.mono,
           }}>
-            #{selectedBlockId.slice(-6)}
-          </span>
+            ID: {selectedBlock.id}
+          </div>
+        </div>
+        <div style={{ display: 'flex', gap: designTokens.spacing.sm }}>
+          <button title="Dupliquer" onClick={() => onElementDuplicate && onElementDuplicate(selectedBlock.id)} style={{ all: 'unset', cursor: 'pointer' }}><Copy size={16} /></button>
+          <button title="Supprimer" onClick={() => onElementDelete && onElementDelete(selectedBlock.id)} style={{ all: 'unset', cursor: 'pointer' }}><Trash2 size={16} /></button>
+          <button title="Plus" style={{ all: 'unset', cursor: 'pointer' }}><MoreHorizontal size={16} /></button>
         </div>
       </div>
 
-      {/* Properties */}
-      <div style={{
-        flex: 1,
-        overflowY: 'auto',
-        padding: designTokens.spacing.lg,
-      }}>
-        {propertySections.map(renderSection)}
+      <div style={{ flex: 1, overflowY: 'auto' }}>
+        {propertySections.map(section => (
+          <div key={section.id} style={{ borderBottom: `1px solid ${designTokens.colors.semantic.border}` }}>
+            <button 
+              onClick={() => toggleSection(section.id)} 
+              style={{
+                all: 'unset',
+                width: '100%',
+                padding: `${designTokens.spacing.md} ${designTokens.spacing.lg}`,
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                cursor: 'pointer',
+                fontWeight: designTokens.typography.weights.medium,
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: designTokens.spacing.md }}>
+                {section.icon}
+                {section.title}
+              </div>
+              {expandedSections.has(section.id) ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
+            </button>
+            {expandedSections.has(section.id) && (
+              <div style={{ padding: `0 ${designTokens.spacing.lg} ${designTokens.spacing.lg}` }}>
+                {section.id === 'content' && renderContentSection()}
+                {section.id === 'style' && renderStyleSection()}
+                {section.id === 'layout' && renderLayoutSection()}
+                {section.id === 'spacing' && renderSpacingSection()}
+                {section.id === 'actions' && renderActionsSection()}
+              </div>
+            )}
+          </div>
+        ))}
       </div>
     </div>
   );
 };
+'''
