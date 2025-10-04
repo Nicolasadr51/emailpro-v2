@@ -83,7 +83,7 @@ export interface EditorActions {
   addElement: (element: Omit<EmailBlock, 'id'>) => void;
   updateBlock: (id: string, updates: Partial<EmailBlock>) => void;
   deleteElement: (id: string) => void;
-  selectElement: (id: string | null) => void;
+  selectBlock: (id: string | null) => void;
   moveElement: (id: string, position: Position) => void;
   duplicateElement: (id: string) => void;
   setTemplate: (template: EmailTemplate) => void;

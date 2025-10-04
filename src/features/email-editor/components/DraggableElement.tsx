@@ -3,7 +3,7 @@
 
 import React, { useState } from 'react';
 import { EmailBlock } from '../../../types/emailEditor';
-import { useDraggableElement, useElementSelection, useElementResize } from '../hooks/useDragDrop';
+import { useDraggableElement, useElementResize } from '../hooks/useDragDrop';
 import { useEmailEditorStore } from '../../../contexts/EmailEditorContext';
 import { TextBlock } from './elements/TextBlock';
 import { ImageBlock } from './elements/ImageBlock';
@@ -13,17 +13,18 @@ import { DividerBlock } from './elements/DividerBlock';
 interface DraggableElementProps {
   element: EmailBlock;
   isSelected: boolean;
+  onSelect: (blockId: string | null) => void;
 }
 
 export const DraggableElement: React.FC<DraggableElementProps> = ({
   element,
   isSelected,
+  onSelect,
 }) => {
   const [isHovered, setIsHovered] = useState(false);
   const { actions } = useEmailEditorStore();
-  const { deleteBlock, duplicateBlock } = actions;
+  const { deleteBlock, duplicateBlock, selectBlock } = actions;
   const draggableProps = useDraggableElement(element.id);
-  const { onClick } = useElementSelection(element.id);
   const { handleResizeStart } = useElementResize(element.id);
 
   // Fonction pour convertir BlockStyles vers styles CSS compatibles
@@ -108,7 +109,7 @@ export const DraggableElement: React.FC<DraggableElementProps> = ({
     <div
       className={`draggable-element ${isSelected ? 'selected' : ''} ${isHovered ? 'hovered' : ''}`}
       style={elementStyle}
-      onClick={onClick}
+      onClick={() => selectBlock(element.id)} // Utilisation de selectBlock ici
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       {...draggableProps}

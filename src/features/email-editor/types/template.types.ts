@@ -5,28 +5,40 @@ import { EmailTemplate, TemplateCategory, TemplatePreview } from './editor.types
 
 export interface CreateTemplateRequest {
   name: string;
-  description?: string;
-  category?: string;
-  isPublic?: boolean;
-  elements: any[];
+  subject: string;
+  preheader?: string;
   layout: {
     width: number;
     height: number;
     backgroundColor: string;
   };
+  blocks: any[]; // Using any[] for now to avoid circular dependency with EmailBlock
+  globalStyles: any; // Using any for now
+  createdAt: string;
+  updatedAt: string;
+  version: string;
+  description?: string;
+  category?: string;
+  isPublic?: boolean;
 }
 
 export interface UpdateTemplateRequest {
   name?: string;
-  description?: string;
-  category?: string;
-  isPublic?: boolean;
-  elements?: any[];
+  subject?: string;
+  preheader?: string;
   layout?: {
     width?: number;
     height?: number;
     backgroundColor?: string;
   };
+  blocks?: any[]; // Using any[] for now to avoid circular dependency with EmailBlock
+  globalStyles?: any; // Using any for now
+  createdAt?: string;
+  updatedAt?: string;
+  version?: string;
+  description?: string;
+  category?: string;
+  isPublic?: boolean;
 }
 
 export interface TemplateFilters {

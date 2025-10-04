@@ -56,13 +56,13 @@ export const useDragDrop = () => {
 
 // Hook pour rendre les éléments draggables
 export const useDraggableElement = (elementId: string) => {
-  const { selectElement } = useEmailEditorStore();
+  const { actions: { selectBlock } } = useEmailEditorStore();
 
   const handleDragStart = useCallback((e: React.DragEvent) => {
     e.dataTransfer.setData('elementId', elementId);
     e.dataTransfer.effectAllowed = 'move';
-    selectElement(elementId);
-  }, [elementId, selectElement]);
+    selectBlock(elementId);
+  }, [elementId, selectBlock]);
 
   const handleDragEnd = useCallback((e: React.DragEvent) => {
     // Cleanup si nécessaire
@@ -90,12 +90,12 @@ export const usePaletteElement = (elementType: BlockType) => {
 
 // Hook pour la sélection par clic
 export const useElementSelection = (elementId: string) => {
-  const { selectElement, selectedBlock } = useEmailEditorStore();
+  const { state: { selectedBlock }, actions: { selectBlock } } = useEmailEditorStore();
 
   const handleClick = useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
-    selectElement(elementId);
-  }, [elementId, selectElement]);
+    selectBlock(elementId);
+  }, [elementId, selectBlock]);
 
   const isSelected = selectedBlock?.id === elementId;
 

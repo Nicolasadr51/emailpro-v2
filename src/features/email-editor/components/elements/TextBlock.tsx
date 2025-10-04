@@ -1,22 +1,21 @@
-// Composant pour les éléments de texte dans l'éditeur
-// Architecture corrigée par Claude 4.5 Sonnet
-
 import React, { useState, useRef, useEffect } from 'react';
-import { EmailBlock, TextBlock as TextBlockType } from '../../../../types/emailEditor';
+import { EmailBlock, TextBlock as TextBlockType, BlockStyles } from '../../../../types/emailEditor';
 import { useEmailEditorStore } from '../../../../contexts/EmailEditorContext';
+import { useBlockStyles } from '../../../../hooks/useBlockStyles';
 
 interface TextBlockProps {
   element: EmailBlock;
 }
 
 export const TextBlock: React.FC<TextBlockProps> = ({ element }) => {
-  // 1. TOUS les hooks sont déclarés inconditionnellement au début
   const [isEditing, setIsEditing] = useState(false);
   const [textContent, setTextContent] = useState('');
   const { state, actions } = useEmailEditorStore();
   const textRef = useRef<HTMLDivElement>(null);
 
-  // 2. useEffect est maintenant toujours appelé, avec une garde à l'intérieur
+  // 1. TOUS les hooks sont déclarés inconditionnellement au début
+  const baseBlockStyles = useBlockStyles(element.styles);
+
   useEffect(() => {
     if (element && element.type === 'text') {
       const textElement = element as TextBlockType;
@@ -24,7 +23,6 @@ export const TextBlock: React.FC<TextBlockProps> = ({ element }) => {
     }
   }, [element]);
 
-  // 3. Handlers définis en dehors du rendu conditionnel
   const handleDoubleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     setIsEditing(true);
@@ -70,8 +68,7 @@ export const TextBlock: React.FC<TextBlockProps> = ({ element }) => {
   const textElement = element as TextBlockType;
   const isSelected = state.selectedBlockId === element.id;
 
-  // 6. Styles définis une seule fois
-  const textStyle = {
+  const textStyle: React.CSSProperties = {
     width: '100%',
     height: '100%',
     minHeight: '20px',
@@ -85,19 +82,19 @@ export const TextBlock: React.FC<TextBlockProps> = ({ element }) => {
     color: textElement.styles?.color || '#333333',
     textAlign: (textElement.styles?.textAlign as any) || 'left',
     lineHeight: textElement.styles?.lineHeight || '1.5',
-    padding: textElement.styles?.padding || '10px',
-    margin: textElement.styles?.margin || '0',
+    padding: baseBlockStyles.padding,
+    margin: baseBlockStyles.margin,
     cursor: isEditing ? 'text' : 'default',
   };
 
-  const containerStyle = {
+  const containerStyle: React.CSSProperties = {
     width: '100%',
     height: '100%',
     minHeight: '40px',
     position: 'relative' as const,
-    backgroundColor: textElement.styles?.backgroundColor || 'transparent',
-    borderRadius: textElement.styles?.borderRadius || '0',
-    border: textElement.styles?.border || 'none',
+    backgroundColor: baseBlockStyles.backgroundColor || 'transparent',
+    borderRadius: baseBlockStyles.borderRadius || '0',
+    border: baseBlockStyles.border || 'none',
   };
 
   // 7. Rendu conditionnel basé sur isEditing

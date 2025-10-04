@@ -1,16 +1,16 @@
 import React, { useRef, useEffect, useState, useCallback } from 'react';
-import { 
-  Move, 
-  MoreHorizontal, 
-  Copy, 
-  Trash2, 
-  Eye, 
+import {
+  Move,
+  MoreHorizontal,
+  Copy,
+  Trash2,
+  Eye,
   EyeOff,
   Lock,
   Unlock,
   Settings
 } from 'lucide-react';
-import { designTokens } from '../../../design-system/tokens';
+import { designTokens, getTransition } from '../../../design-system/tokens';
 import { EmailBlock } from '../../../types/emailEditor';
 import { useImprovedDragDrop } from '../hooks/useImprovedDragDrop';
 import { useEmailEditorStore } from '../../../contexts/EmailEditorContext';
@@ -41,7 +41,7 @@ export const ImprovedDraggableElement: React.FC<ImprovedDraggableElementProps> =
   const [contextMenuPosition, setContextMenuPosition] = useState({ x: 0, y: 0 });
 
   const { startElementDrag, registerDropZone } = useImprovedDragDrop();
-  const { selectElement } = useEmailEditorStore();
+  const { actions: { selectBlock } } = useEmailEditorStore();
 
   // Enregistrer cet élément comme zone de drop
   useEffect(() => {
@@ -59,9 +59,8 @@ export const ImprovedDraggableElement: React.FC<ImprovedDraggableElementProps> =
     if (previewMode || isLocked) return;
     
     event.stopPropagation();
-    onSelect?.(element);
-    selectElement(element);
-  }, [element, onSelect, selectElement, previewMode, isLocked]);
+    onSelect?.(element);    selectBlock(element.id);
+  }, [element, onSelect, selectBlock, previewMode, isLocked]);
 
   // Gérer le début du drag
   const handleDragStart = useCallback((event: React.MouseEvent) => {
@@ -124,14 +123,23 @@ export const ImprovedDraggableElement: React.FC<ImprovedDraggableElementProps> =
     position: 'absolute',
     left: element.position.x,
     top: element.position.y,
-    width: element.size.width,
-    height: element.size.height,
+    width: element.size?.width,
+    height: element.size?.height,
     cursor: previewMode ? 'default' : (isLocked ? 'not-allowed' : 'pointer'),
     opacity: element.visible === false ? 0.5 : 1,
-    transition: previewMode ? 'none' : designTokens.transitions.base,
+    transition: previewMode ? 'none' : getTransition('all', 'base'),
     transform: isSelected && !previewMode ? 'scale(1.02)' : 'scale(1)',
     zIndex: isSelected ? 10 : 1,
-    ...element.style,
+    // Extraire et convertir les propriétés de bordure et de rayon de bordure si elles sont des objets
+    border: element.styles?.border ? `${element.styles.border.width}px ${element.styles.border.style} ${element.styles.border.color}` : undefined,
+    borderRadius: element.styles?.borderRadius ? `${element.styles.borderRadius}px` : (element.styles?.border?.radius ? `${element.styles.border.radius}px` : undefined),
+    margin: element.styles?.margin ? `${element.styles.margin.top}px ${element.styles.margin.right}px ${element.styles.margin.bottom}px ${element.styles.margin.left}px` : undefined,
+    padding: element.styles?.padding ? `${element.styles.padding.top}px ${element.styles.padding.right}px ${element.styles.padding.bottom}px ${element.styles.padding.left}px` : undefined,
+    // Appliquer les autres styles
+    ...(() => {
+      const { border, borderRadius, margin, padding, ...restStyles } = element.styles || {};
+      return restStyles;
+    })(),
   };
 
   // Styles du conteneur avec bordures de sélection
@@ -139,13 +147,13 @@ export const ImprovedDraggableElement: React.FC<ImprovedDraggableElementProps> =
     position: 'relative',
     width: '100%',
     height: '100%',
-    border: !previewMode && (isSelected || isHovered) 
+    border: !previewMode && (isSelected || isHovered)
       ? `2px solid ${isSelected ? designTokens.colors.states.focus : designTokens.colors.states.dropzone}`
       : '2px solid transparent',
     borderRadius: designTokens.borderRadius.sm,
     outline: isLocked && !previewMode ? `2px dashed ${designTokens.colors.semantic.text.muted}` : 'none',
-    backgroundColor: !previewMode && isHovered && !isSelected 
-      ? `${designTokens.colors.states.hover}50` 
+    backgroundColor: !previewMode && isHovered && !isSelected
+      ? `${designTokens.colors.states.hover}50`
       : 'transparent',
   };
 
@@ -156,11 +164,11 @@ export const ImprovedDraggableElement: React.FC<ImprovedDraggableElementProps> =
         return (
           <div style={{
             padding: '8px',
-            fontSize: element.style?.fontSize || '14px',
-            color: element.style?.color || '#000000',
-            textAlign: element.style?.textAlign as any || 'left',
-            fontWeight: element.style?.fontWeight || 'normal',
-            fontStyle: element.style?.fontStyle || 'normal',
+            fontSize: element.styles?.fontSize || '14px',
+            color: element.styles?.color || '#000000',
+            textAlign: element.styles?.textAlign as any || 'left',
+            fontWeight: element.styles?.fontWeight || 'normal',
+            fontStyle: element.styles?.fontStyle || 'normal',
             lineHeight: 1.4,
             wordWrap: 'break-word',
             overflow: 'hidden',
@@ -170,15 +178,15 @@ export const ImprovedDraggableElement: React.FC<ImprovedDraggableElementProps> =
         );
 
       case 'heading':
-        const HeadingTag = (element.content?.level || 'h2') as keyof JSX.IntrinsicElements;
+        const HeadingTag = `h${element.content?.level || 2}` as keyof React.JSX.IntrinsicElements;
         return (
           <HeadingTag style={{
             margin: 0,
             padding: '8px',
-            fontSize: element.style?.fontSize || '24px',
-            color: element.style?.color || '#000000',
-            textAlign: element.style?.textAlign as any || 'left',
-            fontWeight: element.style?.fontWeight || 'bold',
+            fontSize: element.styles?.fontSize || '24px',
+            color: element.styles?.color || '#000000',
+            textAlign: element.styles?.textAlign as any || 'left',
+            fontWeight: element.styles?.fontWeight || 'bold',
             lineHeight: 1.2,
             wordWrap: 'break-word',
             overflow: 'hidden',
@@ -194,12 +202,12 @@ export const ImprovedDraggableElement: React.FC<ImprovedDraggableElementProps> =
             height: '100%',
             border: 'none',
             borderRadius: designTokens.borderRadius.md,
-            backgroundColor: element.style?.backgroundColor || designTokens.colors.blocks.button,
-            color: element.style?.color || '#ffffff',
-            fontSize: element.style?.fontSize || '16px',
-            fontWeight: element.style?.fontWeight || '500',
+            backgroundColor: element.styles?.backgroundColor || designTokens.colors.blocks.button,
+            color: element.styles?.color || '#ffffff',
+            fontSize: element.styles?.fontSize || '16px',
+            fontWeight: element.styles?.fontWeight || '500',
             cursor: previewMode ? 'pointer' : 'inherit',
-            transition: designTokens.transitions.base,
+            transition: getTransition("all", "base"),
           }}>
             {element.content?.text || 'Bouton'}
           </button>
@@ -251,7 +259,7 @@ export const ImprovedDraggableElement: React.FC<ImprovedDraggableElementProps> =
             <div style={{
               width: '100%',
               height: '2px',
-              backgroundColor: element.style?.backgroundColor || designTokens.colors.semantic.border,
+              backgroundColor: element.styles?.backgroundColor || designTokens.colors.semantic.border,
               borderRadius: '1px',
             }} />
           </div>
@@ -502,66 +510,19 @@ export const ImprovedDraggableElement: React.FC<ImprovedDraggableElementProps> =
   };
 
   return (
-    <>
-      <div
-        ref={elementRef}
-        style={elementStyle}
-        onClick={handleClick}
-        onContextMenu={handleContextMenu}
-        onMouseEnter={() => !previewMode && setIsHovered(true)}
-        onMouseLeave={() => !previewMode && setIsHovered(false)}
-        data-element-id={element.id}
-        data-element-type={element.type}
-      >
-        <div style={containerStyle}>
-          {renderContent()}
-          {renderToolbar()}
-        </div>
-
-        {/* Indicateur de verrouillage */}
-        {isLocked && !previewMode && (
-          <div style={{
-            position: 'absolute',
-            top: '4px',
-            right: '4px',
-            backgroundColor: designTokens.colors.blocks.button,
-            color: 'white',
-            borderRadius: '50%',
-            width: '20px',
-            height: '20px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: '10px',
-            zIndex: 1001,
-          }}>
-            <Lock size={10} />
-          </div>
-        )}
-
-        {/* Indicateur de visibilité */}
-        {element.visible === false && !previewMode && (
-          <div style={{
-            position: 'absolute',
-            top: '4px',
-            left: '4px',
-            backgroundColor: designTokens.colors.semantic.text.muted,
-            color: 'white',
-            borderRadius: '50%',
-            width: '20px',
-            height: '20px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: '10px',
-            zIndex: 1001,
-          }}>
-            <EyeOff size={10} />
-          </div>
-        )}
+    <div
+      ref={elementRef}
+      style={elementStyle}
+      onClick={handleClick}
+      onContextMenu={handleContextMenu}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <div style={containerStyle}>
+        {renderToolbar()}
+        {renderContent()}
+        {renderContextMenu()}
       </div>
-
-      {renderContextMenu()}
-    </>
+    </div>
   );
 };

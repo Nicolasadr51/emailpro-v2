@@ -23,16 +23,16 @@ export interface Position {
   order: number; // Pour l'ordonnancement des blocs dans le template
 }
 
-export type BlockType = 
-  | 'text' 
-  | 'heading' 
-  | 'image' 
-  | 'button' 
-  | 'divider' 
-  | 'spacer' 
-  | 'columns' 
-  | 'social' 
-  | 'footer' 
+export type BlockType =
+  | 'text'
+  | 'heading'
+  | 'image'
+  | 'button'
+  | 'divider'
+  | 'spacer'
+  | 'columns'
+  | 'social'
+  | 'footer'
   | 'html';
 
 // Styles de base pour tous les blocs
@@ -54,6 +54,7 @@ export interface BlockStyles {
   fontFamily?: string;
   lineHeight?: string | number;
   textAlign?: 'left' | 'center' | 'right' | 'justify';
+  fontStyle?: 'normal' | 'italic' | 'oblique';
   textDecoration?: string;
   
   // Dimensions
@@ -152,6 +153,7 @@ export interface ColumnsBlockContent {
     id: string;
     width: number; // Pourcentage
     blocks: EmailBlock[];
+
   }>;
 }
 
@@ -183,8 +185,10 @@ export interface BaseEmailBlock<T extends BlockType, C> {
   type: T;
   position: Position;
   styles: BlockStyles;
+  size?: { width: number; height: number };
   locked?: boolean;
   hidden?: boolean;
+  visible?: boolean;
   content: C;
 }
 
@@ -201,7 +205,7 @@ export type FooterBlock = BaseEmailBlock<'footer', FooterBlockContent>;
 export type HtmlBlock = BaseEmailBlock<'html', HtmlBlockContent>;
 
 // Union type pour tous les blocs (discriminated union)
-export type EmailBlock = 
+export type EmailBlock =
   | TextBlock
   | HeadingBlock
   | ImageBlock
@@ -243,7 +247,7 @@ export interface Layout {
   width: number;
   height: number;
   padding?: number;
-  background?: string;
+  backgroundColor: string; // Rendu obligatoire pour la compatibilité
   maxWidth?: number;
   alignment?: 'left' | 'center' | 'right';
 }
@@ -253,7 +257,7 @@ export const DEFAULT_LAYOUT: Layout = {
   width: 600,
   height: 800,
   padding: 20,
-  background: '#ffffff',
+  backgroundColor: '#ffffff',
   maxWidth: 800,
   alignment: 'center',
 };
@@ -378,7 +382,7 @@ export interface EmailExportData {
 }
 
 // Actions du reducer
-export type EmailEditorAction = 
+export type EmailEditorAction =
   | { type: 'LOAD_TEMPLATE'; payload: EmailTemplate }
   | { type: 'ADD_BLOCK'; payload: { blockType: BlockType; position?: number } }
   | { type: 'UPDATE_BLOCK'; payload: { blockId: string; updates: Partial<EmailBlock> } }
@@ -440,7 +444,7 @@ export const createDefaultBlock = (type: BlockType): EmailBlock => {
         type: 'heading',
         content: {
           text: 'Votre titre ici',
-          level: 2,
+          level: 1,
           fontSize: 24,
           fontFamily: 'Arial, sans-serif',
           fontWeight: 'bold',
@@ -512,16 +516,8 @@ export const createDefaultBlock = (type: BlockType): EmailBlock => {
         type: 'columns',
         content: {
           columns: [
-            {
-              id: `column-${Date.now( )}-1`,
-              width: 50,
-              blocks: [],
-            },
-            {
-              id: `column-${Date.now()}-2`,
-              width: 50,
-              blocks: [],
-            },
+            { id: `column-${Date.now()}-1`, width: 50, blocks: [] },
+            { id: `column-${Date.now()}-2`, width: 50, blocks: [] },
           ],
         },
       } as ColumnsBlock;
@@ -550,10 +546,6 @@ export const createDefaultBlock = (type: BlockType): EmailBlock => {
           address: '123 Rue de l\'Exemple, 75000 Paris',
           unsubscribeText: 'Se désabonner',
           unsubscribeLink: '#',
-          socialLinks: [
-            { name: 'facebook', url: 'https://facebook.com', icon: 'facebook' },
-            { name: 'twitter', url: 'https://twitter.com', icon: 'twitter' },
-          ],
         },
       } as FooterBlock;
 
@@ -570,30 +562,8 @@ export const createDefaultBlock = (type: BlockType): EmailBlock => {
       // Fallback pour les types inconnus ou non implémentés
       return {
         ...baseBlock,
-        type: type as BlockType,
+        type: type,
         content: {},
       } as EmailBlock;
   }
 };
-
-// Factory pour créer un template d'email par défaut
-export const createDefaultTemplate = ( ): EmailTemplate => ({
-  id: `template_${Date.now()}`,
-  name: 'Nouveau Template',
-  subject: 'Sujet de votre email',
-  preheader: 'Aperçu de votre email...',
-  layout: DEFAULT_LAYOUT,
-  blocks: [],
-  globalStyles: {
-    backgroundColor: '#f4f4f4',
-    fontFamily: 'Arial, sans-serif',
-    fontSize: 16,
-    lineHeight: 1.5,
-    color: '#333333',
-    containerWidth: 600,
-    containerPadding: 20,
-  },
-  createdAt: new Date().toISOString(),
-  updatedAt: new Date().toISOString(),
-  version: '1.0.0',
-});

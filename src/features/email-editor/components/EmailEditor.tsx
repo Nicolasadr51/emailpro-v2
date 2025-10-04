@@ -1,6 +1,3 @@
-// Composant principal de l'éditeur d'emails
-// Architecture définie par Claude 4.5 Sonnet
-
 import React, { useEffect, useState, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEmailEditorStore } from '../../../contexts/EmailEditorContext';
@@ -36,6 +33,7 @@ export const EmailEditor: React.FC<EmailEditorProps> = ({ className = '' }) => {
 
   console.log("EmailEditor: Attempting to use useEmailEditorStore");
   const { state, actions } = useEmailEditorStore();
+  const { selectBlock } = actions;
   console.log("EmailEditor: Successfully got context", { state, actions });
   
   // Utiliser les données du contexte
@@ -43,7 +41,7 @@ export const EmailEditor: React.FC<EmailEditorProps> = ({ className = '' }) => {
   const elements = template?.blocks || [];
   const setTemplate = actions.loadTemplate;
   const zoom = 1; // Placeholder - le zoom n'est pas encore implémenté dans le contexte
-  const setZoom = () => {}; // Placeholder
+  const setZoom = (newZoom: number) => {}; // Placeholder
   const undo = actions.undo;
   const redo = actions.redo;
 
@@ -59,16 +57,25 @@ export const EmailEditor: React.FC<EmailEditorProps> = ({ className = '' }) => {
       const newTemplate: EmailTemplate = {
         id: `template_${Date.now()}`,
         name: 'Nouveau template',
-        description: '',
-        elements: [],
+        subject: 'Sujet par défaut',
+        blocks: [],
         layout: {
           width: 600,
           height: 800,
-          background: '#ffffff',
+          backgroundColor: '#ffffff',
+        },
+        globalStyles: {
+          backgroundColor: '#f0f0f0',
+          fontFamily: 'Arial, sans-serif',
+          fontSize: 16,
+          lineHeight: 1.5,
+          color: '#333333',
+          containerWidth: 600,
+          containerPadding: 20,
         },
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
-        isPublic: false,
+        version: '1.0.0',
       };
       setTemplate(newTemplate);
       setShowTemplates(false);
@@ -81,16 +88,25 @@ export const EmailEditor: React.FC<EmailEditorProps> = ({ className = '' }) => {
     const newTemplate: EmailTemplate = {
       id: `template_${Date.now()}`,
       name: 'Nouveau template',
-      description: '',
-      elements: [],
+      subject: 'Sujet par défaut',
+      blocks: [],
       layout: {
         width: 600,
         height: 800,
-        background: '#ffffff',
+        backgroundColor: '#ffffff',
+      },
+      globalStyles: {
+        backgroundColor: '#f0f0f0',
+        fontFamily: 'Arial, sans-serif',
+        fontSize: 16,
+        lineHeight: 1.5,
+        color: '#333333',
+        containerWidth: 600,
+        containerPadding: 20,
       },
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
-      isPublic: false,
+      version: '1.0.0',
     };
     setTemplate(newTemplate);
     setShowTemplates(false);
@@ -116,18 +132,26 @@ export const EmailEditor: React.FC<EmailEditorProps> = ({ className = '' }) => {
         // Nouveau template
         const savedTemplate = await emailEditorService.saveTemplate({
           name: template.name,
-          description: template.description,
-          elements: elements,
+          blocks: elements,
           layout: template.layout,
-          isPublic: template.isPublic,
+          subject: template.subject,
+          globalStyles: template.globalStyles,
+          createdAt: template.createdAt,
+          updatedAt: template.updatedAt,
+          version: template.version,
         });
         setTemplate(savedTemplate);
         navigate(`/email-editor/${savedTemplate.id}`, { replace: true });
       } else {
         // Template existant
         await emailEditorService.updateTemplate(template.id, {
-          elements: elements,
+          blocks: elements,
           layout: template.layout,
+          subject: template.subject,
+          globalStyles: template.globalStyles,
+          createdAt: template.createdAt,
+          updatedAt: template.updatedAt,
+          version: template.version,
         });
       }
       setLastSaved(new Date());
@@ -171,9 +195,9 @@ export const EmailEditor: React.FC<EmailEditorProps> = ({ className = '' }) => {
     // Mettre à jour le template avec les nouveaux éléments
     const updatedTemplate = {
       ...template,
-      elements: newElements,
+      blocks: newElements,
       name: layout.name,
-      updatedAt: new Date().toISOString()
+      updatedAt: new Date().toISOString(),
     };
 
     setTemplate(updatedTemplate);
@@ -285,7 +309,7 @@ export const EmailEditor: React.FC<EmailEditorProps> = ({ className = '' }) => {
           
           <div>
             <h1 style={{ margin: 0, fontSize: '18px', fontWeight: '600' }}>
-              {template?.name || 'Éditeur d\'emails'}
+             {template?.name || 'Éditeur d\'emails'}
             </h1>
             {lastSaved && (
               <p style={{ margin: 0, fontSize: '12px', color: '#666' }}>
@@ -472,15 +496,6 @@ export const emailEditorStyles = `
     
     .editor-header h1 {
       font-size: 16px;
-    }
-    
-    .editor-main {
-      height: calc(100vh - 120px);
-    }
-    
-    .editor-status {
-      bottom: 10px;
-      right: 10px;
     }
   }
 `;

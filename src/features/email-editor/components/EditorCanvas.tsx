@@ -10,12 +10,12 @@ interface EditorCanvasProps {
   viewMode?: ViewMode; // Ajouter viewMode en tant que propriété optionnelle de type ViewMode
 }
 
-export const EditorCanvas: React.FC<EditorCanvasProps> = ({ 
-  className = '', 
-  viewMode = 'desktop' 
+export const EditorCanvas: React.FC<EditorCanvasProps> = ({
+  className = '',
+  viewMode = 'desktop'
 }) => {
   console.log("EditorCanvas: Attempting to use useEmailEditorStore");
-  const { state, selectedBlock } = useEmailEditorStore();
+  const { state, selectedBlock, actions } = useEmailEditorStore();
   console.log("EditorCanvas: Successfully got context", { state });
   
   // Utiliser les données du contexte avec vérifications de sécurité
@@ -41,7 +41,7 @@ export const EditorCanvas: React.FC<EditorCanvasProps> = ({
   const canvasStyle = useMemo(() => ({
     width: canvasWidth,
     minHeight: canvasHeight,
-    backgroundColor: template?.layout.background || '#ffffff',
+    backgroundColor: template?.layout.backgroundColor || '#ffffff',
     transform: `scale(${zoom})`,
     transformOrigin: 'top left',
     position: 'relative' as const,
@@ -49,7 +49,7 @@ export const EditorCanvas: React.FC<EditorCanvasProps> = ({
     boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
     borderRadius: '8px',
     overflow: 'hidden',
-  }), [canvasWidth, canvasHeight, template?.layout.background, zoom]);
+  }), [canvasWidth, canvasHeight, template?.layout.backgroundColor, zoom]);
 
   const containerStyle = useMemo(() => ({
     width: `${canvasWidth * zoom + 40}px`,
@@ -77,6 +77,7 @@ export const EditorCanvas: React.FC<EditorCanvasProps> = ({
             key={element.id}
             element={element}
             isSelected={selectedBlockId === element.id}
+            onSelect={actions.selectBlock}
           />
         ))}
 

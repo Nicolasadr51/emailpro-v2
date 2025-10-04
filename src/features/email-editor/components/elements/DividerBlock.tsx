@@ -17,7 +17,7 @@ export const DividerBlock: React.FC<DividerBlockProps> = ({ element }) => {
     if (element.type === 'divider') {
       return element.content;
     }
-    return { height: 1, color: '#cccccc', style: 'solid' };
+    return { height: 1, color: '#cccccc', style: 'solid', thickness: 1 };
   });
   const { actions, selectedBlock } = useEmailEditorStore(); const { updateBlock } = actions;
   const isSelected = selectedBlock?.id === element.id;
