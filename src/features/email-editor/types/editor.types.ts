@@ -107,12 +107,7 @@ export interface ImageBlockContent {
   link?: string;
 }
 
-export interface ButtonBlockContent {
-  text: string;
-  link: string;
-  href: string;
-  target?: 
-}
+
 
 export interface DividerBlockContent {
   thickness: number;
