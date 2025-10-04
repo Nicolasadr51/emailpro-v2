@@ -14,7 +14,7 @@ import {
   MoreHorizontal,
   Ruler
 } from 'lucide-react';
-import { designTokens } from '../../../design-system/tokens';
+import { designTokens, getTransition } from '../../../design-system/tokens';
 import { EmailBlock } from '../../../types/emailEditor';
 
 interface PropertiesPanelProps {
@@ -124,7 +124,7 @@ export const ImprovedPropertiesPanel: React.FC<PropertiesPanelProps> = ({
           fontSize: designTokens.typography.sizes.sm,
           backgroundColor: designTokens.colors.semantic.background,
           outline: 'none',
-          transition: designTokens.transitions.base,
+          transition: getTransition("all", "base"),
         }}
         onFocus={(e) => {
           e.target.style.borderColor = designTokens.colors.states.focus;
@@ -170,7 +170,7 @@ export const ImprovedPropertiesPanel: React.FC<PropertiesPanelProps> = ({
           outline: 'none',
           resize: 'vertical',
           fontFamily: 'inherit',
-          transition: designTokens.transitions.base,
+          transition: getTransition("all", "base"),
         }}
         onFocus={(e) => {
           e.target.style.borderColor = designTokens.colors.states.focus;
@@ -212,7 +212,7 @@ export const ImprovedPropertiesPanel: React.FC<PropertiesPanelProps> = ({
           backgroundColor: designTokens.colors.semantic.background,
           outline: 'none',
           cursor: 'pointer',
-          transition: designTokens.transitions.base,
+          transition: getTransition("all", "base"),
         }}
         onFocus={(e) => {
           e.target.style.borderColor = designTokens.colors.states.focus;
@@ -272,7 +272,7 @@ export const ImprovedPropertiesPanel: React.FC<PropertiesPanelProps> = ({
           backgroundColor: value ? designTokens.colors.states.focus : designTokens.colors.semantic.border,
           position: 'relative',
           cursor: 'pointer',
-          transition: designTokens.transitions.base,
+          transition: getTransition("all", "base"),
           marginLeft: designTokens.spacing.md,
         }}
       >
@@ -284,7 +284,7 @@ export const ImprovedPropertiesPanel: React.FC<PropertiesPanelProps> = ({
           position: 'absolute',
           top: '2px',
           left: value ? '22px' : '2px',
-          transition: designTokens.transitions.base,
+          transition: getTransition("all", "base"),
           boxShadow: designTokens.shadows.sm,
         }} />
       </button>
@@ -559,7 +559,7 @@ export const ImprovedPropertiesPanel: React.FC<PropertiesPanelProps> = ({
             fontSize: designTokens.typography.sizes.base,
             fontWeight: designTokens.typography.weights.semibold,
             color: designTokens.colors.semantic.text.primary,
-            transition: designTokens.transitions.base,
+            transition: getTransition("all", "base"),
           }}
           onMouseEnter={(e) => {
             e.currentTarget.style.color = designTokens.colors.states.focus;
