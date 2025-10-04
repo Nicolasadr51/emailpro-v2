@@ -31,6 +31,7 @@ export const ImprovedEditorCanvas: React.FC<EditorCanvasProps> = ({
   const { dropRef, dropHandlers, isDragOver, draggedItem } = useDragDrop();
   const [showGrid, setShowGrid] = useState(true);
   const [previewMode, setPreviewMode] = useState(false);
+  const [zoom, setZoom] = useState(1);
 
   // Adapter la largeur selon le mode d'affichage
   const getCanvasWidth = useCallback(() => {
