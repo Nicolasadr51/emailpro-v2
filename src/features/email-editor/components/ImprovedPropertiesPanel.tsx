@@ -90,7 +90,7 @@ export const ImprovedPropertiesPanel: React.FC<PropertiesPanelProps> = ({
 
   const handlePropertyChange = (property: string, value: any) => {
     if (selectedBlock && onElementUpdate) {
-      onElementUpdate(selectedBlockId, { [property]: value });
+      onElementUpdate(selectedBlock.id, { [property]: value });
     }
   };
 
