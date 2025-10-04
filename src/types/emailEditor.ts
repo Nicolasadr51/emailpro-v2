@@ -567,3 +567,31 @@ export const createDefaultBlock = (type: BlockType): EmailBlock => {
       } as EmailBlock;
   }
 };
+
+
+
+export const createDefaultTemplate = (): EmailTemplate => ({
+  id: `template-${Date.now()}`,
+  name: 'Nouveau Template',
+  subject: 'Sujet de votre email',
+  preheader: 'Pré-en-tête de votre email',
+  layout: DEFAULT_LAYOUT,
+  blocks: [
+    createDefaultBlock('text'),
+    createDefaultBlock('image'),
+    createDefaultBlock('button'),
+  ],
+  globalStyles: {
+    backgroundColor: '#f0f0f0',
+    fontFamily: 'Arial, sans-serif',
+    fontSize: 16,
+    lineHeight: 1.5,
+    color: '#333333',
+    containerWidth: 600,
+    containerPadding: 20,
+  },
+  createdAt: new Date().toISOString(),
+  updatedAt: new Date().toISOString(),
+  version: '1.0.0',
+});
+
