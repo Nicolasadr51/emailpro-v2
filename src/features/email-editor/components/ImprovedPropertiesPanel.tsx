@@ -1,4 +1,3 @@
-'''
 import React, { useState } from 'react';
 import { 
   Type, 
@@ -334,21 +333,128 @@ export const ImprovedPropertiesPanel: React.FC<PropertiesPanelProps> = ({
       
       case 'button':
         const buttonContent = selectedBlock.content as ButtonBlockContent | undefined;
+        const [buttonData, setButtonData] = useState<ButtonBlockContent>(() => {
+          const oldData = selectedBlock?.content as ButtonBlockContent | undefined;
+          return {
+            text: oldData?.text || 'Cliquez ici',
+            link: oldData?.link || '#',
+            href: oldData?.href || '#',
+            linkTarget: oldData?.linkTarget || '_self',
+            target: oldData?.target || '_self',
+            backgroundColor: oldData?.backgroundColor || '#007bff',
+            color: oldData?.color || '#ffffff',
+            fontSize: oldData?.fontSize || 16,
+            fontFamily: oldData?.fontFamily || 'Arial, sans-serif',
+            fontWeight: oldData?.fontWeight || 'bold',
+            paddingVertical: oldData?.paddingVertical || 12,
+            paddingHorizontal: oldData?.paddingHorizontal || 24,
+            borderRadius: oldData?.borderRadius || 4,
+            borderWidth: oldData?.borderWidth || 0,
+            borderColor: oldData?.borderColor || 'transparent',
+          };
+        });
+
+        // Update buttonData when selectedBlock.content changes
+        React.useEffect(() => {
+          if (selectedBlock?.content) {
+            setButtonData(selectedBlock.content as ButtonBlockContent);
+          }
+        }, [selectedBlock?.content]);
+
+        // Handle changes to buttonData and propagate them up
+        React.useEffect(() => {
+          if (selectedBlock && onElementUpdate) {
+            onElementUpdate(selectedBlock.id, { content: buttonData });
+          }
+        }, [buttonData]);
+
         return (
           <>
             {renderInput(
               'Texte du bouton',
-              buttonContent?.text || '',
-              (value) => handlePropertyChange('content', { ...selectedBlock.content, text: value }),
+              buttonData.text,
+              (value) => setButtonData(prev => ({ ...prev, text: value })),
               'text',
               'Cliquez ici'
             )}
             {renderInput(
               'Lien (URL)',
-              buttonContent?.href || '',
-              (value) => handlePropertyChange('content', { ...selectedBlock.content, href: value }),
+              buttonData.href,
+              (value) => setButtonData(prev => ({ ...prev, href: value })),
               'url',
               'https://example.com'
+            )}
+            {renderInput(
+              'Cible du lien',
+              buttonData.linkTarget,
+              (value) => setButtonData(prev => ({ ...prev, linkTarget: value })),
+              'text',
+              '_self, _blank, _parent, _top'
+            )}
+            {renderInput(
+              'Couleur de fond',
+              buttonData.backgroundColor,
+              (value) => setButtonData(prev => ({ ...prev, backgroundColor: value })),
+              'color'
+            )}
+            {renderInput(
+              'Couleur du texte',
+              buttonData.color,
+              (value) => setButtonData(prev => ({ ...prev, color: value })),
+              'color'
+            )}
+            {renderInput(
+              'Taille de police',
+              String(buttonData.fontSize),
+              (value) => setButtonData(prev => ({ ...prev, fontSize: Number(value) })),
+              'number'
+            )}
+            {renderInput(
+              'Famille de police',
+              buttonData.fontFamily,
+              (value) => setButtonData(prev => ({ ...prev, fontFamily: value })),
+              'text'
+            )}
+            {renderSelect(
+              'Poids de police',
+              buttonData.fontWeight,
+              (value) => setButtonData(prev => ({ ...prev, fontWeight: value })),
+              [
+                { value: 'normal', label: 'Normal' },
+                { value: 'bold', label: 'Gras' },
+                { value: 'bolder', label: 'Plus gras' },
+                { value: 'lighter', label: 'Plus léger' },
+              ]
+            )}
+            {renderInput(
+              'Padding vertical',
+              String(buttonData.paddingVertical),
+              (value) => setButtonData(prev => ({ ...prev, paddingVertical: Number(value) })),
+              'number'
+            )}
+            {renderInput(
+              'Padding horizontal',
+              String(buttonData.paddingHorizontal),
+              (value) => setButtonData(prev => ({ ...prev, paddingHorizontal: Number(value) })),
+              'number'
+            )}
+            {renderInput(
+              'Rayon de la bordure',
+              String(buttonData.borderRadius),
+              (value) => setButtonData(prev => ({ ...prev, borderRadius: Number(value) })),
+              'number'
+            )}
+            {renderInput(
+              'Largeur de la bordure',
+              String(buttonData.borderWidth),
+              (value) => setButtonData(prev => ({ ...prev, borderWidth: Number(value) })),
+              'number'
+            )}
+            {renderInput(
+              'Couleur de la bordure',
+              buttonData.borderColor,
+              (value) => setButtonData(prev => ({ ...prev, borderColor: value })),
+              'color'
             )}
           </>
         );
@@ -628,4 +734,3 @@ export const ImprovedPropertiesPanel: React.FC<PropertiesPanelProps> = ({
     </div>
   );
 };
-'''
