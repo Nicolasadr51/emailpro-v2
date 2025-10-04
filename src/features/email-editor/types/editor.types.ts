@@ -110,7 +110,8 @@ export interface ImageBlockContent {
 export interface ButtonBlockContent {
   text: string;
   link: string;
-  target?: '_blank' | '_self';
+  href: string;
+  target?: 
 }
 
 export interface DividerBlockContent {
