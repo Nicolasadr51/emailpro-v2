@@ -10,7 +10,7 @@ import { StatusIndicator, SaveStatus } from './StatusIndicator';
 import { ViewModeToggle, ViewMode } from './ViewModeToggle';
 import { PredefinedLayouts } from './PredefinedLayouts';
 import { emailEditorService } from '../services/emailEditorService';
-import { EmailTemplate } from '../../../types/emailEditor';
+import { EmailTemplate, createDefaultTemplate } from '../../../types/emailEditor';
 import { PageWrapper } from '../../../components/layout/PageWrapper';
 import { Button } from '../../../components/ui/Button';
 import { SaveIcon, EyeIcon, ArrowLeftIcon, SettingsIcon } from 'lucide-react';
@@ -54,30 +54,7 @@ export const EmailEditor: React.FC<EmailEditorProps> = ({ className = '' }) => {
     } catch (error) {
       console.error('Erreur lors du chargement du template:', error);
       // Créer un nouveau template en cas d'erreur
-      const newTemplate: EmailTemplate = {
-        id: `template_${Date.now()}`,
-        name: 'Nouveau template',
-        subject: 'Sujet par défaut',
-        blocks: [],
-        layout: {
-          width: 600,
-          height: 800,
-          backgroundColor: '#ffffff',
-        },
-        globalStyles: {
-          backgroundColor: '#f0f0f0',
-          fontFamily: 'Arial, sans-serif',
-          fontSize: 16,
-          lineHeight: 1.5,
-          color: '#333333',
-          containerWidth: 600,
-          containerPadding: 20,
-        },
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-        version: '1.0.0',
-      };
-      setTemplate(newTemplate);
+      setTemplate(createDefaultTemplate());
       setShowTemplates(false);
     } finally {
       setIsLoading(false);
