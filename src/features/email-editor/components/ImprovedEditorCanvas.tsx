@@ -49,7 +49,7 @@ export const ImprovedEditorCanvas: React.FC<EditorCanvasProps> = ({
   const canvasStyle = useMemo(() => ({
     width: canvasWidth,
     minHeight: canvasHeight,
-    backgroundColor: template?.layout.backgroundColor || '#ffffff',
+backgroundColor: template?.layout.backgroundColor || '#ffffff',
     transform: `scale(${zoom})`,
     transformOrigin: 'top left',
     position: 'relative' as const,
