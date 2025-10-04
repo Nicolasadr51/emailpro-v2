@@ -14,12 +14,14 @@ interface DraggableElementProps {
   element: EmailBlock;
   isSelected: boolean;
   onSelect: (blockId: string | null) => void;
+  previewMode?: boolean;
 }
 
 export const DraggableElement: React.FC<DraggableElementProps> = ({
   element,
   isSelected,
   onSelect,
+  previewMode = false,
 }) => {
   const [isHovered, setIsHovered] = useState(false);
   const { actions } = useEmailEditorStore();
