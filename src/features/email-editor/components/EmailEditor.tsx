@@ -66,8 +66,8 @@ export const EmailEditor: React.FC<EmailEditorProps> = ({ className = '' }) => {
           height: 800,
           background: '#ffffff',
         },
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
         isPublic: false,
       };
       setTemplate(newTemplate);
@@ -88,8 +88,8 @@ export const EmailEditor: React.FC<EmailEditorProps> = ({ className = '' }) => {
         height: 800,
         background: '#ffffff',
       },
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
       isPublic: false,
     };
     setTemplate(newTemplate);
@@ -173,7 +173,7 @@ export const EmailEditor: React.FC<EmailEditorProps> = ({ className = '' }) => {
       ...template,
       elements: newElements,
       name: layout.name,
-      updatedAt: new Date()
+      updatedAt: new Date().toISOString()
     };
 
     setTemplate(updatedTemplate);
