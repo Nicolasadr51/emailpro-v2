@@ -319,7 +319,7 @@ export const ImprovedPropertiesPanel: React.FC<PropertiesPanelProps> = ({
             )}
             {renderSelect(
               'Niveau de titre',
-              selectedBlock.content?.level || 'h2',
+              String(selectedBlock.content?.level) || 'h2',
               (value) => handlePropertyChange('content', { ...selectedBlock.content, level: value }),
               [
                 { value: 'h1', label: 'Titre 1 (H1)' },
