@@ -567,3 +567,25 @@ export const createDefaultBlock = (type: BlockType): EmailBlock => {
       } as EmailBlock;
   }
 };
+
+// Factory pour créer un template par défaut
+export const createDefaultTemplate = (): EmailTemplate => ({
+  id: `template-${Date.now()}`,
+  name: 'Nouveau Template',
+  subject: 'Sujet de l\'email',
+  preheader: 'Pré-en-tête de l\'email',
+  layout: DEFAULT_LAYOUT,
+  blocks: [],
+  globalStyles: {
+    backgroundColor: '#ffffff',
+    fontFamily: 'Arial, sans-serif',
+    fontSize: 16,
+    lineHeight: 1.5,
+    color: '#000000',
+    containerWidth: 600,
+    containerPadding: 20,
+  },
+  createdAt: new Date().toISOString(),
+  updatedAt: new Date().toISOString(),
+  version: '1.0',
+});
