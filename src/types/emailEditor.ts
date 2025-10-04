@@ -404,7 +404,6 @@ export type EmailEditorAction =
 
 // Factory pour créer des blocs par défaut (correction Claude 4.x)
 export const createDefaultBlock = (type: BlockType): EmailBlock => {
-  const baseBlock = {
     id: `block-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
     position: {
       x: 0,
