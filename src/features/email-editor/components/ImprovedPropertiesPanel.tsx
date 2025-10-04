@@ -334,7 +334,7 @@ export const ImprovedPropertiesPanel: React.FC<PropertiesPanelProps> = ({
       case 'button':
         const buttonContent = selectedBlock.content as ButtonBlockContent | undefined;
         const [buttonData, setButtonData] = useState<ButtonBlockContent>(() => {
-          const oldData = selectedBlock?.content as ButtonBlockContent;
+          const oldData = selectedBlock?.content as ButtonBlockContent | undefined;
           return {
             text: oldData?.text || 'Cliquez ici',
             link: oldData?.link || '#',
@@ -348,8 +348,8 @@ export const ImprovedPropertiesPanel: React.FC<PropertiesPanelProps> = ({
             fontWeight: oldData?.fontWeight || 'bold',
             paddingVertical: oldData?.paddingVertical || 12,
             paddingHorizontal: oldData?.paddingHorizontal || 24,
-            borderRadius: oldData?.borderRadius || 4,
-            borderWidth: oldData?.borderWidth || 0,
+            borderRadius: oldData?.borderRadius ?? 4,
+            borderWidth: oldData?.borderWidth ?? 0,
             borderColor: oldData?.borderColor || 'transparent',
           };
         });
