@@ -334,7 +334,7 @@ export const ImprovedPropertiesPanel: React.FC<PropertiesPanelProps> = ({
       case 'button':
         const buttonContent = selectedBlock.content as ButtonBlockContent | undefined;
         const [buttonData, setButtonData] = useState<ButtonBlockContent>(() => {
-          const oldData = selectedBlock?.content as ButtonBlockContent | undefined;
+          const oldData = selectedBlock?.content as ButtonBlockContent;
           return {
             text: oldData?.text || 'Cliquez ici',
             link: oldData?.link || '#',
