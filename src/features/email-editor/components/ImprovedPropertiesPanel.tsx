@@ -3,7 +3,6 @@ import {
   Type, 
   Palette, 
   Layout, 
-  Spacing, 
   Link, 
   Image,
   ChevronDown,
@@ -12,7 +11,8 @@ import {
   EyeOff,
   Copy,
   Trash2,
-  MoreHorizontal
+  MoreHorizontal,
+  Ruler
 } from 'lucide-react';
 import { designTokens } from '../../../design-system/tokens';
 import { EmailBlock } from '../../../types/emailEditor';
@@ -54,7 +54,7 @@ const propertySections: PropertySection[] = [
   {
     id: 'spacing',
     title: 'Espacement',
-    icon: <Spacing size={16} />,
+    icon: <Ruler size={16} />,
     defaultExpanded: false,
   },
   {
