@@ -23,7 +23,7 @@ export const EditorCanvas: React.FC<EditorCanvasProps> = ({
   const elements = template?.blocks || [];
   const selectedBlockId = state.selectedBlockId;
   const zoom = 1; // Placeholder - le zoom n'est pas encore implémenté dans le contexte
-  const { dropRef, dropHandlers } = useDragDrop();
+  const { dropRef, dropHandlers, isDragOver, draggedItem } = useDragDrop();
 
   // Adapter la largeur selon le mode d'affichage
   const getCanvasWidth = () => {
@@ -64,7 +64,7 @@ export const EditorCanvas: React.FC<EditorCanvasProps> = ({
     <div className={`editor-canvas-container ${className}`} style={containerStyle}>
       <div
         ref={dropRef}
-        className="editor-canvas"
+        className={`editor-canvas ${isDragOver ? 'drag-over' : ''}`}
         style={canvasStyle}
         {...dropHandlers}
       >
@@ -82,7 +82,11 @@ export const EditorCanvas: React.FC<EditorCanvasProps> = ({
         ))}
 
         {/* Drop zone indicator */}
-        <div className="drop-indicator" />
+        {isDragOver && draggedItem && (
+          <div className="drop-indicator">
+            Glissez ici pour ajouter/déplacer {typeof draggedItem.id === 'string' ? draggedItem.id : 'un élément'}
+          </div>
+        )}
 
         {/* Helper message if no elements */}
         {elements.length === 0 && (
@@ -109,6 +113,10 @@ export const EditorCanvas: React.FC<EditorCanvasProps> = ({
 };
 
 export const editorCanvasStyles = `
+  .editor-canvas.drag-over {
+    border: 2px dashed #007bff;
+    background-color: rgba(0, 123, 255, 0.1);
+  }
   .canvas-grid {
     position: absolute;
     top: 0;

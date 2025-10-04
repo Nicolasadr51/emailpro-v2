@@ -1,56 +1,71 @@
 // Hook pour la gestion du drag and drop dans l'éditeur
 // Architecture définie par Claude 4.5 Sonnet
 
-import { useRef, useCallback } from 'react';
+import { useRef, useCallback, useState } from 'react';
 import { BlockType, Position } from '../../../types/emailEditor';
 import { useEmailEditorStore } from '../../../contexts/EmailEditorContext';
 
 export const useDragDrop = () => {
+  const { actions, moveElement } = useEmailEditorStore();
+  const dropRef = useRef<HTMLDivElement>(null);
+  const [isDragOver, setIsDragOver] = useState(false);
+  const [draggedItem, setDraggedItem] = useState<{ type: 'new' | 'existing'; id: string | BlockType } | null>(null);
 
-  const { actions } = useEmailEditorStore();
-  const { moveElement } = useEmailEditorStore();
-  const dragRef = useRef<HTMLDivElement>(null);
-
-  // Gestion du drop sur le canvas
   const handleDrop = useCallback((e: React.DragEvent) => {
     e.preventDefault();
-    
+    setIsDragOver(false);
     const elementType = e.dataTransfer.getData('elementType') as BlockType;
     const elementId = e.dataTransfer.getData('elementId');
-    
-    if (!dragRef.current) return;
 
-    const rect = dragRef.current.getBoundingClientRect();
+    if (!dropRef.current) return;
+
+    const rect = dropRef.current.getBoundingClientRect();
     const position: Position = {
       x: e.clientX - rect.left,
       y: e.clientY - rect.top,
     };
 
     if (elementType && !elementId) {
-      // Création d'un nouvel élément depuis la palette
       actions.addBlock(elementType, position);
     } else if (elementId) {
-      // Déplacement d'un élément existant
       moveElement(elementId, position);
     }
+    setDraggedItem(null);
   }, [actions, moveElement]);
 
   const handleDragOver = useCallback((e: React.DragEvent) => {
     e.preventDefault();
     e.dataTransfer.dropEffect = 'copy';
+    setIsDragOver(true);
   }, []);
 
   const handleDragEnter = useCallback((e: React.DragEvent) => {
     e.preventDefault();
+    setIsDragOver(true);
+    const elementType = e.dataTransfer.getData('elementType');
+    const elementId = e.dataTransfer.getData('elementId');
+    if (elementType) {
+      setDraggedItem({ type: 'new', id: elementType as BlockType });
+    } else if (elementId) {
+      setDraggedItem({ type: 'existing', id: elementId });
+    }
+  }, []);
+
+  const handleDragLeave = useCallback(() => {
+    setIsDragOver(false);
+    setDraggedItem(null);
   }, []);
 
   return {
-    dropRef: dragRef,
+    dropRef,
     dropHandlers: {
       onDrop: handleDrop,
       onDragOver: handleDragOver,
       onDragEnter: handleDragEnter,
+      onDragLeave: handleDragLeave,
     },
+    isDragOver,
+    draggedItem,
   };
 };
 
@@ -169,3 +184,4 @@ export const useElementResize = (elementId: string) => {
     handleResizeStart,
   };
 };
+
