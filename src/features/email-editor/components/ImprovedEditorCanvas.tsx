@@ -3,7 +3,7 @@ import { useEmailEditorStore } from '../../../contexts/EmailEditorContext';
 import { useDragDrop } from '../hooks/useDragDrop';
 import { DraggableElement } from './DraggableElement';
 import { EmailBlock } from '../../../types/emailEditor';
-import { designTokens } from '../../../design-system/tokens';
+import { designTokens, getTransition } from '../../../design-system/tokens';
 import { 
   Monitor, 
   Tablet, 
