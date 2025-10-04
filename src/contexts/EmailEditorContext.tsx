@@ -33,6 +33,7 @@ const migrateBlockPosition = (block: any, index: number): EmailBlock => {
 // État initial de l'éditeur
 const initialState: EmailEditorState = {
   template: createDefaultTemplate(),
+
   selectedBlockId: null,
   isEditing: false,
   editingBlockId: null,
@@ -305,6 +306,7 @@ const emailEditorReducer = (state: EmailEditorState, action: EmailEditorAction):
       return {
         ...initialState,
         template: createDefaultTemplate(),
+
       };
 
     default:
