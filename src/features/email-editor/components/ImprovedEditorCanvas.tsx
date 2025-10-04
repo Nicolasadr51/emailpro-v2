@@ -60,7 +60,7 @@ backgroundColor: template?.layout.backgroundColor || '#ffffff',
     borderRadius: '8px',
     overflow: 'hidden',
     border: isDragOver ? `2px dashed ${designTokens.colors.states.dropzoneActive}` : 'none',
-    transition: designTokens.transitions.base,
+    transition: getTransition(),
   }), [canvasWidth, canvasHeight, template?.layout.backgroundColor, zoom, isDragOver]);
 
   const containerStyle = useMemo(() => ({
@@ -110,7 +110,7 @@ backgroundColor: template?.layout.backgroundColor || '#ffffff',
             color: viewMode === mode ? designTokens.colors.states.focus : designTokens.colors.semantic.text.secondary,
             fontSize: designTokens.typography.sizes.sm,
             cursor: 'pointer',
-            transition: designTokens.transitions.base,
+            transition: getTransition(),
           }}
           title={label}
         >
