@@ -61,7 +61,7 @@ export const ImprovedEditorCanvas: React.FC<EditorCanvasProps> = ({
     overflow: 'hidden',
     border: isDragOver ? `2px dashed ${designTokens.colors.states.dropzoneActive}` : 'none',
     transition: designTokens.transitions.base,
-  }), [canvasWidth, canvasHeight, template?.layout.background, zoom, isDragOver]);
+  }), [canvasWidth, canvasHeight, template?.layout.backgroundColor, zoom, isDragOver]);
 
   const containerStyle = useMemo(() => ({
     width: '100%',
