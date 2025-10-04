@@ -404,6 +404,7 @@ export type EmailEditorAction =
 
 // Factory pour créer des blocs par défaut (correction Claude 4.x)
 export const createDefaultBlock = (type: BlockType): EmailBlock => {
+  const baseBlock = {
     id: `block-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
     position: {
       x: 0,
@@ -515,8 +516,8 @@ export const createDefaultBlock = (type: BlockType): EmailBlock => {
         type: 'columns',
         content: {
           columns: [
-            { id: `column-${Date.now()}-1`, width: 50, blocks: [] },
-            { id: `column-${Date.now()}-2`, width: 50, blocks: [] },
+            { id: 'col1', width: 50, blocks: [] },
+            { id: 'col2', width: 50, blocks: [] },
           ],
         },
       } as ColumnsBlock;
@@ -527,9 +528,8 @@ export const createDefaultBlock = (type: BlockType): EmailBlock => {
         type: 'social',
         content: {
           platforms: [
-            { name: 'facebook', url: 'https://facebook.com', icon: 'facebook' },
-            { name: 'twitter', url: 'https://twitter.com', icon: 'twitter' },
-            { name: 'instagram', url: 'https://instagram.com', icon: 'instagram' },
+            { name: 'facebook', url: '#', icon: 'facebook-icon' },
+            { name: 'twitter', url: '#', icon: 'twitter-icon' },
           ],
           iconSize: 24,
           spacing: 10,
@@ -545,6 +545,7 @@ export const createDefaultBlock = (type: BlockType): EmailBlock => {
           address: '123 Rue de l\'Exemple, 75000 Paris',
           unsubscribeText: 'Se désabonner',
           unsubscribeLink: '#',
+          socialLinks: [],
         },
       } as FooterBlock;
 
@@ -558,7 +559,7 @@ export const createDefaultBlock = (type: BlockType): EmailBlock => {
       } as HtmlBlock;
 
     default:
-      // Fallback pour les types inconnus ou non implémentés
+      // Fallback pour les types de blocs inconnus ou non spécifiés
       return {
         ...baseBlock,
         type: type,
@@ -566,31 +567,3 @@ export const createDefaultBlock = (type: BlockType): EmailBlock => {
       } as EmailBlock;
   }
 };
-
-
-
-export const createDefaultTemplate = (): EmailTemplate => ({
-  id: `template-${Date.now()}`,
-  name: 'Nouveau Template',
-  subject: 'Sujet de votre email',
-  preheader: 'Pré-en-tête de votre email',
-  layout: DEFAULT_LAYOUT,
-  blocks: [
-    createDefaultBlock('text'),
-    createDefaultBlock('image'),
-    createDefaultBlock('button'),
-  ],
-  globalStyles: {
-    backgroundColor: '#f0f0f0',
-    fontFamily: 'Arial, sans-serif',
-    fontSize: 16,
-    lineHeight: 1.5,
-    color: '#333333',
-    containerWidth: 600,
-    containerPadding: 20,
-  },
-  createdAt: new Date().toISOString(),
-  updatedAt: new Date().toISOString(),
-  version: '1.0.0',
-});
-
