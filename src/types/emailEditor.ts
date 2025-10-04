@@ -1,5 +1,19 @@
 // Types pour l'éditeur d'email avec corrections Claude 4.x
 
+export interface Spacing {
+  top: number;
+  right: number;
+  bottom: number;
+  left: number;
+}
+
+export interface Border {
+  width: number;
+  style: 'solid' | 'dashed' | 'dotted';
+  color: string;
+  radius: number;
+}
+
 // Interface pour la position des éléments
 export interface Position {
   x: number;
@@ -28,26 +42,11 @@ export interface BlockStyles {
   color?: string;
   
   // Espacement
-  padding?: {
-    top: number;
-    right: number;
-    bottom: number;
-    left: number;
-  };
-  margin?: {
-    top: number;
-    right: number;
-    bottom: number;
-    left: number;
-  };
+  padding?: Spacing;
+  margin?: Spacing;
   
   // Bordures
-  border?: {
-    width: number;
-    style: 'solid' | 'dashed' | 'dotted' | 'none';
-    color: string;
-    radius: number;
-  };
+  border?: Border;
   
   // Typographie
   fontSize?: string;
@@ -141,6 +140,7 @@ export interface DividerBlockContent {
   height: number;
   color: string;
   style: 'solid' | 'dashed' | 'dotted';
+  thickness: number;
 }
 
 export interface SpacerBlockContent {
@@ -274,7 +274,7 @@ export interface EmailTemplate {
   preheader?: string;
   layout: Layout;
   blocks: EmailBlock[];
-  globalStyles: GlobalStyles;
+    globalStyles: GlobalStyles;
   createdAt: string;
   updatedAt: string;
   version: string;
@@ -345,7 +345,7 @@ export interface BlockComponentProps<T extends EmailBlock = EmailBlock> {
   block: T;
   isSelected: boolean;
   isEditing: boolean;
-  onSelect: () => void;
+  onSelect: (e: React.MouseEvent<Element, MouseEvent>) => void;
   onUpdate: (updates: Partial<T>) => void;
   onStartEdit: () => void;
   onStopEdit: () => void;
@@ -413,6 +413,7 @@ export const createDefaultBlock = (type: BlockType): EmailBlock => {
       backgroundColor: 'transparent',
       padding: { top: 10, right: 10, bottom: 10, left: 10 },
       margin: { top: 0, right: 0, bottom: 0, left: 0 },
+      border: { width: 0, style: 'solid', color: 'transparent', radius: 0 },
       textAlign: 'left' as const,
     },
   };
@@ -492,6 +493,7 @@ export const createDefaultBlock = (type: BlockType): EmailBlock => {
           height: 1,
           color: '#cccccc',
           style: 'solid',
+          thickness: 1,
         },
       } as DividerBlock;
 
@@ -511,12 +513,12 @@ export const createDefaultBlock = (type: BlockType): EmailBlock => {
         content: {
           columns: [
             {
-              id: `col-${Date.now()}-1`,
+              id: `column-${Date.now( )}-1`,
               width: 50,
               blocks: [],
             },
             {
-              id: `col-${Date.now()}-2`,
+              id: `column-${Date.now()}-2`,
               width: 50,
               blocks: [],
             },
@@ -530,18 +532,11 @@ export const createDefaultBlock = (type: BlockType): EmailBlock => {
         type: 'social',
         content: {
           platforms: [
-            {
-              name: 'facebook',
-              url: 'https://facebook.com',
-              icon: 'facebook',
-            },
-            {
-              name: 'twitter',
-              url: 'https://twitter.com',
-              icon: 'twitter',
-            },
+            { name: 'facebook', url: 'https://facebook.com', icon: 'facebook' },
+            { name: 'twitter', url: 'https://twitter.com', icon: 'twitter' },
+            { name: 'instagram', url: 'https://instagram.com', icon: 'instagram' },
           ],
-          iconSize: 32,
+          iconSize: 24,
           spacing: 10,
         },
       } as SocialBlock;
@@ -552,9 +547,13 @@ export const createDefaultBlock = (type: BlockType): EmailBlock => {
         type: 'footer',
         content: {
           companyName: 'Votre Entreprise',
-          address: '123 Rue Example, 75001 Paris, France',
+          address: '123 Rue de l\'Exemple, 75000 Paris',
           unsubscribeText: 'Se désabonner',
-          unsubscribeLink: '#unsubscribe',
+          unsubscribeLink: '#',
+          socialLinks: [
+            { name: 'facebook', url: 'https://facebook.com', icon: 'facebook' },
+            { name: 'twitter', url: 'https://twitter.com', icon: 'twitter' },
+          ],
         },
       } as FooterBlock;
 
@@ -563,18 +562,23 @@ export const createDefaultBlock = (type: BlockType): EmailBlock => {
         ...baseBlock,
         type: 'html',
         content: {
-          html: '<p>Votre code HTML personnalisé ici...</p>',
+          html: '<!-- Votre code HTML personnalisé ici -->',
         },
       } as HtmlBlock;
 
     default:
-      throw new Error(`Type de bloc non supporté: ${type}`);
+      // Fallback pour les types inconnus ou non implémentés
+      return {
+        ...baseBlock,
+        type: type as BlockType,
+        content: {},
+      } as EmailBlock;
   }
 };
 
-// Template par défaut
-export const createDefaultTemplate = (): EmailTemplate => ({
-  id: `template-${Date.now()}`,
+// Factory pour créer un template d'email par défaut
+export const createDefaultTemplate = ( ): EmailTemplate => ({
+  id: `template_${Date.now()}`,
   name: 'Nouveau Template',
   subject: 'Sujet de votre email',
   preheader: 'Aperçu de votre email...',
