@@ -123,6 +123,7 @@ export type ButtonTarget = '_self' | '_blank';
 export interface ButtonBlockContent {
   text: string;
   link: string;
+  href: string;
   linkTarget: '_blank' | '_self'; // Maintenu pour compatibilité
   target: ButtonTarget; // Ajouté selon l'usage dans le composant
   backgroundColor: string;
